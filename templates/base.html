@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}La Scarpetta{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    {% block css_files %}{% endblock %}
+</head>
+<body>
+    <nav>
+        <!-- Navbar comune -->
+    </nav>
+
+    {% block content %}
+    <!-- Qui verrà inserito il contenuto dei template figli -->
+    {% endblock %}
+
+    <footer>
+        <!-- Footer comune -->
+    </footer>
+
+    <script src="{% static 'pages/js/script.js' %}"></script>
+</body>
+</html>

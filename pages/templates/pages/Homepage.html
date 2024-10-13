@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Homepage - La Scarpetta{% endblock %}
+
+{% block css_files %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'pages/Homepage.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="https://fonts.cdnfonts.com/css/glacial-indifference-2" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Engagement&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <div class="menu left">
+        <a href="#container1-1">Chi Siamo</a>
+        <a href="#menu">Il Menù</a> <!-- Usa il routing di Django -->
+    </div>
+    <div class="logo">
+        <img src="{% static 'pages/images/Logosvgcentrato(1).png' %}" alt="Logo La Scarpetta">
+    </div>
+    <div class="menu right">
+        <a href="#contatti">Contattaci</a>
+        <a href="{% url 'Homepage' %}">Prenota Ora</a>
+        </div>
+    <!-- Icona del menu hamburger -->
+    <div class="menu-icon" id="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <!-- Menu Mobile -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#container1-1">Chi Siamo</a>
+        <a href="#menu">Il Menù</a> <!-- Usa il routing di Django -->
+        <a href="#contattiMobile">Contattaci</a>
+        <a href="{% url 'Homepage' %}">Prenota Ora</a>
+</div>
+</nav>
+
+<!-- Banner centrale con immagini a scorrimento -->
+<!-- Banner centrale con immagini a scorrimento -->
+<div class="hero-banner">
+    <div class="slider-container">
+        <!-- Le tue immagini dello slider -->
+        <div class="slider-image">
+            <img src="{% static 'pages/images/Sala-2.jpg' %}" alt="Immagine 1">
+        </div>
+        <div class="slider-image">
+            <img src="{% static 'pages/images/Foto-7.jpg' %}" alt="Immagine 2">
+        </div>
+    </div>
+    <!-- Overlay -->
+    <div class="overlay">
+        <div class="logo-container">
+            <img src="{% static 'pages/images/LaScarpettaSVG_01_RevA (2) 2.png' %}" alt="Logo La Scarpetta" id="custom-logo">
+        </div>
+    </div>
+</div>
+
+<div class="container1" id="container1-1">
+    <div class="text-container">
+        <h1 id="scritta">La Scarpetta</h1>
+        <p>
+            Il nostro ristorante di cucina tipica toscana vi delizierà con piatti dal gusto semplice ma sorprendente. Qui, l'attenzione al cliente e la cura delle materie prime sono fondamentali, e potrete assaporarle in ogni portata.
+            Situato nel centro di Firenze, il nostro locale è il luogo ideale per immergersi nelle tradizioni culinarie toscane. Il nostro chef seleziona ingredienti freschi e di alta qualità, privilegiando prodotti locali e di stagione.
+            La nostra cucina offre ricette classiche arricchite da un tocco di creatività. Ogni piatto è preparato con passione.
+            Se desiderate provare ottimi sapori e trascorrere una serata speciale, vi aspettiamo!
+        </p>
+        <p>Ci ispiriamo a quei momenti, ai cibi appena cotti ricchi di sapori, ai profumi e alla convivialità.</p>
+    </div>
+    <div class="image-container1">
+        <img src="{% static 'pages/images/Osteria.png' %}" alt="Piatto di cibo">
+    </div>
+</div>
+
+<div class="prenotazione">
+    <button class="bottone-prenota">Prenota un Tavolo</button>
+</div>
+
+<div class="slider-section2">
+    <div class="IlMenu" id="menu">
+        <a href="{% url 'menu' %}"><h1 style="font-size: 50px; font-family: 'Engagement', cursive; color: #DAA520;" class="IlMenu">Il nostro Menù</h1>
+        </a>
+    </div>
+    <!-- Aggiungiamo il contenuto del menù sotto la navbar -->
+    <div class="containerMenu">
+        <!-- Visualizza l'ultima immagine caricata -->
+        {% if latest_image %}
+            <img src="{{ latest_image.image.url }}" alt="Menù La Scarpetta">
+        {% endif %}
+    
+        <!-- Form per caricare una nuova immagine -->
+        {% if user.is_staff %}
+            <form method="post" enctype="multipart/form-data" action="{% url 'menu_upload' %}">
+                {% csrf_token %}
+                {{ form.as_p }}  <!-- Visualizza il form -->
+                <button type="submit">Carica Nuovo Menù</button>
+            </form>
+        {% endif %}
+    </div>
+    
+    <div class="carousel-container">
+        <div class="slides-wrapper">
+            <div class="carousel-image">
+                <img src="{% static 'pages/images/Foto-29.jpg' %}" alt="Immagine 1">
+            </div>
+            <div class="carousel-image">
+                <img src="{% static 'pages/images/Foto-7.jpg' %}" alt="Immagine 2">
+            </div>
+            <div class="carousel-image">
+                <img src="{% static 'pages/images/Foto-13.jpg' %}" alt="Immagine 3">
+            </div>
+        </div>
+        <!-- Bottoni di navigazione -->
+        <a class="previous" onclick="prevSlide()">❮</a>
+        <a class="next" onclick="nextSlide()">❯</a>
+    </div>
+    <div style="text-align:center; margin-top: 15px;">
+        <span class="navigation-dot" onclick="currentSlide(1)"></span>
+        <span class="navigation-dot" onclick="currentSlide(2)"></span>
+        <span class="navigation-dot" onclick="currentSlide(3)"></span>
+    </div>
+</div>
+
+<!-- Sezione Contatti -->
+<div class="content-container" id="contatti">
+    <div class="contact-hours-container">
+        <div class="contact-left">
+            <h2>Contatti</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Via del Ponte Sospeso, 7r, 50142 Firenze FI</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <p>055 5121510</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    <p><a href="https://instagram.com/elascarpettafirenze" target="_blank">@elascarpettafirenze</a></p>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-facebook"></i>
+                    <p><a href="https://facebook.com/lascarpettafirenze" target="_blank">lascarpettafirenze</a></p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <p><a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a></p>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <p><a href="https://wa.me/1234567890" target="_blank">Contattaci su WhatsApp</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hours-right">
+            <h2>Orari di apertura</h2>
+            <div class="opening-hours">
+                <p><strong>Lunedì:</strong> 12-15, 19-00</p>
+                <p><strong>Martedì:</strong> Chiuso</p>
+                <p><strong>Mercoledì-Domenica:</strong> 12-15, 19-00</p>
+            </div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11577.48292808035!2d11.2115738!3d43.7742329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a5aa11009a4f9%3A0x7b2045d5b4037df9!2sVia%20del%20Ponte%20Sospeso%2C%2050142%20Firenze%20FI%2C%20Italia!5e0!3m2!1sit!2sus!4v1647101325581!5m2!1sit!2sus" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- Sezione Contatti Mobile -->
+<div class="mobile-contact-section" id="contattiMobile">
+    <h2>Contatti</h2>
+    <ul class="contact-list">
+        <li><i class="fas fa-map-marker-alt"></i> Via del Ponte Sospeso, 7r, 50142 Firenze FI</li>
+        <li><i class="fas fa-phone"></i> 055 5121510</li>
+        <li><i class="fas fa-envelope"></i> <a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a></li>
+        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/elascarpettafirenze" target="_blank">@elascarpettafirenze</a></li>
+        <li><i class="fab fa-facebook"></i> <a href="https://facebook.com/lascarpettafirenze" target="_blank">lascarpettafirenze</a></li>
+        <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/1234567890" target="_blank">Contattaci su WhatsApp</a></li>
+    </ul>
+
+    <h2>Orari di Apertura</h2>
+    <ul class="opening-hours-list">
+        <li><strong>Lunedì - Domenica:</strong> 12:00 - 15:00, 19:00 - 00:00</li>
+    </ul>
+</div>
+
+    <div class="footer">
+        <p>&copy; 2022 La Scarpetta - <a href="#">Privacy policy</a> - <a href="#">Cookie policy</a> - {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}">Esci come amministratore</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login amministratore</a>
+        {% endif %}</p>
+    </div>
+
+
+<script src="{% static 'pages/js/script.js' %}"></script>
+<script src="{% static 'pages/js/CaruselScript.js' %}"></script>
+<script>
+    const menuIcon = document.getElementById('menu-icon');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuLinks = document.querySelectorAll('.mobile-menu a');
+
+    menuIcon.addEventListener('click', function (event) {
+        event.stopPropagation();
+        menuIcon.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+    });
+
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            menuIcon.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        });
+    });
+
+    document.addEventListener('click', function (event) {
+        if (!mobileMenu.contains(event.target) && !menuIcon.contains(event.target)) {
+            if (mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                menuIcon.classList.remove('active');
+            }
+        }
+    });
+</script>
+{% endblock %}

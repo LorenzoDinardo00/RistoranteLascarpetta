@@ -1,0 +1,288 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background-color: #f7f2ed;
+    color: #2c2c2c;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-menu{
+    display:none;
+}
+/* Titoli di sezione */
+.section-title {
+    color: #ff9900;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 30px;
+    width: 100%;
+    font-family: cursive;
+}
+/* Stile generale per la navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra gli elementi della navbar */
+    background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0) 100%);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Stile per il logo centrale */
+.logo {
+    margin: 0 30px; /* Distanza tra il logo e i menu a sinistra e destra */
+    flex-shrink: 0;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.logo img {
+    max-width: 120px;
+    height: auto;
+    display: block;
+}
+
+/* Stile per i menu */
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra gli elementi del menu vicino al logo */
+}
+
+/* Stile per i menu di sinistra e destra */
+.menu.left {
+    margin-right: 20px; /* Spazio tra il logo e il menu di sinistra */
+}
+
+.menu.right {
+    margin-left: 20px; /* Spazio tra il logo e il menu di destra */
+}
+
+/* Stile per i link del menu */
+.menu a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    padding: 0 8vh; /* Distanza uniforme tra i link del menu */
+}
+
+.menu a:hover {
+    color: #999;
+}
+
+/* Stile per l'icona del menu hamburger (mobile) */
+.menu-icon {
+    display: none;
+}
+
+/* Contenitore del menù (testo e immagine) */
+.container {
+    text-align: center;
+    margin: 120px auto;  /* Aggiunto margine per separarlo dalla navbar */
+    max-width: 750px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+img {
+    width: 100%;
+    max-width: 700px;
+    transition: transform 0.3s;
+}
+
+img:hover {
+    transform: scale(1.02);
+}
+
+h1 {
+    font-size: 36px;
+    color: #a6793d;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.upload-btn {
+    background-color: #a6793d;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.upload-btn:hover {
+    background-color: #855c2c;
+    transform: scale(1.05);
+}
+
+.upload-btn:active {
+    background-color: #6b4c21;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    @media (max-width: 768px) {
+        .navbar {
+            justify-content: space-between;
+            padding: 10px 0; /* Riduce il padding orizzontale */
+            padding-top: 14% !important;
+        }
+
+        /* Mostra l'icona hamburger */
+        .menu-icon {
+            display: block;
+            position: absolute;
+            right: 20px; /* Distanza costante dal bordo destro */
+            top: 20px;
+            background-color: transparent;
+        }
+
+        /* Logo centrato con la correzione per non sforare */
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 90%; /* Impedisce al logo di diventare troppo grande */
+            margin: auto;
+        }
+
+        .mobile-menu {
+            width: 100%; /* Assicura che il menu mobile occupi tutta la larghezza */
+            box-sizing: border-box; /* Include padding e border nel calcolo della larghezza */
+            left: 0.1vh !important;
+        }
+
+        /* Stile per i link del menu mobile */
+        .mobile-menu a {
+            text-align: center; /* Centra il testo nei link */
+            width: auto; /* Rimuove la larghezza fissa per evitare sforamenti */
+            padding: 12px; /* Aumento del padding per una migliore area tattile */
+        }
+}
+    /* Nascondi i menu desktop */
+    .menu.left,
+    .menu.right {
+        display: none;
+    }
+
+    /* Mostra l'icona hamburger */
+    .menu-icon {
+        display: block;
+        right: 5vh;
+        cursor: pointer;
+        z-index: 1001;
+        position: absolute;
+        top: 20px;
+    }
+
+    .menu-icon span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px 0;
+        background-color: #333;
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Trasformazione dell'icona hamburger in 'X' quando attiva */
+    .menu-icon.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-icon.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-icon.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Logo centrato */
+    .logo {
+        position: absolute;
+        left: 50%;
+        top: 15%;
+        transform: translateX(-50%);
+    }
+
+    .mobile-menu {
+        transform: translateY(-100%); /* Sposta il menu sopra la vista per nasconderlo */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60vh;
+        background-color: rgba(0, 0, 0, 0.8); /* Nero trasparente */
+        margin-top: 70px;
+        z-index: 1000;
+        overflow-y: auto;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        transition: transform 1s ease, opacity 1s ease, visibility 1s ease; /* Aggiungi transform alla transizione */
+        opacity: 0;
+        visibility: hidden; /* Inizia non visibile */
+    }
+
+    .mobile-menu.active {
+        transform: translateY(0); /* Sposta il menu nella posizione originale per mostrarlo */
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .mobile-menu a {
+        width: 90%;
+        padding: 12px;
+        margin: 10px 0;
+        text-align: center;
+        color: #DAA520;
+        text-decoration: none;
+        font-size: 21px;
+        transition: background-color 0.3s ease;
+        position: relative; /* Necessario per la posizione della linea decorativa */
+    }
+
+    .mobile-menu a:hover {
+        background-color: #000000;
+    }
+
+    .mobile-menu a::after {
+        content: ""; /* Aggiunge un elemento decorativo dopo ogni link eccetto l'ultimo */
+        display: block;
+        height: 2px; /* Altezza della linea decorativa */
+        background-color: #DAA520; /* Colore della linea */
+        width: 50%; /* Lunghezza della linea, regolabile secondo necessità */
+        margin: 8px auto 0; /* Posiziona la linea un po' sotto il link */
+    }
+
+    }
+@media screen and (max-width: 600px) {
+    /* Media Query per schermi molto piccoli */
+    @media (max-width: 480px) {
+        /* Ridimensionamento del logo */
+
+}
+}
