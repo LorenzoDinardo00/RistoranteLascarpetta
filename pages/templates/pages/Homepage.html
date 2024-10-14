@@ -79,28 +79,34 @@
     <button class="bottone-prenota">Prenota un Tavolo</button>
 </div>
 
-<div class="slider-section2">
-    <div class="IlMenu" id="menu">
-        <a href="{% url 'menu' %}"><h1 style="font-size: 50px; font-family: 'Engagement', cursive; color: #DAA520;" class="IlMenu">Il nostro Menù</h1>
-        </a>
-    </div>
-    <!-- Aggiungiamo il contenuto del menù sotto la navbar -->
-    <div class="containerMenu">
-        <!-- Visualizza l'ultima immagine caricata -->
-        {% if latest_image %}
-            <img src="{{ latest_image.image.url }}" alt="Menù La Scarpetta">
-        {% endif %}
+<!-- Sezione del Menù Gourmet -->
+<div class="gourmet-section" id="menu">
+    <h1 class="gourmet-title">Il nostro Menù</h1>
+
+    <!-- Immagine del Menù -->
+    {% if latest_image %}
+        <div class="menu-frame">
+            <img src="{{ latest_image.image.url }}" alt="Menù La Scarpetta" class="menu-photo">
+        </div>
+    {% endif %}
+<!-- Form per caricare una nuova immagine -->
+{% if user.is_staff %}
+<div class="menu-upload-form">
+    <h3>Carica Nuovo Menù</h3>
+<form method="post" enctype="multipart/form-data" action="{% url 'menu_upload' %}">
+    {% csrf_token %}
+    <label for="id_image" class="btn btn-primary">Seleziona Immagine del Menù</label>
+    {{ form.image }}
+    <input id="id_image" type="file" style="display: none;" onchange="document.getElementById('file-name').innerHTML = this.files[0].name">
+    <span id="file-name" style="margin-left: 10px; margin-top:10px;"></span>
+    <!-- Il campo description è nascosto e preimpostato -->
+    {{ form.description }}
+    <button type="submit" class="btn btn-primary" style="display:inline;">Carica Immagine</button>
+</form>
+</div>
+{% endif %}
     
-        <!-- Form per caricare una nuova immagine -->
-        {% if user.is_staff %}
-            <form method="post" enctype="multipart/form-data" action="{% url 'menu_upload' %}">
-                {% csrf_token %}
-                {{ form.as_p }}  <!-- Visualizza il form -->
-                <button type="submit">Carica Nuovo Menù</button>
-            </form>
-        {% endif %}
-    </div>
-    
+
     <div class="carousel-container">
         <div class="slides-wrapper">
             <div class="carousel-image">
@@ -117,11 +123,13 @@
         <a class="previous" onclick="prevSlide()">❮</a>
         <a class="next" onclick="nextSlide()">❯</a>
     </div>
-    <div style="text-align:center; margin-top: 15px;">
-        <span class="navigation-dot" onclick="currentSlide(1)"></span>
-        <span class="navigation-dot" onclick="currentSlide(2)"></span>
-        <span class="navigation-dot" onclick="currentSlide(3)"></span>
-    </div>
+       <!-- Assicurati che i "carousel-dot" siano definiti come segue: -->
+<div class="carousel-indicators">
+    <span class="carousel-dot" data-index="0"></span>
+    <span class="carousel-dot" data-index="1"></span>
+    <span class="carousel-dot" data-index="2"></span>
+</div>
+
 </div>
 
 <!-- Sezione Contatti -->
@@ -198,31 +206,38 @@
 
 <script src="{% static 'pages/js/script.js' %}"></script>
 <script src="{% static 'pages/js/CaruselScript.js' %}"></script>
+
+<script src="{% static 'pages/js/NavigationDot.js' %}"></script>
 <script>
-    const menuIcon = document.getElementById('menu-icon');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuLinks = document.querySelectorAll('.mobile-menu a');
-
-    menuIcon.addEventListener('click', function (event) {
-        event.stopPropagation();
-        menuIcon.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-    });
-
-    menuLinks.forEach(link => {
-        link.addEventListener('click', function () {
-            menuIcon.classList.remove('active');
-            mobileMenu.classList.remove('active');
+    document.addEventListener('DOMContentLoaded', function () {
+        const navbar = document.querySelector('.navbar');
+        const mobileMenu = document.getElementById('mobile-menu');
+    
+        function adjustMenuPosition() {
+            const height = navbar.offsetHeight;  // Ottiene l'altezza della navbar
+            mobileMenu.style.top = height + 'px';  // Imposta il top del menu a tendina
+        }
+    
+        // Aggiusta la posizione del menu a tendina al caricamento della pagina
+        adjustMenuPosition();
+    
+        // Assicurati di aggiustare la posizione quando la dimensione della finestra cambia
+        window.addEventListener('resize', adjustMenuPosition);
+    
+        // Gestione del click per attivare il menu a tendina
+        const menuIcon = document.getElementById('menu-icon');
+        menuIcon.addEventListener('click', function () {
+            mobileMenu.classList.toggle('active');
+            this.classList.toggle('active');
         });
-    });
-
-    document.addEventListener('click', function (event) {
-        if (!mobileMenu.contains(event.target) && !menuIcon.contains(event.target)) {
-            if (mobileMenu.classList.contains('active')) {
+    
+        // Chiude il menu se clicchi fuori dall'area
+        document.addEventListener('click', function (event) {
+            if (!menuIcon.contains(event.target) && !mobileMenu.contains(event.target)) {
                 mobileMenu.classList.remove('active');
                 menuIcon.classList.remove('active');
             }
-        }
+        });
     });
 </script>
 {% endblock %}

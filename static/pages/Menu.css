@@ -161,7 +161,7 @@ input[type="file"] {
         /* Logo centrato con la correzione per non sforare */
         .logo {
             position: absolute;
-            left: 50%;
+            left: 10px !important;
             transform: translateX(-50%);
             max-width: 90%; /* Impedisce al logo di diventare troppo grande */
             margin: auto;
@@ -221,7 +221,6 @@ input[type="file"] {
     /* Logo centrato */
     .logo {
         position: absolute;
-        left: 50%;
         top: 15%;
         transform: translateX(-50%);
     }

@@ -1,67 +1,25 @@
 {% extends "base.html" %}
+{% load static %}
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'pages/Login.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="login-container">
-    <h2>Login</h2>
+    <h2>La Scarpetta</h2>
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" required>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
         </div>
         <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>
 {% endblock %}
 
-{% block css %}
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f4f4f9;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-    .login-container {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        width: 300px;
-    }
-    .form-group {
-        margin-bottom: 15px;
-    }
-    label {
-        display: block;
-        margin-bottom: 5px;
-    }
-    input[type="text"],
-    input[type="password"] {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    button {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 4px;
-        background-color: #0056b3;
-        color: white;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #004494;
-    }
-</style>
-{% endblock %}
+
