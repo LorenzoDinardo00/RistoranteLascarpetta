@@ -7,6 +7,7 @@ from .models import MenuImage
 import os
 from django.contrib.auth import logout
 
+
 # Create your views here.
 def starting_page(request):
     form = MenuImageForm()
@@ -55,3 +56,7 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('Homepage')
+
+
+def prenotazioni(request):
+    return render(request, 'pages/prenotazioni.html')

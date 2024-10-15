@@ -12,18 +12,18 @@
 {% endblock %}
 
 {% block content %}
-<nav class="navbar">
+<nav class="navbar" >
     <div class="menu left">
         <a href="#container1-1">Chi Siamo</a>
         <a href="#menu">Il Menù</a> <!-- Usa il routing di Django -->
     </div>
     <div class="logo">
+        <a href="#starting">
         <img src="{% static 'pages/images/Logosvgcentrato(1).png' %}" alt="Logo La Scarpetta">
-    </div>
+        </a></div>
     <div class="menu right">
         <a href="#contatti">Contattaci</a>
-        <a href="{% url 'Homepage' %}">Prenota Ora</a>
-        </div>
+        <a href="{% url 'prenotazioni' %}">Prenota Ora</a>        </div>
     <!-- Icona del menu hamburger -->
     <div class="menu-icon" id="menu-icon">
         <span></span>
@@ -35,13 +35,12 @@
         <a href="#container1-1">Chi Siamo</a>
         <a href="#menu">Il Menù</a> <!-- Usa il routing di Django -->
         <a href="#contattiMobile">Contattaci</a>
-        <a href="{% url 'Homepage' %}">Prenota Ora</a>
-</div>
+        <a href="{% url 'prenotazioni' %}">Prenota Ora</a></div>
 </nav>
 
 <!-- Banner centrale con immagini a scorrimento -->
 <!-- Banner centrale con immagini a scorrimento -->
-<div class="hero-banner">
+<div class="hero-banner"id="starting">
     <div class="slider-container">
         <!-- Le tue immagini dello slider -->
         <div class="slider-image">
@@ -75,8 +74,10 @@
     </div>
 </div>
 
-<div class="prenotazione">
+<div class="prenotazione"> <a href="{% url 'prenotazioni' %}">
     <button class="bottone-prenota">Prenota un Tavolo</button>
+
+</a>
 </div>
 
 <!-- Sezione del Menù Gourmet -->
@@ -138,17 +139,19 @@
         <div class="contact-left">
             <h2>Contatti</h2>
             <div class="contact-info">
-                <div class="contact-item">
+                <div class="contact-item"><a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank">
                     <i class="fas fa-map-marker-alt"></i>
-                    <p>Via del Ponte Sospeso, 7r, 50142 Firenze FI</p>
+                    <p>Via del Ponte Sospeso, 7r, FI</p>
+                </a>
                 </div>
-                <div class="contact-item">
+                <div class="contact-item"> <a href="tel:055 5121510">
                     <i class="fas fa-phone"></i>
                     <p>055 5121510</p>
+                </a>
                 </div>
                 <div class="contact-item">
                     <i class="fab fa-instagram"></i>
-                    <p><a href="https://instagram.com/elascarpettafirenze" target="_blank">@elascarpettafirenze</a></p>
+                    <p><a href="https://instagram.com/lascarpettafirenze" target="_blank">@lascarpettafirenze</a></p>
                 </div>
                 <div class="contact-item">
                     <i class="fab fa-facebook"></i>
@@ -160,7 +163,7 @@
                 </div>
                 <div class="contact-item">
                     <i class="fab fa-whatsapp"></i>
-                    <p><a href="https://wa.me/1234567890" target="_blank">Contattaci su WhatsApp</a></p>
+                    <p><a href="https://wa.me/3755374459" target="_blank">Contattaci su WhatsApp</a></p>
                 </div>
             </div>
         </div>
@@ -168,9 +171,7 @@
         <div class="hours-right">
             <h2>Orari di apertura</h2>
             <div class="opening-hours">
-                <p><strong>Lunedì:</strong> 12-15, 19-00</p>
-                <p><strong>Martedì:</strong> Chiuso</p>
-                <p><strong>Mercoledì-Domenica:</strong> 12-15, 19-00</p>
+                <p><strong>Lunedì-Domenica:</strong> 12-15, 19-00</p>
             </div>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11577.48292808035!2d11.2115738!3d43.7742329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a5aa11009a4f9%3A0x7b2045d5b4037df9!2sVia%20del%20Ponte%20Sospeso%2C%2050142%20Firenze%20FI%2C%20Italia!5e0!3m2!1sit!2sus!4v1647101325581!5m2!1sit!2sus" allowfullscreen="" loading="lazy"></iframe>
         </div>
@@ -181,18 +182,24 @@
 <div class="mobile-contact-section" id="contattiMobile">
     <h2>Contatti</h2>
     <ul class="contact-list">
-        <li><i class="fas fa-map-marker-alt"></i> Via del Ponte Sospeso, 7r, 50142 Firenze FI</li>
-        <li><i class="fas fa-phone"></i> 055 5121510</li>
+        <li><i class="fas fa-map-marker-alt"></i><a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank"> Via del Ponte Sospeso, 7r, 50142 Firenze FI</li> </a>
+        <li><i class="fas fa-phone"></i><a href="tel:055 5121510"> 055 5121510</li></a>
         <li><i class="fas fa-envelope"></i> <a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a></li>
-        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/elascarpettafirenze" target="_blank">@elascarpettafirenze</a></li>
+        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/lascarpettafirenze" target="_blank">@lascarpettafirenze</a></li>
         <li><i class="fab fa-facebook"></i> <a href="https://facebook.com/lascarpettafirenze" target="_blank">lascarpettafirenze</a></li>
-        <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/1234567890" target="_blank">Contattaci su WhatsApp</a></li>
+        <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/3755374459" target="_blank">Contattaci su WhatsApp</a></li>
     </ul>
 
     <h2>Orari di Apertura</h2>
     <ul class="opening-hours-list">
         <li><strong>Lunedì - Domenica:</strong> 12:00 - 15:00, 19:00 - 00:00</li>
     </ul>
+</div>
+<!-- Riquadro 'Powered by Tempora Innovation' con design modificato -->
+<div class="powered-by-container">
+    <p class="powered-by-text">
+        Engineered by <span class="highlight">Tempora Innovation</span>
+    </p>
 </div>
 
     <div class="footer">
@@ -212,23 +219,26 @@
     document.addEventListener('DOMContentLoaded', function () {
         const navbar = document.querySelector('.navbar');
         const mobileMenu = document.getElementById('mobile-menu');
-    
+        const menuIcon = document.getElementById('menu-icon');
+        
+        // Funzione per regolare la posizione del menu mobile partendo da 10px
         function adjustMenuPosition() {
-            const height = navbar.offsetHeight;  // Ottiene l'altezza della navbar
-            mobileMenu.style.top = height + 'px';  // Imposta il top del menu a tendina
+            const startingOffset = 10;  // Offset da 10px dall'alto della pagina
+            mobileMenu.style.top = startingOffset + 'px';  // Imposta il top del menu mobile a 10px
         }
     
-        // Aggiusta la posizione del menu a tendina al caricamento della pagina
+        // Aggiusta la posizione al caricamento della pagina
         adjustMenuPosition();
     
-        // Assicurati di aggiustare la posizione quando la dimensione della finestra cambia
-        window.addEventListener('resize', adjustMenuPosition);
-    
-        // Gestione del click per attivare il menu a tendina
-        const menuIcon = document.getElementById('menu-icon');
+        // Mostra/nasconde il menu mobile con il click sull'icona del menu
         menuIcon.addEventListener('click', function () {
             mobileMenu.classList.toggle('active');
             this.classList.toggle('active');
+    
+            // Verifica se il menu è attivo per aggiustare la posizione
+            if (mobileMenu.classList.contains('active')) {
+                adjustMenuPosition();  // Imposta la posizione corretta quando il menu è visibile
+            }
         });
     
         // Chiude il menu se clicchi fuori dall'area
@@ -237,6 +247,14 @@
                 mobileMenu.classList.remove('active');
                 menuIcon.classList.remove('active');
             }
+        });
+    
+        // Aggiunge l'evento di chiusura del menu al click su ogni voce del menu mobile
+        document.querySelectorAll('#mobile-menu a').forEach(function(menuItem) {
+            menuItem.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuIcon.classList.remove('active');
+            });
         });
     });
 </script>

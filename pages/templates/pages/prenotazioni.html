@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Prenota Ora - La Scarpetta{% endblock %}
+
+{% block css_files %}
+    <!-- CSS Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- File CSS personalizzato -->
+    <link rel="stylesheet" href="{% static 'pages/prenotazioni.css' %}">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Glacial+Indifference&family=Engagement&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="text-center">
+            <!-- Pulsante di prenotazione - Arancione -->
+            <div class="quandoo-widget-builder mb-4" data-config='{"format":"text-button","bgcolor":"#f5b016","txcolor":"#ffffff","round":"yes","position":"","font":"lg","merchant":54109,"txt":"Prenota ora"}'></div>
+            <script src="https://s3-eu-west-1.amazonaws.com/quandoo-website/widget-builder/quandoo-widget-builder.js"></script>
+
+            <!-- Formato calendario - Arancione -->
+            <div id="quandoo-booking-widget" class="shadow-sm p-4 rounded mx-auto" style="border: 1px solid #ddd; background-color: #f9f9f9; max-width: 400px;">
+                <script src="https://booking-widget.quandoo.com/index.js" data-merchant-id="54109" data-theme="brand"></script>
+            </div>
+             </div>
+             
+    </div>
+{% endblock %}
