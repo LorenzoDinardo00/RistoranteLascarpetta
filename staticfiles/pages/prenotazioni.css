@@ -1,0 +1,24 @@
+/* prenotazioni.css */
+
+body {
+    font-family: 'Glacial Indifference', sans-serif;
+}
+
+#quandoo-booking-widget {
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.quandoo-widget-builder button {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quandoo-widget-builder button:hover {
+    background-color: #ff9900; /* Più scuro durante hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-family: 'Engagement', cursive;
+}
