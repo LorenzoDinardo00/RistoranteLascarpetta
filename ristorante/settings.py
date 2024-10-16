@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-o)b6tq2=wzan2+pg-r-4a2u(wwihgh5r@er)&43nsc7cn%0icg'  # Manteniamo la tua secret key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['ristorantelascarpetta.onrender.com',
     '*.onrender.com',
@@ -135,8 +135,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')    # Directory where static 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media settings for files uploaded by users, stored in AWS S3
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # AWS S3 configurations for media files
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
