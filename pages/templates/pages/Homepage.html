@@ -195,18 +195,17 @@
         <li><strong>Lunedì - Domenica:</strong> 12:00 - 15:00, 19:00 - 00:00</li>
     </ul>
 </div>
-<!-- Riquadro 'Powered by Tempora Innovation' con design modificato -->
-<div class="powered-by-container">
-    <p class="powered-by-text">
-        Engineered by <span class="highlight">Tempora Innovation</span>
-    </p>
-</div>
+
 
     <div class="footer">
+        <!-- Riquadro 'Powered by Tempora Innovation' con design modificato -->
+        <div class="powered-by-container">
+            <p class="powered-by-text">
+                Engineered by <span class="highlight">Tempora Innovation</span>
+            </p>
+        </div>
         <p>&copy; 2022 La Scarpetta - <a href="#">Privacy policy</a> - <a href="#">Cookie policy</a> - {% if user.is_authenticated %}
             <a href="{% url 'logout' %}">Esci come amministratore</a>
-        {% else %}
-            <a href="{% url 'login' %}">Login amministratore</a>
         {% endif %}</p>
     </div>
 
