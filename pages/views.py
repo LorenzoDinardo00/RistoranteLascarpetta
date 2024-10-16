@@ -24,7 +24,7 @@ def menu_upload(request):
             for image in old_images:
                 # Elimina l'immagine dal backend di storage (es. S3)
                 image.image.delete(save=False)  # Elimina dal backend S3 senza salvare il modello
-            old_images.delete()
+                image.delete()  # Elimina l'istanza dal database
 
             # Salva la nuova immagine
             form.save()
@@ -33,11 +33,11 @@ def menu_upload(request):
             print("Errori nel form:", form.errors)  # Debug per errori di validazione
     else:
         form = MenuImageForm()
-    
+
     # Renderizza la homepage, con il form per caricare l'immagine
     latest_image = MenuImage.objects.last()  # Recupera l'ultima immagine caricata
     return render(request, 'pages/Homepage.html', {'form': form, 'latest_image': latest_image})
-
+    
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
