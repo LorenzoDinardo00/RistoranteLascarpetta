@@ -204,8 +204,8 @@
                 Engineered by <span class="highlight">Tempora Innovation</span>
             </p>
         </div>
-        <p>&copy; 2022 La Scarpetta - <a href="#">Privacy policy</a> - <a href="#">Cookie policy</a> - {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}">Esci come amministratore</a>
+        <p>&copy; 2022 La Scarpetta - <a href="#">Privacy policy</a> - <a href="#">Cookie policy</a> {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}">- Esci come amministratore</a>
         {% endif %}</p>
     </div>
 
