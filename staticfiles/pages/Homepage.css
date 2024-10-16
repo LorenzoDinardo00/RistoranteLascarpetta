@@ -794,7 +794,7 @@ body .IlMenu h1 {
 .content-container h2 {
     font-size: 45px; /* Leggermente più grande */
     margin-bottom: 30px;
-    color: #DAA520;
+    color: black;
     text-align: left; /* Allineamento a sinistra per un aspetto più professionale */
     font-family: 'Engagement', cursive; /* Font elegante */
 }
@@ -879,7 +879,7 @@ body .IlMenu h1 {
 .mobile-contact-section h2 {
     font-size: 45px;
     margin-bottom: 20px;
-    color: #DAA520;
+    color: black;
     text-align: center;
     letter-spacing: 1px;
     font-family: "Engagement", cursive !important;
@@ -1599,7 +1599,7 @@ form{
 
 .powered-by-text {
     font-family: 'Glacial Indifference', sans-serif;
-    font-size: 0.5rem; /* Leggermente più grande per una migliore leggibilità */
+    font-size: 0.4rem; /* Leggermente più grande per una migliore leggibilità */
     color: #666666; /* Colore morbido per il testo */
 }
 
