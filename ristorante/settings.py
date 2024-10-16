@@ -27,7 +27,10 @@ SECRET_KEY = 'django-insecure-o)b6tq2=wzan2+pg-r-4a2u(wwihgh5r@er)&43nsc7cn%0icg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['ristorantelascarpetta.onrender.com', '*.onrender.com']
+ALLOWED_HOSTS = ['ristorantelascarpetta.onrender.com',
+    '*.onrender.com',
+    'lascarpettafirenze.com',
+    'www.lascarpettafirenze.com']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
 if RENDER_EXTERNAL_HOSTNAME:
@@ -147,3 +150,5 @@ MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SECURE_SSL_REDIRECT = True
