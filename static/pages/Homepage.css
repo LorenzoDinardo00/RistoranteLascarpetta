@@ -955,7 +955,6 @@ body .IlMenu h1 {
         width: 100%;
         position: relative;
         background-color: rgba(200, 200, 200, 0.5);
-        border-radius: 10px;
     }
 }
 
@@ -1040,7 +1039,6 @@ body .IlMenu h1 {
     width: 100%;
     position: relative;
     background-color: rgba(200, 200, 200, 0.5);
-    border-radius: 10px;
 }
 
 /* Aggiungi un'ombra sfocata sotto l'immagine */
