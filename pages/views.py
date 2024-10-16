@@ -4,15 +4,14 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from .forms import MenuImageForm
 from .models import MenuImage
-import os
 from django.contrib.auth import logout
-
 
 # Create your views here.
 def starting_page(request):
     form = MenuImageForm()
     latest_image = MenuImage.objects.last()  # Recupera l'ultima immagine caricata
     return render(request, "pages/Homepage.html", {'form': form, 'latest_image': latest_image})
+
 def menu_page(request):
     return render(request, 'pages/Menu.html')  # Assicurati che il percorso sia corretto
 
@@ -23,9 +22,8 @@ def menu_upload(request):
             # Elimina le immagini vecchie, se necessario
             old_images = MenuImage.objects.all()
             for image in old_images:
-                image_path = image.image.path
-                if os.path.exists(image_path):
-                    os.remove(image_path)
+                # Elimina l'immagine dal backend di storage (es. S3)
+                image.image.delete(save=False)  # Elimina dal backend S3 senza salvare il modello
             old_images.delete()
 
             # Salva la nuova immagine
