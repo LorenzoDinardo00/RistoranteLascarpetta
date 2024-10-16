@@ -27,10 +27,12 @@ SECRET_KEY = 'django-insecure-o)b6tq2=wzan2+pg-r-4a2u(wwihgh5r@er)&43nsc7cn%0icg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['ristorantelascarpetta.onrender.com',
+ALLOWED_HOSTS = [
+    'ristorantelascarpetta.onrender.com',
     '*.onrender.com',
     'lascarpettafirenze.com',
-    'www.lascarpettafirenze.com']
+    'www.lascarpettafirenze.com'
+]
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
 if RENDER_EXTERNAL_HOSTNAME:
@@ -41,7 +43,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',  # Serve static files without Django's staticfiles app
     'django.contrib.staticfiles',     # Keep the staticfiles app
     'storages',                       # AWS S3 storage for media files
-    'pages',  # Your app here
+    'pages',                          # Your app here
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -128,27 +130,30 @@ USE_TZ = True
 
 # WhiteNoise settings for static files (CSS, JS)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Local static directory
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')    # Directory where static files are collected
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Directory per i file statici locali
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')    # Dove vengono raccolti i file statici in produzione
 
-# WhiteNoise storage for compressed files and caching
+# WhiteNoise storage per comprimere e memorizzare in cache i file statici
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media settings for files uploaded by users, stored in AWS S3
-#MEDIA_URL = '/media/'
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # AWS S3 configurations for media files
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = 'lascarpetta'
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')  # Consigliato gestire anche questo con l'ENV
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
-# Use S3 to store user-uploaded files
+# Utilizza S3 per memorizzare i file caricati dagli utenti
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# MEDIA_URL configurato per puntare su S3
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+# Non usare MEDIA_ROOT in produzione
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Rimuoviamo questa parte per evitare confusione
+
+# Security settings
+SECURE_SSL_REDIRECT = True
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-SECURE_SSL_REDIRECT = True
