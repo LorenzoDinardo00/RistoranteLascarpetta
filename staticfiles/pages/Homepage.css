@@ -1585,7 +1585,7 @@ form{
     border-radius: 12px; /* Angoli arrotondati */
     padding: 10px; /* Spazio uniforme su tutti i lati */
     width: 280px; /* Larghezza fissa */
-    margin: 40px auto; /* Margine uniforme, centrato */
+    margin: 20px auto; /* Margine uniforme, centrato */
     box-sizing: border-box; /* Assicurati che padding e bordo siano inclusi nella larghezza */
     box-shadow: none; /* Nessuna ombra per un look pulito */
     text-align: center; /* Testo centrato */
@@ -1599,7 +1599,7 @@ form{
 
 .powered-by-text {
     font-family: 'Glacial Indifference', sans-serif;
-    font-size: 0.9rem; /* Leggermente più grande per una migliore leggibilità */
+    font-size: 0.4rem; /* Leggermente più grande per una migliore leggibilità */
     color: #666666; /* Colore morbido per il testo */
 }
 
@@ -1613,6 +1613,6 @@ form{
     color: #cc5200; /* Variazione di colore su hover */
 }
 .powered-by-container p {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0;
+    margin-bottom: 0;
 }
