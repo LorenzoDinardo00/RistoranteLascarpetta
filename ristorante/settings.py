@@ -137,6 +137,10 @@ MEDIA_URL = '/files/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# AWS S3 configurations
+AWS_STORAGE_BUCKET_NAME = lascarpetta  # Assicurati che sia definito correttamente
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
 
 
 # Utilizzo di S3 per la gestione dei file statici e media
