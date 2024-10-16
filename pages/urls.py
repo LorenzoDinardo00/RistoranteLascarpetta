@@ -14,4 +14,4 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('prenotazioni/', prenotazioni, name='prenotazioni'),
 
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
