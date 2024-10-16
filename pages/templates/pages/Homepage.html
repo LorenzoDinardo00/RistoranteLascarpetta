@@ -1,260 +1,1618 @@
-{% extends "base.html" %}
-{% load static %}
+/* Importa i font */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/glacial-indifference-2');
 
-{% block title %}Homepage - La Scarpetta{% endblock %}
+/* Stile generale del body */
+body {
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden; /* Evita lo scroll orizzontale */
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
 
-{% block css_files %}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'pages/Homepage.css' %}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link href="https://fonts.cdnfonts.com/css/glacial-indifference-2" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Engagement&display=swap" rel="stylesheet">
-{% endblock %}
+.mobile-menu {
+    display: none;
+}
 
-{% block content %}
-<nav class="navbar" >
-    <div class="menu left">
-        <a href="#container1-1">Chi Siamo</a>
-        <a href="#menu">Il Menù</a> <!-- Usa il routing di Django -->
-    </div>
-    <div class="logo">
-        <a href="#starting">
-        <img src="{% static 'pages/images/Logosvgcentrato(1).png' %}" alt="Logo La Scarpetta">
-        </a></div>
-    <div class="menu right">
-        <a href="#contatti">Contattaci</a>
-        <a href="{% url 'prenotazioni' %}">Prenota Ora</a>        </div>
-    <!-- Icona del menu hamburger -->
-    <div class="menu-icon" id="menu-icon">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <!-- Menu Mobile -->
-    <div class="mobile-menu" id="mobile-menu">
-        <a href="#container1-1">Chi Siamo</a>
-        <a href="#menu">Il Menù</a> <!-- Usa il routing di Django -->
-        <a href="#contattiMobile">Contattaci</a>
-        <a href="{% url 'prenotazioni' %}">Prenota Ora</a></div>
-</nav>
+/* Titoli di sezione */
+.section-title {
+    color: #ff9900;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 30px;
+    width: 100%;
+    font-family: cursive;
+}
 
-<!-- Banner centrale con immagini a scorrimento -->
-<!-- Banner centrale con immagini a scorrimento -->
-<div class="hero-banner"id="starting">
-    <div class="slider-container">
-        <!-- Le tue immagini dello slider -->
-        <div class="slider-image">
-            <img src="{% static 'pages/images/Sala-2.jpg' %}" alt="Immagine 1">
-        </div>
-        <div class="slider-image">
-            <img src="{% static 'pages/images/Foto-7.jpg' %}" alt="Immagine 2">
-        </div>
-    </div>
-    <!-- Overlay -->
-    <div class="overlay">
-        <div class="logo-container">
-            <img src="{% static 'pages/images/LaScarpettaSVG_01_RevA (2) 2.png' %}" alt="Logo La Scarpetta" id="custom-logo">
-        </div>
-    </div>
-</div>
+/* Stile generale per la navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra gli elementi della navbar */
+    background: radial-gradient(circle at center, #ffffff 0%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
-<div class="container1" id="container1-1">
-    <div class="text-container">
-        <h1 id="scritta">La Scarpetta</h1>
-        <p>
-            Il nostro ristorante di cucina tipica toscana vi delizierà con piatti dal gusto semplice ma sorprendente. Qui, l'attenzione al cliente e la cura delle materie prime sono fondamentali, e potrete assaporarle in ogni portata.
-            Situato nel centro di Firenze, il nostro locale è il luogo ideale per immergersi nelle tradizioni culinarie toscane. Il nostro chef seleziona ingredienti freschi e di alta qualità, privilegiando prodotti locali e di stagione.
-            La nostra cucina offre ricette classiche arricchite da un tocco di creatività. Ogni piatto è preparato con passione.
-            Se desiderate provare ottimi sapori e trascorrere una serata speciale, vi aspettiamo!
-        </p>
-        <p>Ci ispiriamo a quei momenti, ai cibi appena cotti ricchi di sapori, ai profumi e alla convivialità.</p>
-    </div>
-    <div class="image-container1">
-        <img src="{% static 'pages/images/Osteria.png' %}" alt="Piatto di cibo">
-    </div>
-</div>
+/* Stile per il logo centrale */
+.logo {
+    margin: 0 30px; /* Distanza tra il logo e i menu a sinistra e destra */
+    flex-shrink: 0;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
 
-<div class="prenotazione"> <a href="{% url 'prenotazioni' %}">
-    <button class="bottone-prenota">Prenota un Tavolo</button>
+.logo img {
+    max-width: 120px;
+    height: auto;
+    display: block;
+}
 
-</a>
-</div>
+/* Stile per i menu */
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra gli elementi del menu vicino al logo */
+}
 
-<!-- Sezione del Menù Gourmet -->
-<div class="gourmet-section" id="menu">
-    <h1 class="gourmet-title">Il nostro Menù</h1>
+/* Stile per i menu di sinistra e destra */
+.menu.left {
+    margin-right: 20px; /* Spazio tra il logo e il menu di sinistra */
+}
 
-    <!-- Immagine del Menù -->
-    {% if latest_image %}
-        <div class="menu-frame">
-            <img src="{{ latest_image.image.url }}" alt="Menù La Scarpetta" class="menu-photo">
-        </div>
-    {% endif %}
-<!-- Form per caricare una nuova immagine -->
-{% if user.is_staff %}
-<div class="menu-upload-form">
-    <h3>Carica Nuovo Menù</h3>
-<form method="post" enctype="multipart/form-data" action="{% url 'menu_upload' %}">
-    {% csrf_token %}
-    <label for="id_image" class="btn btn-primary">Seleziona Immagine del Menù</label>
-    {{ form.image }}
-    <input id="id_image" type="file" style="display: none;" onchange="document.getElementById('file-name').innerHTML = this.files[0].name">
-    <span id="file-name" style="margin-left: 10px; margin-top:10px;"></span>
-    <!-- Il campo description è nascosto e preimpostato -->
-    {{ form.description }}
-    <button type="submit" class="btn btn-primary" style="display:inline;">Carica Immagine</button>
-</form>
-</div>
-{% endif %}
+.menu.right {
+    margin-left: 20px; /* Spazio tra il logo e il menu di destra */
+}
+
+
+/* Stile per i link del menu */
+.menu a {
+    text-decoration: none;
+    color: #000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Ombra sottile nera */
+    font-size: clamp(10px, 5vw, 20px);
+    padding: 0 8vh; /* Distanza uniforme tra i link del menu */
+    font-family: 'Glacial Indifference', sans-serif;
+}
+@media (max-width: 1200px) {
+    .menu a{
+        white-space: nowrap; /* Impedisce il ritorno a capo */
+        font-size: clamp(10px, 5vw, 20px);
+        padding: 0 4vh;
+    }
+}
+@media (max-width: 1000px) {
+    .menu a{
+        white-space: nowrap; /* Impedisce il ritorno a capo */
+        font-size: clamp(10px, 5vw, 20px);
+        padding: 0 2vh;
+    }
+}
+
+.menu a:hover {
+    color: #DAA520;
+}
+
+/* Stile per l'icona del menu hamburger (mobile) */
+.menu-icon {
+    display: none;
+}
+
+#container1-1 {
+    scroll-margin-top: 80px; /* Puoi modificare 80px in base all'altezza della navbar */
+}
+
+/* Video di sfondo */
+#bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1; /* Mette il video dietro al contenuto */
+    transform: translate(-50%, -50%); /* Centra il video */
+    object-fit: cover; /* Assicura che il video copra l'intera area come un'immagine di sfondo */
+}
+
+/* Overlay traslucido */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Testo "La Scarpetta" con miglioramenti */
+.overlay h1 {
+    color: rgba(255, 255, 255, 0.8); /* Sfondo più chiaro e meno trasparente */
+    font-size: 72px;
+    letter-spacing: 8px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.3); /* Colore bianco trasparente */
+    padding: 20px 60px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    z-index: 2;
+}
+
+/* Ombra per l'intera sezione */
+.hero-banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+/* Stili per container1 */
+.container1 {
+    display: flex;
+    align-items: stretch;
+    max-width: 1200px;
+    margin: 70px auto;
+    padding: 20px;
+    background-color: #fff; /* Sfondo bianco per tutto il container */
+}
+
+/* Contenitore del testo */
+.container1 .text-container {
+    flex: 2; /* Aumentato rispetto a 1 ma meno di 3 */
+    padding: 20px;
+    background-color: #fff;
+}
+
+.container1 .text-container h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+    color: #000;
+    font-family: "Engagement", cursive;
+}
+
+.container1 .intro {
+    color: #c79e30;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.container1 .text-container p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: justify;
+    font-family: 'Glacial Indifference', sans-serif;
+}
+
+/* Contenitore dell'immagine */
+.container1 .image-container1 {
+    flex: 1; /* Mantenuto a 1 per una proporzionalità coerente */
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90% !important;
+    height: 65vh !important;
+}
+
+.container1 .image-container1 img {
+    max-width: 100%; /* Adatta la larghezza al contenitore */
+    height: 80%;
+    object-fit: contain;
+    width: 90% !important;
     
+}
 
-    <div class="carousel-container">
-        <div class="slides-wrapper">
-            <div class="carousel-image">
-                <img src="{% static 'pages/images/Foto-29.jpg' %}" alt="Immagine 1">
-            </div>
-            <div class="carousel-image">
-                <img src="{% static 'pages/images/Foto-7.jpg' %}" alt="Immagine 2">
-            </div>
-            <div class="carousel-image">
-                <img src="{% static 'pages/images/Foto-13.jpg' %}" alt="Immagine 3">
-            </div>
-        </div>
-        <!-- Bottoni di navigazione -->
-        <a class="previous" onclick="prevSlide()">❮</a>
-        <a class="next" onclick="nextSlide()">❯</a>
-    </div>
-       <!-- Assicurati che i "carousel-dot" siano definiti come segue: -->
-<div class="carousel-indicators">
-    <span class="carousel-dot" data-index="0"></span>
-    <span class="carousel-dot" data-index="1"></span>
-    <span class="carousel-dot" data-index="2"></span>
-</div>
+.prenotazione {
+    display: flex; /* Usa Flexbox */
+    justify-content: center; /* Centra orizzontalmente i contenuti */
+    align-items: center; /* Centra verticalmente i contenuti */
+}
 
-</div>
+.bottone-prenota {
+    display: inline-block; /* Elemento inline con dimensioni di blocco */
+    padding: 15px 40px; /* Spaziatura interna */
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #DAA520;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 auto; /* Margini automatici per il centro orizzontale */
+    width: auto; /* Larghezza in base al contenuto */
+    max-width: 300px; /* Larghezza massima */
+    margin-bottom: 7% !important;
+}
 
-<!-- Sezione Contatti -->
-<div class="content-container" id="contatti">
-    <div class="contact-hours-container">
-        <div class="contact-left">
-            <h2>Contatti</h2>
-            <div class="contact-info">
-                <div class="contact-item"><a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p>Via del Ponte Sospeso, 7r, FI</p>
-                </a>
-                </div>
-                <div class="contact-item"> <a href="tel:055 5121510">
-                    <i class="fas fa-phone"></i>
-                    <p>055 5121510</p>
-                </a>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-instagram"></i>
-                    <p><a href="https://instagram.com/lascarpettafirenze" target="_blank">@lascarpettafirenze</a></p>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-facebook"></i>
-                    <p><a href="https://facebook.com/lascarpettafirenze" target="_blank">lascarpettafirenze</a></p>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <p><a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a></p>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <p><a href="https://wa.me/3755374459" target="_blank">Contattaci su WhatsApp</a></p>
-                </div>
-            </div>
-        </div>
+.container1 .text-container button:hover {
+    background: linear-gradient(135deg, #d4ac0d, #b7950b);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
 
-        <div class="hours-right">
-            <h2>Orari di apertura</h2>
-            <div class="opening-hours">
-                <p><strong>Lunedì-Domenica:</strong> 12-15, 19-00</p>
-            </div>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11577.48292808035!2d11.2115738!3d43.7742329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a5aa11009a4f9%3A0x7b2045d5b4037df9!2sVia%20del%20Ponte%20Sospeso%2C%2050142%20Firenze%20FI%2C%20Italia!5e0!3m2!1sit!2sus!4v1647101325581!5m2!1sit!2sus" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-    </div>
-</div>
+/* Bottone elegante "Prenota Ora" */
+.prenota-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #ff9900, #ff9900);
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+    font-family: "Glacial Indifference",sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-<!-- Sezione Contatti Mobile -->
-<div class="mobile-contact-section" id="contattiMobile">
-    <h2>Contatti</h2>
-    <ul class="contact-list">
-        <li><i class="fas fa-map-marker-alt"></i><a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank"> Via del Ponte Sospeso, 7r, 50142 Firenze FI</li> </a>
-        <li><i class="fas fa-phone"></i><a href="tel:055 5121510"> 055 5121510</li></a>
-        <li><i class="fas fa-envelope"></i> <a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a></li>
-        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/lascarpettafirenze" target="_blank">@lascarpettafirenze</a></li>
-        <li><i class="fab fa-facebook"></i> <a href="https://facebook.com/lascarpettafirenze" target="_blank">lascarpettafirenze</a></li>
-        <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/3755374459" target="_blank">Contattaci su WhatsApp</a></li>
-    </ul>
+.prenota-btn:hover {
+    background: linear-gradient(135deg, #d4ac0d, #b7950b);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
 
-    <h2>Orari di Apertura</h2>
-    <ul class="opening-hours-list">
-        <li><strong>Lunedì - Domenica:</strong> 12:00 - 15:00, 19:00 - 00:00</li>
-    </ul>
-</div>
+/* Sezione dello slider */
+.slider-section {
+    max-width: 1200px;
+    padding: 20px;
+    padding-top: 1px;
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
 
+/* Updated styles for the carousel images */
+.carousel-container {
+    max-width: 1000px; /* Mantiene la larghezza massima come specificato */
+    margin: 30px auto; /* Centra il carosello con margini più bilanciati */
+    overflow: hidden;
+    position: relative;
+    border: solid 3px #dcd0c0; /* Colore neutro chiaro per il bordo esterno */
+    background-color: #ffffff; /* Sfondo bianco per contrasto */
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.2), /* Ombra principale per profondità */
+        0 0 0 5px #ffffff, /* Striscia interna bianca per creare uno spazio visivo */
+        0 0 0 6px #b2a29f; /* Seconda cornice per aggiungere dettaglio */
+    border-radius: 12px; /* Angoli arrotondati per un aspetto morbido */
+}
 
-    <div class="footer">
-      
-        <p>&copy; 2022 La Scarpetta - <a href="#">Privacy policy</a> - <a href="#">Cookie policy</a> {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}">- Esci come amministratore</a>
-        {% endif %}  <!-- Riquadro 'Powered by Tempora Innovation' con design modificato -->
-        <div class="powered-by-container">
-            <p class="powered-by-text">
-                Engineered by <span class="highlight">Tempora Innovation</span>
-            </p>
-        </div></p>
-    </div>
+.slides-wrapper {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
 
+.carousel-image {
+    min-width: 100%;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+}
 
-<script src="{% static 'pages/js/script.js' %}"></script>
-<script src="{% static 'pages/js/CaruselScript.js' %}"></script>
+.carousel-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Centra l'immagine */
+    border-radius: 10px; /* Angoli arrotondati per le immagini */
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.1), /* Ombra leggera per le immagini */
+        0 0 0 1px #dcd0c0; /* Sottile bordo intorno all'immagine per definizione */
+}
 
-<script src="{% static 'pages/js/NavigationDot.js' %}"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const navbar = document.querySelector('.navbar');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        
-        // Funzione per regolare la posizione del menu mobile partendo da 10px
-        function adjustMenuPosition() {
-            const startingOffset = 10;  // Offset da 10px dall'alto della pagina
-            mobileMenu.style.top = startingOffset + 'px';  // Imposta il top del menu mobile a 10px
-        }
+/* Bottoni di navigazione */
+.previous,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 30px;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    transition: background-color 0.3s;
+    z-index: 2;
+}
+
+.previous {
+    left: 20px;
+    display: none;
+}
+
+.next {
+    right: 20px;
+    display: none;
+}
+
+.previous:hover,
+.next:hover {
+    background-color: #ff9900;
+}
+
+/* Punti di navigazione */
+.navigation-dot {
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    transition: background-color 0.6s ease;
+    display: inline-block;
+}
+
+.active,
+.navigation-dot:hover {
+    background-color: #ff9900;
+}
+
+.IlMenu {
+    font-size: 25px !important;
+    margin: auto;
+    font-family: "Engagement", cursive;
+    color: #DAA520;
+    text-align: center;
+}
+body .IlMenu h1 {
+    font-size: 50px !important;
+    font-family: "Engagement", cursive !important;
+    color: #000 !important;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0.4;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Media Query per dispositivi mobili */
+@media (max-width: 800px) {
+    .navbar {
+        justify-content: space-between;
+        padding: 10px 0; /* Riduce il padding orizzontale */
+        padding-top: 14% !important;
+    }
+
+    /* Mostra l'icona hamburger */
+    .menu-icon {
+        display: block;
+        position: absolute;
+        right: 20px; /* Distanza costante dal bordo destro */
+        top: 20px;
+        background-color: transparent;
+    }
+
+    /* Logo centrato con la correzione per non sforare */
+    .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 90%; /* Impedisce al logo di diventare troppo grande */
+        margin: auto;
+    }
+
+    .mobile-menu {
+        width: 100%; /* Assicura che il menu mobile occupi tutta la larghezza */
+        box-sizing: border-box; /* Include padding e border nel calcolo della larghezza */
+        left: 0.1vh !important;
+    }
+
+    /* Stile per i link del menu mobile */
+    .mobile-menu a {
+        text-align: center; /* Centra il testo nei link */
+        width: auto; /* Rimuove la larghezza fissa per evitare sforamenti */
+        padding: 12px; /* Aumento del padding per una migliore area tattile */
+    }
+
+    /* Layout mobile per container1 */
+    .container1 {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .container1 .text-container,
+    .container1 .image-container1 {
+        padding: 10px;
+        width: 100%;
+        height: auto;
+    }
+
+    .container1 .image-container1 img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Nascondi i menu desktop */
+    .menu.left,
+    .menu.right {
+        display: none;
+    }
+
+    /* Mostra l'icona hamburger */
+    .menu-icon {
+        display: block;
+        right: 5vh;
+        cursor: pointer;
+        z-index: 1001;
+        position: absolute;
+        top: 20px;
+    }
+
+    .menu-icon span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px 0;
+        background-color: #333;
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Trasformazione dell'icona hamburger in 'X' quando attiva */
+    .menu-icon.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-icon.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-icon.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Logo centrato */
+    .logo {
+        position: absolute;
+        left: 18%;
+        top: 10%;
+        transform: translateX(-50%);
+    }
+    .carousel-image img {
+        width: 100%;
+        padding: 12px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .containerMenu {
+        margin: 0px auto;
+        padding: 10px !important; 
+        padding-top: 20px !important;
+        text-align: center;
+    }
+    .mobile-menu {
+        top: -100%; /* Spostato fuori schermo inizialmente */
+        position: fixed;
+        left: 0;
+        width: 100%;
+        height: 60vh;
+        background-color: #f0f0f0;
+        margin-top: 52px;
+        z-index: 1000;
+        overflow-y: auto;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        transition: top 1s ease, opacity 1s ease, visibility 1s ease;
+        opacity: 0;
+        visibility: hidden;
+    }
     
-        // Aggiusta la posizione al caricamento della pagina
-        adjustMenuPosition();
-    
-        // Mostra/nasconde il menu mobile con il click sull'icona del menu
-        menuIcon.addEventListener('click', function () {
-            mobileMenu.classList.toggle('active');
-            this.classList.toggle('active');
-    
-            // Verifica se il menu è attivo per aggiustare la posizione
-            if (mobileMenu.classList.contains('active')) {
-                adjustMenuPosition();  // Imposta la posizione corretta quando il menu è visibile
-            }
-        });
-    
-        // Chiude il menu se clicchi fuori dall'area
-        document.addEventListener('click', function (event) {
-            if (!menuIcon.contains(event.target) && !mobileMenu.contains(event.target)) {
-                mobileMenu.classList.remove('active');
-                menuIcon.classList.remove('active');
-            }
-        });
-    
-        // Aggiunge l'evento di chiusura del menu al click su ogni voce del menu mobile
-        document.querySelectorAll('#mobile-menu a').forEach(function(menuItem) {
-            menuItem.addEventListener('click', function() {
-                mobileMenu.classList.remove('active');
-                menuIcon.classList.remove('active');
-            });
-        });
-    });
-</script>
-{% endblock %}
+    .mobile-menu.active {
+        top: 10px; /* Parte da 10px dall'alto quando viene attivato */
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .mobile-menu a {
+        width: 90%;
+        padding: 12px;
+        margin: 10px 0;
+        text-align: center;
+        color: #000;
+        text-decoration: none;
+        font-size: 21px;
+        transition: background-color 0.3s ease;
+        position: relative; /* Necessario per la posizione della linea decorativa */
+    }
+
+    .mobile-menu a:hover {
+        background-color: #ededed;
+    }
+
+    .mobile-menu a::after {
+        content: ""; /* Aggiunge un elemento decorativo dopo ogni link eccetto l'ultimo */
+        display: block;
+        height: 2px; /* Altezza della linea decorativa */
+        background-color: #DAA520; /* Colore della linea */
+        width: 50%; /* Lunghezza della linea, regolabile secondo necessità */
+        margin: 8px auto 0; /* Posiziona la linea un po' sotto il link */
+    }
+
+    /* Altri stili per dispositivi mobili */
+    .prenota-btn {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .hero-banner {
+        height: 100vh !important;
+    }
+
+    .intro {
+        font-size: 18px;
+    }
+
+    button,
+    .menu-btn,
+    .prenota-btn {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    /* Riduce lo spazio tra la scritta "Il nostro Menù" e il carousel */
+    .IlMenu {
+        margin-bottom: 0; /* Rimuove lo spazio sotto la scritta */
+        padding: 0; /* Rimuove eventuali padding sotto la scritta */
+        padding-top: 5px;
+    }
+
+    /* Modifica la sezione del carousel per attaccarsi alla scritta */
+    .slider-section {
+        margin-top: 0; /* Elimina lo spazio sopra il carousel */
+        padding-top: 0; /* Elimina eventuali padding sopra il carousel */
+    }
+
+    .carousel-container {
+        padding-bottom: 30px;
+        height: auto !important;
+    }
+
+    /* --- Modifiche per unire le sezioni e nascondere la mappa --- */
+
+    /* Nascondi la mappa */
+    .content-container .hours-right iframe {
+        display: none;
+    }
+
+    /* Unisci le sezioni */
+    .content-container .contact-left,
+    .content-container .hours-right {
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
+    }
+    .prenotazione {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 60px;
+    }
+    /* Rimuovi lo spazio tra le sezioni */
+    .content-container .contact-hours-container {
+        gap: 0;
+        flex-direction: column;
+    }
+
+    /* Regola i titoli */
+    .content-container h2 {
+        margin-top: 20px;
+    }
+
+    /* Regola i margini interni */
+    .content-container .contact-info .contact-item,
+    .content-container .opening-hours p {
+        margin-left: 0;
+    }
+
+    /* Assicura che le colonne occupino tutta la larghezza */
+    .content-container .contact-left,
+    .content-container .hours-right {
+        width: 100%;
+    }
+}
+
+/* Media Query per schermi molto piccoli */
+@media (max-width: 480px) {
+    /* Ridimensionamento del logo */
+    .logo img {
+        width: 100px;
+    }
+
+    /* Testo dell'overlay ridotto */
+    .overlay h1 {
+        font-size: 36px;
+        letter-spacing: 3px;
+        padding: 10px 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        backdrop-filter: blur(2px);
+        color: #fff;
+        margin: auto;
+    }
+    .slider-container{
+        margin-top: -15px !important;
+    }
+
+    /* Stili per container1 */
+    .container1 {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .container1 .text-container h1 {
+        font-size: 45px;
+        margin-bottom: 10px;
+        color: #000;
+        padding-top: 70px;
+    }
+
+    .container1 .text-container p {
+        font-size: 17px;
+        line-height: 1.5;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    /* Ridimensionamento dei link del menu */
+    .menu a {
+        font-size: 20px;
+    }
+
+    /* Ridimensionamento dell'icona hamburger */
+    .menu-icon span {
+        width: 20px;
+    }
+
+    /* Immagini a larghezza piena */
+    .image-container1 img {
+        width: 100%;
+    }
+
+    /* Ridimensionamento del bottone "Prenota Ora" */
+    .prenota-btn {
+        padding: 10px 25px;
+        font-size: 14px;
+    }
+
+    .hero-banner {
+        height: 50vh;
+    }
+
+    .carousel-slide img {
+        height: auto;
+    }
+
+    /* Riduce lo spazio tra la scritta "Il nostro Menù" e il carousel */
+    .IlMenu {
+        margin-bottom: 0; /* Rimuove lo spazio sotto la scritta */
+        padding-bottom: 0; /* Rimuove eventuali padding sotto la scritta */
+    }
+
+    /* Modifica la sezione del carousel per attaccarsi alla scritta */
+    .slider-section {
+        margin-top: 0; /* Elimina lo spazio sopra il carousel */
+        padding-top: 0; /* Elimina eventuali padding sopra il carousel */
+    }
+}
+
+/* Specifico per i titoli della sezione contenuta sotto il menù */
+.content-container h2 {
+    font-weight: 400;
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+}
+
+.contact-info h2 {
+    font-family: "Engagement", cursive;
+    font-weight: bold;
+}
+
+/* Contenitore principale per la sezione sotto il menù */
+/* Modifiche per la sezione Contatti desktop */
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px; /* Aumentato il padding per dare più respiro alla sezione */
+    background-color: #fff;
+}
+
+.content-container .contact-hours-container {
+    display: flex;
+    flex-wrap: nowrap; /* Evita il wrap delle colonne su desktop */
+    justify-content: space-between;
+    max-width: 1200px;
+    width: 100%;
+    gap: 50px; /* Aumentato il gap per più spazio tra le colonne */
+    margin: 0 auto;
+}
+
+.content-container .contact-left,
+.content-container .hours-right {
+    flex: 1;
+    padding: 40px;
+    background-color: #f9f9f9; /* Colore di sfondo leggermente diverso per contrasto */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombra più pronunciata */
+    min-height: 450px;
+    box-sizing: border-box;
+    max-width: 600px; /* Aumentata la larghezza massima */
+}
+
+.content-container h2 {
+    font-size: 45px; /* Leggermente più grande */
+    margin-bottom: 30px;
+    color: black;
+    text-align: left; /* Allineamento a sinistra per un aspetto più professionale */
+    font-family: 'Engagement', cursive; /* Font elegante */
+}
+
+.contact-info .contact-item {
+    display: flex;
+    align-items: flex-start; /* Allinea le icone all'inizio */
+    margin-bottom: 25px; /* Più spazio tra gli elementi */
+}
+
+.contact-info .contact-item i {
+    margin-right: 20px;
+    font-size: 28px;
+    color: #DAA520; /* Colore delle icone per abbinarlo al tema */
+    min-width: 30px; /* Assicura che le icone siano allineate verticalmente */
+}
+
+.contact-info .contact-item p,
+.contact-info .contact-item a {
+    font-size: 20px;
+    color: #333; /* Colore del testo più scuro per migliorare la leggibilità */
+    margin: 0;
+    font-family: "Glacial Indifference",sans-serif;
+    display:inline;
+}
+
+.contact-info .contact-item a {
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact-info .contact-item a:hover {
+    color: #DAA520;
+}
+
+.opening-hours p {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.opening-hours p strong {
+    color: black; /* Evidenzia i giorni con il colore del tema */
+}
+
+.hours-right iframe {
+    margin-top: 30px;
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+    height: 350px;
+}
+
+/* Stile del footer */
+.footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    margin-top: auto; /* Posiziona il footer in fondo */
+    width: 100%;
+}
+
+.footer a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+/* Stile per la sezione Contatti mobile */
+.mobile-contact-section {
+    display: none;
+    padding: 40px 20px;
+    background-color: #f0f0f0; /* Grigio chiaro, simile all'immagine */
+    color: #333;
+    font-family: "Glacial Indifference",sans-serif;
+    box-sizing: border-box;
+    border-radius: 8px; /* Angoli arrotondati per un look elegante */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Leggera ombra per profondità */
+}
+
+.mobile-contact-section h2 {
+    font-size: 45px;
+    margin-bottom: 20px;
+    color: black;
+    text-align: center;
+    letter-spacing: 1px;
+    font-family: "Engagement", cursive !important;
+}
+
+.mobile-contact-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+}
+
+.mobile-contact-section li {
+    font-size: 18px;
+    margin-bottom: 20px; /* Spaziatura tra gli elementi della lista */
+    line-height: 1.8; /* Migliora l'interlinea per una leggibilità maggiore */
+    display: flex;
+    align-items: center;
+}
+
+.mobile-contact-section li i {
+    margin-right: 15px;
+    font-size: 24px; /* Dimensione più grande per le icone */
+    color: #000; /* Colore nero per le icone */
+}
+
+.mobile-contact-section a {
+    color: #000; /* Colore nero per i link */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.mobile-contact-section a:hover {
+    text-decoration: underline;
+}
+
+/* Spaziatura migliorata per la lista degli orari di apertura */
+.mobile-contact-section .opening-hours-list {
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-contact-section .opening-hours-list li {
+    margin-bottom: 15px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between; /* Spazia gli orari e i giorni */
+    padding-bottom: 10px; /* Aggiunge spazio extra sotto ogni elemento */
+    border-bottom: 1px solid #ccc; /* Linea di separazione per chiarezza */
+}
+
+.mobile-contact-section .opening-hours-list li:last-child {
+    border-bottom: none; /* Rimuove la linea di separazione dall'ultimo elemento */
+}
+
+/* Media Query per dispositivi mobili */
+@media (max-width: 800px) {
+    .mobile-contact-section {
+        display: block;
+    }
+
+    /* Nasconde la sezione originale dei contatti su mobile */
+    .content-container {
+        display: none;
+    }
+    #custom-logo {
+        margin: auto;
+        height: auto;
+        z-index: 2;
+        padding-left: 70px;
+        padding-right: 70px;
+        padding-top: 15px;
+        padding-bottom: 10px;
+        width: 100%;
+        position: relative;
+        background-color: rgba(200, 200, 200, 0.5);
+    }
+}
+
+/* Nasconde la nuova sezione su desktop */
+@media (min-width: 769px) {
+    .mobile-contact-section {
+        display: none;
+    }
+}
+
+/* Slider nella hero section */
+.slider-container {
+    position: relative;
+    max-width: 100%;
+    height: 111vh;
+    overflow: hidden;
+    margin-top: -10px;
+}
+
+.slider-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding-top: 80px;
+}
+
+.slider-image img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from { opacity: 0.4 }
+    to { opacity: 1 }
+}
+
+/* Bottoni di navigazione dello slider */
+.prev2, .next2 {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    z-index: 2;
+}
+
+.prev2 {
+    left: 0;
+    display:none;
+}
+
+.next2 {
+    right: 0;
+    display: none;
+}
+
+.prev2:hover, .next2:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+#custom-logo {
+    margin: auto;
+    height: auto;
+    z-index: 2;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-top: 15px;
+    width: 100%;
+    position: relative;
+    background-color: rgba(200, 200, 200, 0.5);
+}
+
+/* Aggiungi un'ombra sfocata sotto l'immagine */
+.overlay::before {
+    content: "";
+    position: absolute;
+    top: 50%; /* Posiziona sotto l'immagine */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 85%;
+    filter: blur(15px); /* Effetto sfocatura */
+    z-index: 1; /* Sfocatura sotto l'immagine */
+    border-radius: 10px; /* Se vuoi mantenere bordi arrotondati */
+}
+
+.IlMenu a{
+    color: #DAA520 !important;
+    text-decoration: none;
+}
+
+/* Modifiche al container del menù */
+.containerMenu {
+    margin: 0px auto; /* Centra il container con margini bilanciati */
+    padding: 100px;
+    padding-top: 20px !important;
+    text-align: center;
+}
+
+.containerMenu img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Centra l'immagine */
+    border-radius: 10px; /* Angoli arrotondati per migliorare l'estetica */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Leggera ombra per profondità */
+}
+
+.upload-btn {
+    display: inline-block;
+    background-color: #DAA520;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 50px;
+    margin-top: 20px; /* Spazio tra l'immagine e il bottone */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.upload-btn:hover {
+    background-color: #b7950b;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+input[type="file"] {
+    display: none; /* Nasconde l'input file */
+}
+
+.menu-upload-form {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    margin:100px;
+}
+
+.menu-upload-form h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    color: #333;
+}
+form{
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Sezione del Menù */
+.menu-showcase {
+    padding: 80px 20px;
+    background-color: #f7f7f7;
+    text-align: center;
+}
+
+.menu-title {
+    font-size: 52px;
+    color: #c89f40;
+    font-family: 'Engagement', cursive;
+    margin-bottom: 50px;
+}
+
+.menu-picture-container {
+    position: relative;
+    display: inline-block;
+    margin: 0 auto 60px;
+}
+
+.menu-picture {
+    width: 100%;
+    max-width: 850px;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.menu-picture::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 2px solid #c89f40;
+    border-radius: 12px;
+    z-index: -1;
+}
+
+.menu-picture:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.menu-picture:hover::before {
+    top: -15px;
+    left: -15px;
+    right: -5px;
+    bottom: -5px;
+}
+
+
+
+/* Sfondo con gradiente leggero */
+.menu-showcase {
+    background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+}
+
+/* Stile del bottone di prenotazione */
+.reserve-table-btn {
+    display: inline-block;
+    background-color: #c89f40;
+    color: #fff;
+    padding: 16px 40px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    margin-top: 30px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.reserve-table-btn:hover {
+    background-color: #b38938;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Stile della galleria di immagini */
+.image-carousel {
+    position: relative;
+    max-width: 1100px;
+    margin: 60px auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+/* Bottoni di navigazione */
+.carousel-btn-prev,
+.carousel-btn-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    padding: 16px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.35);
+    border-radius: 50%;
+    user-select: none;
+    transition: background-color 0.3s;
+    transform: translateY(-50%);
+}
+
+.carousel-btn-prev {
+    left: 20px;
+}
+
+.carousel-btn-next {
+    right: 20px;
+}
+
+.carousel-btn-prev:hover,
+.carousel-btn-next:hover {
+    background-color: #c89f40;
+}
+
+/* Indicatori */
+.carousel-dots {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Stili CSS per i navigation dots */
+.carousel-dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carousel-dot.active, .carousel-dot:hover {
+    background-color: #888; /* Cambia colore al passaggio del mouse o quando attivo */
+}
+
+/* Assicurati che .carousel-indicators non sia nascosto */
+.carousel-indicators {
+    text-align: center;
+    padding: 10px 0; /* Aggiunge spazio sopra e sotto i dots */
+    position: relative; /* Potrebbe essere necessario regolare la posizione */
+    z-index: 100; /* Assicurati che sia sopra altri elementi */
+}
+
+/* Adjustments per dispositivi mobili */
+@media (max-width: 768px) {
+    .menu-title {
+        font-size: 40px;
+    }
+    .reserve-table-btn {
+        padding: 14px 36px;
+        font-size: 18px;
+    }
+    .carousel-btn-prev,
+    .carousel-btn-next {
+        padding: 12px;
+    }
+    .carousel-dot {
+        height: 12px;
+        width: 12px;
+    }
+}
+
+/*--------------------------------*/
+
+/* Sezione del Menù Gourmet */
+.gourmet-section {
+    padding: 75px 20px;
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+.gourmet-title {
+    font-size: 70px !important;
+    color: #000;    
+    font-family: 'Engagement', sans-serif;
+    margin-bottom: 60px;
+}
+
+.menu-frame {
+    position: relative;
+    display: inline-block;
+    margin: 0 auto 70px;
+}
+
+.menu-photo {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    box-shadow: -30px 30px 50px rgba(0, 0, 0, 0.2); /* Ombra pronunciata verso sinistra */
+    transition: box-shadow 0.3s ease;
+}
+
+/* Rimuovi lo zoom al passaggio del mouse */
+.menu-photo:hover {
+    box-shadow: -30px 30px 50px rgba(0, 0, 0, 0.2);
+}
+
+.menu-frame::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: -15px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #b58900;
+    border-radius: 8px;
+    z-index: -1;
+}
+
+/* Bottone di Prenotazione Elegante */
+.reservation-button {
+    display: inline-block;
+    background-color: #b58900;
+    color: #fff;
+    padding: 18px 50px;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    margin-top: 40px;
+    transition: background-color 0.3s, transform 0.3s;
+    font-family: 'Glacial Indifference', sans-serif;
+}
+
+.reservation-button:hover {
+    background-color: #a07400;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Carosello Immagini di Lusso */
+.luxury-carousel {
+    position: relative;
+    max-width: 1000px;
+    margin: 80px auto 0;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Bottoni di Navigazione */
+.carousel-nav-prev,
+.carousel-nav-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    padding: 16px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    user-select: none;
+    transition: background-color 0.3s;
+    transform: translateY(-50%);
+}
+
+.carousel-nav-prev {
+    left: 30px;
+}
+
+.carousel-nav-next {
+    right: 30px;
+}
+
+.carousel-nav-prev:hover,
+.carousel-nav-next:hover {
+    background-color: #b58900;
+}
+
+/* Indicatori */
+.carousel-indicators {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.carousel-dot {
+    cursor: pointer;
+    height: 14px;
+    width: 14px;
+    margin: 0 7px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.carousel-dot.active,
+.carousel-dot:hover {
+    background-color: #b58900;
+}
+
+/* Adattamenti per Dispositivi Mobili */
+@media (max-width: 768px) {
+    .gourmet-title {
+        font-size: 42px;
+    }
+    .reservation-button {
+        padding: 14px 40px;
+        font-size: 18px;
+    }
+    .carousel-nav-prev,
+    .carousel-nav-next {
+        padding: 12px;
+    }
+    .carousel-dot {
+        height: 12px;
+        width: 12px;
+    }
+}
+.btn btn-primary{
+    margin-left: 0px;
+    margin-top: 10px !important;
+}
+/* Media queries per dispositivi con schermi fino a 600px di larghezza */
+@media (max-width: 600px) {
+    .carousel-container {
+        max-width: 90%; /* Adatta la larghezza al dispositivo */
+        margin: 10px auto;
+        border: 3px solid #b2a29f;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Riduci l'ombra per dispositivi più piccoli */
+    }
+
+    .carousel-image img {
+        border-radius: 5px; /* Riduci il raggio dell'angolo per un aspetto più adatto a schermi piccoli */
+    }
+}
+
+/* Considerazioni aggiuntive per dispositivi molto piccoli o quando il carosello viene visualizzato in portrait */
+@media (max-width: 400px) {
+    .carousel-container {
+        max-width: 100%; /* Utilizza tutta la larghezza disponibile */
+        border: 2px solid #b2a29f;
+        padding-bottom: 0px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra ulteriormente ridotta */
+    }
+}
+/* Applica questi stili solo su schermi con larghezza massima di 600px */
+@media (max-width: 600px) {
+    form {
+        background-color: #ffffff; /* Sfondo bianco per massima leggibilità */
+        padding: 15px; /* Padding ridotto per salvare spazio */
+        border-radius: 8px; /* Angoli arrotondati per un aspetto amichevole */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Ombra leggera per un effetto sottile */
+    }
+
+    .btn {
+        width: 100%; /* Pulsante esteso a tutta la larghezza del container */
+        padding: 12px 0; /* Padding verticale aumentato per una facile interazione */
+        font-size: 16px; /* Dimensione del font aumentata per migliorare la leggibilità */
+        border-radius: 5px; /* Angoli meno arrotondati */
+        margin-bottom: 10px; /* Spazio tra i pulsanti e altri elementi */
+    }
+
+    input[type="file"] + label {
+        display: block; /* Assicura che il label si comporti come un blocco, utile per tocchi */
+        cursor: pointer; /* Indica che il label è cliccabile */
+    }
+
+    #file-name {
+        font-size: 14px; /* Riduci la dimensione del font per il nome del file caricato */
+        margin-top: 5px; /* Riduci lo spazio sopra il nome del file */
+    }
+
+    button[type="submit"] {
+        display: block; /* Assicurati che il bottone di submit sia un blocco */
+        width: 100%; /* Estendi il bottone di submit a tutta la larghezza */
+        margin-top: 10px; /* Spazio sopra il bottone di submit */
+    }
+    .menu-upload-form {
+        background: white;
+        padding: 0px;
+        padding-top: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        margin: 50px;
+    }
+    .gourmet-section {
+        padding: 40px 20px;
+        background-color: #f2f2f2;
+        text-align: center;
+    }    
+    .container1 .text-container h1 {
+        font-size: 50px;
+        margin-bottom: 20px;
+        color: #000;
+        font-family: "Engagement", cursive;
+        text-align: center;
+    }
+}
+/* Estetica corretta per 'Powered by Tempora Innovation' */
+.powered-by-container {
+    background-color: #f4f4f4; /* Colore di sfondo leggero */
+    border: 2px solid #999999; /* Bordo solido e uniforme */
+    border-radius: 12px; /* Angoli arrotondati */
+    padding: 10px; /* Spazio uniforme su tutti i lati */
+    width: 280px; /* Larghezza fissa */
+    margin: 20px auto; /* Margine uniforme, centrato */
+    box-sizing: border-box; /* Assicurati che padding e bordo siano inclusi nella larghezza */
+    box-shadow: none; /* Nessuna ombra per un look pulito */
+    text-align: center; /* Testo centrato */
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.powered-by-container:hover {
+    border-color: #f5b016; /* Cambia il colore del bordo su hover */
+    background-color: #ffffff; /* Sfondo bianco al passaggio del mouse */
+}
+
+.powered-by-text {
+    font-family: 'Glacial Indifference', sans-serif;
+    font-size: 0.4rem; /* Leggermente più grande per una migliore leggibilità */
+    color: #666666; /* Colore morbido per il testo */
+}
+
+.powered-by-text .highlight {
+    font-weight: bold;
+    color: #27374D; /* Colore distintivo per Tempora Innovation */
+    text-transform: uppercase; /* Testo maiuscolo */
+}
+
+.powered-by-text:hover .highlight {
+    color: #cc5200; /* Variazione di colore su hover */
+}
+.powered-by-container p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
