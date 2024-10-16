@@ -750,7 +750,7 @@ body .IlMenu h1 {
     font-size: 26px;
     margin-bottom: 20px;
     text-align: center;
-    color: #a6793d;
+    color: black;
     font-weight: bold;
 }
 
@@ -837,7 +837,7 @@ body .IlMenu h1 {
 }
 
 .opening-hours p strong {
-    color: #DAA520; /* Evidenzia i giorni con il colore del tema */
+    color: black; /* Evidenzia i giorni con il colore del tema */
 }
 
 .hours-right iframe {
