@@ -13,5 +13,6 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', user_logout, name='logout'),
     path('prenotazioni/', prenotazioni, name='prenotazioni'),
+    path('create-superuser/', views.create_superuser, name='create_superuser'),
 
 ]
