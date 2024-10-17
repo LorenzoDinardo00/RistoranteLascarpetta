@@ -5,6 +5,9 @@ from django.shortcuts import render, redirect
 from .forms import MenuImageForm
 from .models import MenuImage
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
 
 # Create your views here.
 def starting_page(request):
@@ -58,3 +61,12 @@ def user_logout(request):
 
 def prenotazioni(request):
     return render(request, 'pages/prenotazioni.html')
+
+
+
+def create_superuser(request):
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@example.com', 'password123')
+        return HttpResponse("Superuser creato con successo.")
+    else:
+        return HttpResponse("Il superuser esiste già.")
