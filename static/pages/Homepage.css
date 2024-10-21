@@ -649,8 +649,8 @@ body .IlMenu h1 {
     }
 
     .carousel-container {
-        padding-bottom: 30px;
         height: auto !important;
+        
     }
 
     /* --- Modifiche per unire le sezioni e nascondere la mappa --- */
