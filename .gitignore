@@ -1,0 +1,4 @@
+# Ignora il file settings_local.py
+settings.py
+settings_local.py
+media

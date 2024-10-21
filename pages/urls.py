@@ -14,5 +14,8 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('prenotazioni/', prenotazioni, name='prenotazioni'),
     path('create-superuser/', views.create_superuser, name='create_superuser'),
+    path('pdf/upload/', views.upload_pdf, name='upload_pdf'),     # Caricamento PDF
 
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

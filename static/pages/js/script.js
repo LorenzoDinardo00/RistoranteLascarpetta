@@ -13,3 +13,5 @@ function showSlides() {
     slides[slideIndex - 1].style.display = "block";
     setTimeout(showSlides, 5000); // Cambia immagine ogni 5 secondi
 }
+
+

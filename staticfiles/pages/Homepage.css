@@ -420,14 +420,20 @@ body .IlMenu h1 {
     }
 
     /* Logo centrato con la correzione per non sforare */
-    .logo {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        max-width: 90%; /* Impedisce al logo di diventare troppo grande */
-        margin: auto;
+    .navbar {
+        justify-content: flex-start; /* Allinea tutti gli elementi della navbar all'inizio */
     }
 
+    .logo {
+        flex: 0 0 auto; /* Impedisce al logo di crescere e occupare più spazio del necessario */
+        margin-right: auto; /* Spinge tutti gli altri elementi della navbar verso destra */
+    }
+
+    .logo img {
+        max-width: 120px; /* Controlla la dimensione massima del logo */
+        display: block; /* Assicurati che l'immagine del logo sia un blocco */
+        margin-left: 10px; /* Aggiunge un piccolo margine sinistro per non attaccarlo completamente al bordo */
+    }
     .mobile-menu {
         width: 100%; /* Assicura che il menu mobile occupi tutta la larghezza */
         box-sizing: border-box; /* Include padding e border nel calcolo della larghezza */
@@ -1615,4 +1621,125 @@ form{
 .powered-by-container p {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+/* Sezione del Menù Gourmet */
+.gourmet-section {
+    padding: 75px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.gourmet-title {
+    font-size: 60px;
+    color: #333;
+    margin-bottom: 40px;
+    font-family: 'Engagement', cursive;
+}
+
+/* Contenitore del PDF */
+.pdf-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#pdf-viewer {
+    position: relative;
+}
+
+#the-canvas {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Controlli del PDF */
+.pdf-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn {
+    background-color: #ff9900;
+    color: #fff;
+    border: none;
+    padding: 12px 18px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0 15px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+    background-color: #e68a00;
+    transform: translateY(-3px);
+}
+
+.page-info {
+    font-size: 18px;
+    color: #555;
+}
+
+/* Form di Upload */
+.menu-upload-form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.menu-upload-form h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.btn-file-upload {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-file-upload:hover {
+    background-color: #e68a00;
+    transform: translateY(-3px);
+}
+
+#file-name {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #555;
+}
+
+.btn-submit {
+    background-color: #ff9900;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #e68a00;
+    transform: translateY(-3px);
 }

@@ -26,37 +26,37 @@ body {
     width: 100%;
     font-family: cursive;
 }
-
 /* Stile generale per la navbar */
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centra gli elementi della navbar */
-    background: radial-gradient(circle at center, #ffffff 0%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%);
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 10;
-    backdrop-filter: blur(10px);
-    padding: 10px 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-weight: bold;
-    text-transform: uppercase;
+.navbar{
+display: grid;
+grid-template-columns: 1fr auto 1fr; /* Tre colonne: sinistra, centro (logo), destra */
+align-items: center;
+width: 100%;
+position: fixed;
+top: 0;
+z-index: 10;
+padding: 10px 20px;
+background: radial-gradient(circle at center, #ffffff 0%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%);
+backdrop-filter: blur(10px);
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+text-transform: uppercase;
+
 }
 
 /* Stile per il logo centrale */
 .logo {
-    margin: 0 30px; /* Distanza tra il logo e i menu a sinistra e destra */
-    flex-shrink: 0;
-    background-color: transparent;
-    border-radius: 0;
-    box-shadow: none;
+    grid-column: 2 / 3; /* Seconda colonna */
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente */
+    align-items: center;     /* Centra verticalmente */
 }
 
 .logo img {
     max-width: 120px;
     height: auto;
     display: block;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 /* Stile per i menu */
@@ -68,13 +68,43 @@ body {
 
 /* Stile per i menu di sinistra e destra */
 .menu.left {
-    margin-right: 20px; /* Spazio tra il logo e il menu di sinistra */
+    grid-column: 1 / 2; /* Prima colonna */
+    display: flex;
+    justify-content: flex-end; /* Allinea i link verso destra all'interno del menu sinistro */
+    align-items: center;
 }
 
 .menu.right {
-    margin-left: 20px; /* Spazio tra il logo e il menu di destra */
+    grid-column: 3 / 4; /* Terza colonna */
+    display: flex;
+    justify-content: flex-start; /* Allinea i link verso sinistra all'interno del menu destro */
+    align-items: center;
+}
+.menu.left a,
+.menu.right a {
+    text-decoration: none;
+    color: #000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    font-size: clamp(10px, 5vw, 20px);
+    margin: 0 15px; /* Spaziatura orizzontale tra i link */
+    font-family: 'Glacial Indifference', sans-serif;
 }
 
+.menu a {
+    text-decoration: none;
+    color: #000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Ombra sottile nera */
+    font-size: clamp(10px, 5vw, 20px);
+    font-family: 'Glacial Indifference', sans-serif;
+    font-weight: 700; /* Mantieni lo spessore anche al passaggio del mouse */
+
+
+}
+
+.menu.left a:hover,
+.menu.right a:hover {
+    color: #DAA520;
+}
 
 /* Stile per i link del menu */
 .menu a {
@@ -298,7 +328,7 @@ body {
     margin: 30px auto; /* Centra il carosello con margini più bilanciati */
     overflow: hidden;
     position: relative;
-    border: solid 3px #dcd0c0; /* Colore neutro chiaro per il bordo esterno */
+    border: solid 0px #dcd0c0; /* Colore neutro chiaro per il bordo esterno */
     background-color: #ffffff; /* Sfondo bianco per contrasto */
     box-shadow: 
         0 10px 20px rgba(0, 0, 0, 0.2), /* Ombra principale per profondità */
@@ -411,21 +441,21 @@ body .IlMenu h1 {
     }
 
     /* Mostra l'icona hamburger */
-    .menu-icon {
-        display: block;
-        position: absolute;
-        right: 20px; /* Distanza costante dal bordo destro */
-        top: 20px;
-        background-color: transparent;
-    }
+   
 
     /* Logo centrato con la correzione per non sforare */
-    .logo {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        max-width: 90%; /* Impedisce al logo di diventare troppo grande */
-        margin: auto;
+    .navbar {
+        justify-content: flex-start; /* Allinea tutti gli elementi della navbar all'inizio */
+    }
+    .logo{
+        grid-column: 1 / -1; /* Assumendo che il logo debba estendersi per tutto il grid */
+        justify-self: center;
+    }
+    .logo img {
+        max-width: 120px; /* Controlla la dimensione massima del logo */
+        display: block; /* Assicurati che l'immagine del logo sia un blocco */
+        margin-top: -2%;
+        margin-left: 10px; /* Aggiunge un piccolo margine sinistro per non attaccarlo completamente al bordo */
     }
 
     .mobile-menu {
@@ -436,6 +466,12 @@ body .IlMenu h1 {
 
     /* Stile per i link del menu mobile */
     .mobile-menu a {
+        text-decoration: none;
+        color: #000;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        font-size: clamp(10px, 5vw, 20px);
+        margin: 0 15px; /* Spaziatura orizzontale tra i link */
+        font-family: 'Glacial Indifference', sans-serif;
         text-align: center; /* Centra il testo nei link */
         width: auto; /* Rimuove la larghezza fissa per evitare sforamenti */
         padding: 12px; /* Aumento del padding per una migliore area tattile */
@@ -466,37 +502,40 @@ body .IlMenu h1 {
         display: none;
     }
 
-    /* Mostra l'icona hamburger */
-    .menu-icon {
-        display: block;
-        right: 5vh;
-        cursor: pointer;
-        z-index: 1001;
-        position: absolute;
-        top: 20px;
-    }
+ /* Position and style the menu icon */
+.menu-icon {
+    display: block;
+    right: 20px; /* Adjust the right margin for better alignment */
+    top: 20px; /* Adjust top margin to align with your design */
+    cursor: pointer;
+    z-index: 1001; /* Ensures it stays on top of other content */
+    position: absolute;
+    width: 30px; /* Width of the hamburger icon */
+    height: 30px; /* Height of the hamburger icon */
+    background-color: transparent; /* Ensures no background color */
 
-    .menu-icon span {
-        display: block;
-        width: 25px;
-        height: 3px;
-        margin: 5px 0;
-        background-color: #333;
-        transition: all 0.3s ease-in-out;
-    }
+}
 
-    /* Trasformazione dell'icona hamburger in 'X' quando attiva */
-    .menu-icon.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-    }
+.menu-icon span {
+    display: block;
+    width: 100%; /* Full width of the container */
+    height: 2px; /* Height of each line */
+    background-color: #333; /* Color of the hamburger lines */
+    margin-bottom: 8px; /* Space between the lines */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+}
 
-    .menu-icon.active span:nth-child(2) {
-        opacity: 0;
-    }
+.menu-icon.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px); /* Adjust translation to align cross center */
+}
 
-    .menu-icon.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -5px);
-    }
+.menu-icon.active span:nth-child(2) {
+    opacity: 0; /* Middle bar disappears */
+}
+
+.menu-icon.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px); /* Adjust translation to align cross center */
+}
 
     /* Logo centrato */
     .logo {
@@ -664,7 +703,7 @@ body .IlMenu h1 {
 @media (max-width: 480px) {
     /* Ridimensionamento del logo */
     .logo img {
-        width: 100px;
+        width: 120px;
     }
 
     /* Testo dell'overlay ridotto */
@@ -945,14 +984,12 @@ body .IlMenu h1 {
         display: none;
     }
     #custom-logo {
-        margin: auto;
+        display: block;          /* Assicura che l'immagine sia trattata come un blocco */
+        margin: 0 auto;          /* Centra l'immagine orizzontalmente */
+        width: auto;             /* Lasciala adattarsi al suo contenuto o imposta una larghezza specifica */
         height: auto;
         z-index: 2;
-        padding-left: 70px;
-        padding-right: 70px;
-        padding-top: 15px;
-        padding-bottom: 10px;
-        width: 100%;
+        padding: 0;              /* Rimuove il padding che causava lo spostamento */
         position: relative;
         background-color: rgba(200, 200, 200, 0.5);
     }
@@ -1312,7 +1349,6 @@ form{
     text-align: center;
     padding: 10px 0; /* Aggiunge spazio sopra e sotto i dots */
     position: relative; /* Potrebbe essere necessario regolare la posizione */
-    z-index: 100; /* Assicurati che sia sopra altri elementi */
 }
 
 /* Adjustments per dispositivi mobili */
@@ -1506,7 +1542,7 @@ form{
     .carousel-container {
         max-width: 90%; /* Adatta la larghezza al dispositivo */
         margin: 10px auto;
-        border: 3px solid #b2a29f;
+        border: 0px solid #b2a29f;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Riduci l'ombra per dispositivi più piccoli */
     }
 
@@ -1519,8 +1555,8 @@ form{
 @media (max-width: 400px) {
     .carousel-container {
         max-width: 100%; /* Utilizza tutta la larghezza disponibile */
-        border: 2px solid #b2a29f;
         padding-bottom: 0px;
+        margin-top: 0px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra ulteriormente ridotta */
     }
 }
@@ -1615,4 +1651,140 @@ form{
 .powered-by-container p {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+/*-----------------------------------*/
+/* Sezione del Menù Gourmet */
+.gourmet-section {
+    padding: 75px 0px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.gourmet-title {
+    font-size: 60px;
+    color: #333;
+    margin-bottom: 40px;
+    font-family: 'Engagement', cursive;
+}
+
+/* Contenitore del PDF */
+.pdf-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#pdf-viewer {
+    position: relative;
+}
+
+#the-canvas {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Controlli del PDF */
+.pdf-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+.pdf-controls button {
+    background-color: #FFA500; /* Colore arancione per un look vibrante */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 20px; /* Bottoni arrotondati */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Aggiunge una leggera ombra per profondità */
+    transition: background-color 0.3s, transform 0.2s; /* Transizione per hover e click */
+}
+
+.pdf-controls button:hover {
+    background-color: #FF4500; /* Un arancione più scuro per l'hover */
+    transform: scale(1.05); /* Leggermente più grande al passaggio del mouse */
+}
+
+.pdf-controls button:active {
+    background-color: #E04000; /* Un arancione più scuro per il click */
+    transform: scale(0.95); /* Ridimensiona leggermente quando cliccato */
+}
+.pdf-controls button {
+    padding: 5px 10px; /* Riduci la spaziatura interna */
+    font-size: 14px; /* Dimensione del testo più piccola */
+    border-radius: 15px; /* Rendi i bordi leggermente più arrotondati */
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .pdf-controls button {
+        padding: 8px 12px; /* Leggermente più grande per i dispositivi touch */
+        font-size: 16px; /* Font leggermente più grande per una migliore leggibilità su dispositivi mobile */
+    }
+}
+/* Contenitore dei puntini */
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}
+
+/* Stili per i puntini */
+.carousel-dot {
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+/* Puntino attivo o al passaggio del mouse */
+.carousel-dot.active,
+.carousel-dot:hover {
+    background-color: #ff9900; /* Colore per il puntino attivo */
+}
+#cookie-consent-banner {
+    display: none; /* inizialmente nascosto, mostrato via JS */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333; /* colore scuro per un buon contrasto */
+    color: #fff;
+    text-align: center;
+    padding: 20px 10px; /* più spazio all'interno */
+    font-size: 16px; /* dimensione del testo maggiore */
+    box-shadow: 0 -4px 6px rgba(0,0,0,0.1); /* ombra per farlo risaltare */
+    z-index: 1000; /* assicurarsi che sia sopra altri elementi */
+}
+#cookie-consent-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75); /* Sfondo semitrasparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Assicurati che sia al di sopra di tutti gli altri contenuti */
+}
+
+#cookie-consent-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 80%;
+    max-width: 500px;
 }
