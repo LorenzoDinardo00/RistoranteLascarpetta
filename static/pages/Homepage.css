@@ -1384,6 +1384,7 @@ form{
     color: #000;    
     font-family: 'Engagement', sans-serif;
     margin-bottom: 60px;
+    padding-top: 20px;
 }
 
 .menu-frame {
@@ -1672,7 +1673,6 @@ form{
 .pdf-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
 }
 
 #pdf-viewer {
@@ -1802,35 +1802,7 @@ form{
 
     #cookie-consent-modal button {
         width: 100%; /* Pulsanti a larghezza completa su mobile */
-        margin: 5px 0; /* Margine uniforme per i pulsanti */
+        margin: auto; /* Margine uniforme per i pulsanti */
     }
 }
 
-@media (max-width: 768px) {
-    /* Migliora la spaziatura tra gli elementi nella lista dei contatti */
-    .mobile-contact-section .contact-list li {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 10px 0; /* Aggiunge padding verticale per separare gli elementi */
-        font-size: 18px; /* Dimensione del font per migliorare la leggibilità su mobile */
-    }
-
-    /* Allineamento e spaziatura delle icone */
-    .mobile-contact-section .contact-list li i {
-        margin-right: 15px; /* Aumenta la distanza tra l'icona e il testo */
-        font-size: 20px; /* Dimensione adeguata per le icone su mobile */
-        color: #DAA520; /* Colore coerente con il tema del sito */
-    }
-
-    /* Migliora l'estetica dei link nella lista dei contatti */
-    .mobile-contact-section .contact-list li a {
-        text-decoration: none;
-        color: #333; /* Colore del testo scuro per una buona leggibilità */
-        transition: color 0.3s ease;
-    }
-
-    .mobile-contact-section .contact-list li a:hover {
-        color: #DAA520; /* Colore di evidenziazione per i link al passaggio del mouse */
-    }
-}
