@@ -1781,6 +1781,7 @@ form{
     border-radius: 25px;
     margin-left: 15px;
     transition: background-color 0.3s ease;
+    margin-top: 10px !important;
 }
 
 /* Effetto hover sui pulsanti */
