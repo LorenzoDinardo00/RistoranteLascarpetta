@@ -140,7 +140,7 @@ text-transform: uppercase;
 }
 
 #container1-1 {
-    scroll-margin-top: 80px; /* Puoi modificare 80px in base all'altezza della navbar */
+    scroll-margin-top: 100px; /* Puoi modificare 80px in base all'altezza della navbar */
 }
 
 /* Video di sfondo */
@@ -201,7 +201,7 @@ text-transform: uppercase;
     display: flex;
     align-items: stretch;
     max-width: 1200px;
-    margin: 70px auto;
+    margin: 70px auto !important;
     padding: 20px;
     background-color: #fff; /* Sfondo bianco per tutto il container */
 }
@@ -1374,7 +1374,7 @@ form{
 
 /* Sezione del Menù Gourmet */
 .gourmet-section {
-    padding: 75px 20px;
+    padding: 0px 20px;
     background-color: #f2f2f2;
     text-align: center;
 }
@@ -1602,7 +1602,7 @@ form{
         margin: 50px;
     }
     .gourmet-section {
-        padding: 40px 20px;
+        padding: 0px 20px;
         background-color: #f2f2f2;
         text-align: center;
     }    
@@ -1656,7 +1656,7 @@ form{
 /*-----------------------------------*/
 /* Sezione del Menù Gourmet */
 .gourmet-section {
-    padding: 75px 0px;
+    padding: 0px 0px;
     background-color: #f9f9f9;
     text-align: center;
 }
@@ -1752,39 +1752,84 @@ form{
 .carousel-dot:hover {
     background-color: #ff9900; /* Colore per il puntino attivo */
 }
-#cookie-consent-banner {
-    display: none; /* inizialmente nascosto, mostrato via JS */
+#cookie-consent-modal {
+    display: none; /* Mantieni il banner nascosto finché non viene mostrato via JS */
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #333; /* colore scuro per un buon contrasto */
-    color: #fff;
-    text-align: center;
-    padding: 20px 10px; /* più spazio all'interno */
-    font-size: 16px; /* dimensione del testo maggiore */
-    box-shadow: 0 -4px 6px rgba(0,0,0,0.1); /* ombra per farlo risaltare */
-    z-index: 1000; /* assicurarsi che sia sopra altri elementi */
-}
-#cookie-consent-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75); /* Sfondo semitrasparente */
+    background-color: #333; /* Sfondo scuro per contrasto */
+    color: #fff; /* Testo bianco per leggibilità */
+    padding: 15px 20px; /* Spaziatura interna */
+    font-size: 16px; /* Dimensione del testo maggiore */
+    box-shadow: 0 -4px 6px rgba(0,0,0,0.1); /* Ombra per separarlo dal resto */
+    z-index: 1000; /* Posizionarlo sopra gli altri elementi */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000; /* Assicurati che sia al di sopra di tutti gli altri contenuti */
+    justify-content: space-between; /* Distribuisce gli elementi su una linea */
+    align-items: center; /* Allinea gli elementi verticalmente */
+    font-family: 'Glacial Indifference', sans-serif; /* Font coerente con il resto del sito */
 }
 
-#cookie-consent-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 80%;
-    max-width: 500px;
+/* Stile per i pulsanti all'interno del banner */
+#cookie-consent-modal button {
+    background-color: #DAA520; /* Colore oro per i pulsanti */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 25px;
+    margin-left: 15px;
+    transition: background-color 0.3s ease;
+}
+
+/* Effetto hover sui pulsanti */
+#cookie-consent-modal button:hover {
+    background-color: #b7950b; /* Colore più scuro al passaggio del mouse */
+}
+
+/* Media query per dispositivi mobili */
+@media (max-width: 768px) {
+    #cookie-consent-modal {
+        flex-direction: column; /* Posiziona gli elementi in verticale su schermi piccoli */
+        padding: 10px 15px;
+    }
+
+    #cookie-consent-modal p {
+        margin-bottom: 10px; /* Aggiunge spaziatura sotto il testo su mobile */
+    }
+
+    #cookie-consent-modal button {
+        width: 100%; /* Pulsanti a larghezza completa su mobile */
+        margin: 5px 0; /* Margine uniforme per i pulsanti */
+    }
+}
+
+@media (max-width: 768px) {
+    /* Migliora la spaziatura tra gli elementi nella lista dei contatti */
+    .mobile-contact-section .contact-list li {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 10px 0; /* Aggiunge padding verticale per separare gli elementi */
+        font-size: 18px; /* Dimensione del font per migliorare la leggibilità su mobile */
+    }
+
+    /* Allineamento e spaziatura delle icone */
+    .mobile-contact-section .contact-list li i {
+        margin-right: 15px; /* Aumenta la distanza tra l'icona e il testo */
+        font-size: 20px; /* Dimensione adeguata per le icone su mobile */
+        color: #DAA520; /* Colore coerente con il tema del sito */
+    }
+
+    /* Migliora l'estetica dei link nella lista dei contatti */
+    .mobile-contact-section .contact-list li a {
+        text-decoration: none;
+        color: #333; /* Colore del testo scuro per una buona leggibilità */
+        transition: color 0.3s ease;
+    }
+
+    .mobile-contact-section .contact-list li a:hover {
+        color: #DAA520; /* Colore di evidenziazione per i link al passaggio del mouse */
+    }
 }

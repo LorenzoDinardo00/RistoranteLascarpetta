@@ -15,6 +15,40 @@
 {% endblock %}
 
 {% block content %}
+<nav class="navbar" >
+    <div class="menu left">
+        <a href="{% url 'Homepage' %}#container1-1">Chi Siamo</a>
+        <a href="{% url 'Homepage' %}#menu">Il Menù</a> <!-- Usa il routing di Django -->
+    </div>
+    <div class="logo">
+        <a href="{% url 'Homepage' %}#starting">
+        <img src="{% static 'pages/images/Logosvgcentrato(1).png' %}" alt="Logo La Scarpetta">
+        </a></div>
+    <div class="menu right">
+        <a href="{% url 'Homepage' %}#contatti">Contattaci</a>
+        <a href="{% url 'prenotazioni' %}" id="booking-button">Prenota Ora</a>
+    </div>
+    <!-- Icona del menu hamburger -->
+    <div class="menu-icon" id="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <!-- Menu Mobile -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="{% url 'Homepage' %}#container1-1">Chi Siamo</a>
+        <a href="{% url 'Homepage' %}#menu">Il Menù</a> <!-- Usa il routing di Django -->
+        <a href="{% url 'Homepage' %}#contattiMobile">Contattaci</a>
+        <a href="{% url 'prenotazioni' %}" id="booking-button-mobile">Prenota Ora</a>
+    </nav>
+<div id="cookie-consent-modal" style="display:none;">
+    <div id="cookie-consent-content">
+        <h2>Consentimento dei Cookie</h2>
+        <p>Questo sito utilizza i cookie per migliorare l'esperienza utente. Devi accettare i nostri cookie per continuare a navigare.</p>
+        <button onclick="acceptCookies()">Accetta Cookie</button>
+        <button onclick="declineCookies()">Rifiuta Cookie</button>
+    </div>
+</div>
     <div class="d-flex justify-content-center align-items-center vh-100">
         <div class="text-center">
             <!-- Pulsante di prenotazione - Arancione -->
@@ -28,4 +62,292 @@
              </div>
              
     </div>
+    <script src="{% static 'pages/js/script.js' %}"></script>
+<script src="{% static 'pages/js/CaruselScript.js' %}"></script>
+
+<script src="{% static 'pages/js/NavigationDot.js' %}"></script>
+<!-- Include pdf.js library -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Gestione del Menù Mobile (Rimani invariato) ---
+            const navbar = document.querySelector('.navbar');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            
+            function adjustMenuPosition() {
+                const startingOffset = 10;
+                mobileMenu.style.top = startingOffset + 'px';
+            }
+        
+            adjustMenuPosition();
+        
+            menuIcon.addEventListener('click', function (event) {
+                event.stopPropagation(); // Previene la chiusura immediata del menu
+                mobileMenu.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+        
+            document.addEventListener('click', function (event) {
+                if (!menuIcon.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('active');
+                }
+            });
+        
+            document.querySelectorAll('#mobile-menu a').forEach(function(menuItem) {
+                menuItem.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    menuIcon.classList.remove('active');
+                });
+            });
+        
+            // --- Gestione del PDF ---
+            {% if latest_pdf %}
+            // Percorso del PDF caricato
+            var url = "{{ latest_pdf.file.url }}";
+            
+            var pdfDoc = null,
+                pageNum = 1,
+                pageRendering = false,
+                pageNumPending = null,
+                scale = 1.5,
+                canvas = document.getElementById('the-canvas'),
+                ctx = canvas.getContext('2d');
+            
+            // Carica il PDF
+            pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+                pdfDoc = pdfDoc_;
+    
+                // Genera i puntini
+                createPdfIndicators();
+    
+                // Renderizza la prima pagina
+                renderPage(pageNum);
+            });
+            
+            function renderPage(num) {
+                pageRendering = true;
+                pdfDoc.getPage(num).then(function(page) {
+                    var viewport = page.getViewport({ scale: scale });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+            
+                    var renderContext = {
+                        canvasContext: ctx,
+                        viewport: viewport
+                    };
+                    var renderTask = page.render(renderContext);
+            
+                    renderTask.promise.then(function() {
+                        pageRendering = false;
+                        if (pageNumPending !== null) {
+                            renderPage(pageNumPending);
+                            pageNumPending = null;
+                        }
+    
+                        // Aggiorna gli indicatori
+                        updatePdfIndicators(num);
+                    });
+                });
+                // Aggiorna l'indicazione della pagina se necessario
+                // document.getElementById('page_num').textContent = num;
+            }
+            
+            function queueRenderPage(num) {
+                if (num < 1 || num > pdfDoc.numPages) {
+                    return;
+                }
+                if (pageRendering) {
+                    pageNumPending = num;
+                } else {
+                    renderPage(num);
+                }
+            }
+            
+            function onPrevPage() {
+                if (pageNum <= 1) {
+                    return;
+                }
+                pageNum--;
+                queueRenderPage(pageNum);
+            }
+            
+            function onNextPage() {
+                if (pageNum >= pdfDoc.numPages) {
+                    return;
+                }
+                pageNum++;
+                queueRenderPage(pageNum);
+            }
+            
+            document.getElementById('prev').addEventListener('click', onPrevPage);
+            document.getElementById('next').addEventListener('click', onNextPage);
+    
+            // Funzione per creare i puntini
+            function createPdfIndicators() {
+                var indicatorsContainer = document.getElementById('pdf-indicators');
+                indicatorsContainer.innerHTML = ''; // Pulisce eventuali puntini esistenti
+    
+                for (var i = 1; i <= pdfDoc.numPages; i++) {
+                    var dot = document.createElement('span');
+                    dot.classList.add('carousel-dot');
+                    dot.setAttribute('data-page-number', i);
+    
+                    // Aggiunge l'event listener per il click
+                    dot.addEventListener('click', function(event) {
+                        var pageNumber = Number(event.target.getAttribute('data-page-number'));
+                        pageNum = pageNumber;
+                        queueRenderPage(pageNum);
+                    });
+    
+                    indicatorsContainer.appendChild(dot);
+                }
+    
+                // Imposta il puntino della prima pagina come attivo
+                updatePdfIndicators(pageNum);
+            }
+    
+            // Funzione per aggiornare lo stato attivo dei puntini
+            function updatePdfIndicators(pageNum) {
+                var dots = document.querySelectorAll('.carousel-dot');
+                dots.forEach(function(dot) {
+                    dot.classList.remove('active');
+                });
+                var activeDot = document.querySelector('.carousel-dot[data-page-number="' + pageNum + '"]');
+                if (activeDot) {
+                    activeDot.classList.add('active');
+                }
+            }
+            
+            // --- Gestione del Drag/Swipe ---
+            const pdfContainer = document.querySelector('.pdf-container');
+            const pdfViewer = document.getElementById('pdf-viewer');
+            
+            let isDragging = false;
+            let startX = 0;
+            let currentTranslateX = 0;
+            let prevTranslateX = 0;
+            let animationID;
+            
+            // Previeni il comportamento predefinito per evitare lo zoom o lo scroll
+            pdfContainer.addEventListener('dragstart', (e) => e.preventDefault());
+            
+            // Eventi Touch
+            pdfContainer.addEventListener('touchstart', touchStart);
+            pdfContainer.addEventListener('touchend', touchEnd);
+            pdfContainer.addEventListener('touchmove', touchMove);
+            
+            // Eventi Mouse
+            pdfContainer.addEventListener('mousedown', touchStart);
+            pdfContainer.addEventListener('mouseup', touchEnd);
+            pdfContainer.addEventListener('mouseleave', touchEnd);
+            pdfContainer.addEventListener('mousemove', touchMove);
+            
+            function touchStart(event) {
+                isDragging = true;
+                startX = getPositionX(event);
+                animationID = requestAnimationFrame(animation);
+                pdfViewer.classList.add('grabbing');
+            }
+            
+            function touchMove(event) {
+                if (!isDragging) return;
+                const currentPosition = getPositionX(event);
+                const diff = currentPosition - startX;
+                currentTranslateX = prevTranslateX + diff;
+            }
+            
+            function touchEnd() {
+                cancelAnimationFrame(animationID);
+                isDragging = false;
+                const movedBy = currentTranslateX - prevTranslateX;
+                const threshold = pdfContainer.offsetWidth * 0.2;
+                
+                if (movedBy < -threshold && pageNum < pdfDoc.numPages) {
+                    pageNum++;
+                    queueRenderPage(pageNum);
+                } else if (movedBy > threshold && pageNum > 1) {
+                    pageNum--;
+                    queueRenderPage(pageNum);
+                } else {
+                    // Resta sulla stessa pagina
+                    queueRenderPage(pageNum);
+                }
+                
+                resetPosition();
+                pdfViewer.classList.remove('grabbing');
+            }
+            
+            function getPositionX(event) {
+                return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+            }
+            
+            function animation() {
+                setSliderPosition();
+                if (isDragging) {
+                    requestAnimationFrame(animation);
+                }
+            }
+            
+            function setSliderPosition() {
+                pdfViewer.style.transform = `translateX(${currentTranslateX}px)`;
+            }
+            
+            function resetPosition() {
+                currentTranslateX = 0;
+                prevTranslateX = 0;
+                pdfViewer.style.transform = `translateX(${currentTranslateX}px)`;
+            }
+            
+            {% endif %}
+        });
+    </script>
+    <script>
+            // Funzione per ottenere il valore di un cookie specifico
+            function getCookie(name) {
+                let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+                return match ? match[2] : null;
+            }
+        
+            // Funzione per impostare la visibilità della mappa
+            function setMapVisibility(show) {
+                var mapElement = document.getElementById('map');
+                if (mapElement) {
+                    mapElement.style.display = show ? 'block' : 'none';
+                }
+            }
+        
+            // Funzione per aggiornare la visibilità dei pulsanti di prenotazione
+            function updateBookingButtonVisibility(isVisible) {
+                const displayStyle = isVisible ? 'block' : 'none';
+                document.getElementById('booking-button').style.display = displayStyle;
+                document.getElementById('booking-button-mobile').style.display = displayStyle;
+                document.getElementById('booking-button-main').style.display = displayStyle;
+            }
+        
+            // Funzione chiamata quando l'utente accetta i cookie
+            function acceptCookies() {
+                document.cookie = "cookie_consent=true; max-age=" + 60*60*24*365 + "; path=/";
+                document.getElementById('cookie-consent-modal').style.display = 'none';
+                setMapVisibility(true);  // Mostra la mappa
+                updateBookingButtonVisibility(true);  // Mostra i pulsanti di prenotazione
+            }
+        
+            // Funzione chiamata quando l'utente rifiuta i cookie
+            function declineCookies() {
+                document.cookie = "cookie_consent=false; max-age=" + 60*60*24*365 + "; path=/";
+                document.getElementById('cookie-consent-modal').style.display = 'none';
+                setMapVisibility(false);  // Nasconde la mappa
+                updateBookingButtonVisibility(false);  // Nasconde i pulsanti di prenotazione
+            }
+        
+            // Funzione eseguita al caricamento della pagina per controllare lo stato del consenso dei cookie
+            window.onload = function() {
+                let consent = getCookie('cookie_consent');
+                document.getElementById('cookie-consent-modal').style.display = consent === "true" ? 'none' : 'flex';
+                setMapVisibility(consent === "true");
+                updateBookingButtonVisibility(consent === "true");
+            }
+        </script>
 {% endblock %}

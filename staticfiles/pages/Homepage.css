@@ -109,9 +109,7 @@ body {
     display: none;
 }
 
-#container1-1 {
-    scroll-margin-top: 80px; /* Puoi modificare 80px in base all'altezza della navbar */
-}
+
 
 /* Video di sfondo */
 #bg-video {
