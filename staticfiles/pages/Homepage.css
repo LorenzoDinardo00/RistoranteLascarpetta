@@ -169,7 +169,6 @@ body {
     display: flex;
     align-items: stretch;
     max-width: 1200px;
-    margin: 70px auto;
     padding: 20px;
     background-color: #fff; /* Sfondo bianco per tutto il container */
 }

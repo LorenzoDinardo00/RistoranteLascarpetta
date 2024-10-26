@@ -139,9 +139,7 @@ text-transform: uppercase;
     display: none;
 }
 
-#container1-1 {
-    scroll-margin-top: 100px; /* Puoi modificare 80px in base all'altezza della navbar */
-}
+
 
 /* Video di sfondo */
 #bg-video {
@@ -184,6 +182,9 @@ text-transform: uppercase;
     backdrop-filter: blur(5px);
     z-index: 2;
 }
+.hero-banner{
+    margin-bottom: 80px;
+}
 
 /* Ombra per l'intera sezione */
 .hero-banner::before {
@@ -201,11 +202,12 @@ text-transform: uppercase;
     display: flex;
     align-items: stretch;
     max-width: 1200px;
-    margin: 70px auto !important;
     padding: 20px;
     background-color: #fff; /* Sfondo bianco per tutto il container */
 }
-
+#scritta{
+    scroll-margin: -10px;
+}
 /* Contenitore del testo */
 .container1 .text-container {
     flex: 2; /* Aumentato rispetto a 1 ma meno di 3 */
@@ -620,6 +622,7 @@ body .IlMenu h1 {
 
     .hero-banner {
         height: 100vh !important;
+        margin-bottom: 120px,
     }
 
     .intro {
@@ -731,7 +734,8 @@ body .IlMenu h1 {
         font-size: 45px;
         margin-bottom: 10px;
         color: #000;
-        padding-top: 70px;
+        margin-top: 90px;
+
     }
 
     .container1 .text-container p {
@@ -890,17 +894,72 @@ body .IlMenu h1 {
 /* Stile del footer */
 .footer {
     text-align: center;
-    padding: 10px;
-    background-color: #000;
-    color: #fff;
-    margin-top: auto; /* Posiziona il footer in fondo */
+    padding: 15px;
+    background-color: #222;
+    color: #ccc;
+    margin-top: auto;
     width: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+/* Stile per i link */
+.footer a {
+    color: #bbb;
+    margin: 0 5px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #fff;
+}
+
+/* Stile del footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #222;
+    color: #ccc;
+    margin-top: auto;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.footer p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
 }
 
 .footer a {
-    color: #fff;
-    margin: 0 10px;
+    color: #bbb;
     text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #fff;
+}
+
+.footer .separator {
+    color: #555;
+    font-size: 16px;
+    padding: 0 5px;
+}
+
+/* Stile per il link "Esci come amministratore" */
+.footer .admin-link {
+    font-weight: bold;
+    color: #ff6666;
+}
+
+.footer .admin-link:hover {
+    color: #ff3333;
 }
 
 /* Stile per la sezione Contatti mobile */
@@ -977,6 +1036,7 @@ body .IlMenu h1 {
 @media (max-width: 800px) {
     .mobile-contact-section {
         display: block;
+        margin-top: 6px;
     }
 
     /* Nasconde la sezione originale dei contatti su mobile */
@@ -1001,6 +1061,43 @@ body .IlMenu h1 {
         display: none;
     }
 }
+#nascondi{
+    display:none;
+}
+/* Media queries per dispositivi mobili */
+
+    /* Media queries per schermi piccoli (mobile) */
+@media (max-width: 600px) {
+    .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px; /* Riduce lo spazio su dispositivi mobili */
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px; /* Riduce lo spazio su dispositivi mobili */
+    }
+    .fmobile{
+        display: block !important;
+    }
+  .nascondiinpc{
+    display:block;
+  }
+  .fpc{
+    display:none !important;
+}
+}
+
+
+.fmobile{
+    display:none;
+}
+
+
 
 /* Slider nella hero section */
 .slider-container {
@@ -1368,6 +1465,10 @@ form{
         height: 12px;
         width: 12px;
     }
+    .carousel-indicators {
+        text-align: center;
+        margin-top: 16px;
+    }
 }
 
 /*--------------------------------*/
@@ -1497,8 +1598,10 @@ form{
 /* Indicatori */
 .carousel-indicators {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 19px;
 }
+
+
 
 .carousel-dot {
     cursor: pointer;
@@ -1697,7 +1800,6 @@ form{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
 }
 .pdf-controls button {
     background-color: #FFA500; /* Colore arancione per un look vibrante */
@@ -1811,3 +1913,176 @@ form{
     }
 }
 
+
+/* Animazione da sinistra */
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-100px);
+    animation: fadeInLeft 2.5s forwards;
+}
+
+@keyframes fadeInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animazione da destra */
+.fade-in-right {
+    opacity: 0;
+    transform: translateX(100px);
+    animation: fadeInRight 2.5s forwards;
+}
+
+@keyframes fadeInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Classe base per gli elementi animati */
+.animate-section {
+    opacity: 0;
+}
+
+/* Stili per i pulsanti di controllo */
+.pdf-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.pdf-controls button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.pdf-controls button:hover {
+    background-color: #ddd;
+}
+
+/* Stili per i tooltip */
+.pdf-controls button::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.pdf-controls button:hover::after {
+    opacity: 1;
+}
+
+/* Stili per l'indicatore di caricamento */
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    color: #555;
+    display: none;
+}
+
+#loading-indicator {
+    display: none;
+}
+
+/* Stili per le transizioni del canvas */
+#the-canvas {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: scale(1);
+    opacity: 1;
+}
+
+#the-canvas.fade-out {
+    transform: scale(0.95);
+    opacity: 0;
+}
+
+#the-canvas.fade-in {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Stili per la classe grabbing */
+.grabbing {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+}
+
+/* Stili per gli indicatori del carousel */
+.carousel-indicators {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.carousel-dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 4px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carousel-dot.active {
+    background-color: #717171;
+}
+
+/* Animazioni per il canvas */
+#the-canvas {
+    position: relative;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Slide out to left quando si va alla pagina successiva */
+#the-canvas.slide-out-to-left {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+/* Slide out to right quando si torna alla pagina precedente */
+#the-canvas.slide-out-to-right {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+/* Slide in from right quando si naviga alla pagina successiva */
+#the-canvas.slide-in-from-right {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+/* Slide in from left quando si torna alla pagina precedente */
+#the-canvas.slide-in-from-left {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+/* Classe per abilitare le animazioni */
+#the-canvas.animate {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}

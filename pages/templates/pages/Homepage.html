@@ -35,10 +35,11 @@
     </div>
     <!-- Menu Mobile -->
     <div class="mobile-menu" id="mobile-menu">
-        <a href="#container1-1">Chi Siamo</a>
+        <a href="#scritta" id="chi">Chi Siamo</a>
         <a href="#menu">Il Menù</a> <!-- Usa il routing di Django -->
         <a href="#contattiMobile">Contattaci</a>
         <a href="{% url 'prenotazioni' %}" id="booking-button-mobile">Prenota Ora</a>
+    </div>
     </nav>
 <div id="cookie-consent-modal" style="display:none;">
     <div id="cookie-consent-content">
@@ -48,9 +49,10 @@
         <button onclick="declineCookies()">Rifiuta Cookie</button>
     </div>
 </div>
+
 <!-- Banner centrale con immagini a scorrimento -->
 <!-- Banner centrale con immagini a scorrimento -->
-<div class="hero-banner"id="starting">
+<div class="hero-banner" id="starting">
     <div class="slider-container">
         <!-- Le tue immagini dello slider -->
         <div class="slider-image">
@@ -65,8 +67,8 @@
     </div>
 </div>
 
-<div class="container1" id="container1-1">
-    <div class="text-container">
+<div class="container1 " id="container1-1">
+    <div class="text-container animate-section">
         <h1 id="scritta">La Scarpetta</h1>
         <p>
             Immersi nel cuore di Firenze, celebriamo la tradizione culinaria della città e della Toscana. Il nostro chef, creerà per voi esperienze di gusto indimenticabili, dall'antipasto sfizioso, alla bistecca succulenta e al dolce fatto in casa.
@@ -74,10 +76,11 @@
         </p>
         <p>
             Vi aspettiamo <a href="https://www.google.com/search?client=safari&sca_esv=bcf76c252b636167&hl=it-it&sxsrf=ADLYWILkdSTu3Jbqp9ZoLE4hFxW2pPSs1Q:1729566612260&q=recensioni+di+la+scarpetta+firenze&uds=ADvngMjcH0KdF7qGWtwTBrP0nt7dd3T370p1BFaxl35pjuB-JwyTMr2qmFp789noWpPFpNJlK1wl6ZTv93oPHdn9uKGVonWavN9gE8oOPmuoo9CTM152UISGIMg2gVqz0nD3a1cF-X8rSdWr6rC3rCJgeckVeYDKDIyF5Lckq5_0kyrHGZ5T1hKCd_tyxQJkRT8dDTzQCLH-&si=ACC90nwjPmqJHrCEt6ewASzksVFQDX8zco_7MgBaIawvaF4-7jGNhOVKKCWTG3Mg1YugNP_Rf3d_c6_Bjb1jSBfb5XHTcp1PEoB5c7sOs4yvyBt9p84KZuFIKKkXt-w2FqV_movk1G8ND7McalnIt_QcySuv5T1D3A%3D%3D&sa=X&ved=2ahUKEwjP3afcgaGJAxXx9bsIHcoUPCMQxKsJegQIFBAB&ictx=1&stq=1&lei=lBcXZ8_DD_Hr7_UPyqnwmQI">qui</a> per una serata indimenticabile!</p>
-    </div>
-    <div class="image-container1">
+</div>
+    <div class="image-container1 animate-section">
         <img src="{% static 'pages/images/Osteria.webp' %}" alt="Piatto di cibo">
     </div>
+
 </div>
 
 <div class="prenotazione"> <a href="{% url 'prenotazioni' %}">
@@ -86,21 +89,29 @@
 </div>
 <!-- Sezione del Menù Gourmet -->
 <!-- Sezione del Menù Gourmet -->
-<div class="gourmet-section" id="menu">
+<div class="gourmet-section animate-section" id="menu">
     <h1 class="gourmet-title">Il nostro Menù</h1>
 
     <!-- Visualizzazione del PDF del menù, se disponibile -->
+    <!-- Visualizzazione del PDF del menù, se disponibile -->
     {% if latest_pdf %}
-<div class="pdf-container">
-    <div id="pdf-viewer">
-        <canvas id="the-canvas"></canvas>
+    <div class="pdf-container">
+        <div class="pdf-carousel-container">
+            <div class="pdf-carousel-wrapper" id="pdf-carousel-wrapper">
+                <canvas id="the-canvas"></canvas>
+                <div id="loading-indicator" class="loading">Caricamento...</div>
+            </div>
+        </div>
+        <div class="pdf-controls">
+            <button id="prev" class="btn btn-secondary" data-tooltip="Pagina Precedente">❮</button>
+            <div class="carousel-indicators" id="pdf-indicators"></div>
+            <button id="next" class="btn btn-secondary" data-tooltip="Pagina Successiva">❯</button>
+            <!-- Pulsanti di Zoom -->
+            <button id="zoom-in" class="btn btn-secondary" data-tooltip="Ingrandisci">+</button>
+            <button id="zoom-out" class="btn btn-secondary" data-tooltip="Riduci">-</button>
+        </div>
     </div>
-    <div class="pdf-controls">
-        <button id="prev" class="btn btn-secondary">❮</button>
-        <div class="carousel-indicators" id="pdf-indicators"></div>
-        <button id="next" class="btn btn-secondary">❯</button>    </div>
-</div>
-{% endif %}
+    {% endif %}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
     <script>
@@ -125,7 +136,7 @@
 {% endif %}
 </div>
 
-    <div class="carousel-container">
+    <div class="carousel-container ">
         <div class="slides-wrapper">
             <div class="carousel-image">
                 <img src="{% static 'pages/images/Foto-29.jpg' %}" alt="Immagine 1">
@@ -155,7 +166,7 @@
     <div class="contact-hours-container">
         <div class="contact-left">
             <h2>Contatti</h2>
-            <div class="contact-info">
+            <div class="contact-info animate-section">
                 <div class="contact-item"><a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank">
                     <i class="fas fa-map-marker-alt"></i>
                     <p>Via del Ponte Sospeso, 7r, FI</p>
@@ -185,7 +196,7 @@
             </div>
         </div>
 
-        <div class="hours-right">
+        <div class="hours-right animate-section">
             <h2>Orari di apertura</h2>
             <div class="opening-hours">
                 <p><strong>Lunedì-Domenica:</strong> 12-15, 19-00</p>
@@ -201,7 +212,7 @@
 <!-- Sezione Contatti Mobile -->
 <div class="mobile-contact-section" id="contattiMobile">
     <h2>Contatti</h2>
-    <ul class="contact-list">
+    <ul class="contact-list animate-section">
         <li><i class="fas fa-map-marker-alt"></i><a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank"> Via del Ponte Sospeso, 7r, 50142 Firenze FI</li> </a>
         <li><i class="fas fa-phone"></i><a href="tel:055 5121510"> 055 5121510</li></a>
         <li><i class="fas fa-envelope"></i> <a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a></li>
@@ -211,265 +222,307 @@
     </ul>
 
     <h2>Orari di Apertura</h2>
-    <ul class="opening-hours-list">
+    <ul class="opening-hours-list animate-section">
         <li><strong>Dal Lunedì <br> Alla Domenica</strong> 12:00 - 15:00,<br> 19:00 - 00:00</li>
     </ul>
 </div>
 
 
-    <div class="footer">
-     
-        <p>&copy; 2024 La Scarpetta-<a href="{% url 'cookie_consent:privacy_policy' %}">Privacy Policy</a>-
-            <a href="{% url 'cookie_consent:cookie_policy' %}">Cookie policy-</a>{% if user.is_authenticated %}
-            <a href="{% url 'logout' %}">Esci come amministratore</a>
-        {% endif %} Engineered by Tempora Innovation  
-        </p>
-       <!-- Banner di consenso ai cookie -->
-       
+<div class="footer fpc">
+    <p>&copy; 2024 La Scarpetta <a href="{% url 'cookie_consent:privacy_policy' %}">Privacy Policy</a>
+        <a href="{% url 'cookie_consent:cookie_policy' %}"> Cookie Policy</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="admin-link"> Esci come amministratore</a>
+        {% endif %}
+        Engineered by Tempora Innovation
+    </p>
+</div>
+
+<div class="footer fmobile">
+    <p>&copy; 2024 La Scarpetta</p>
+    <div class="footer-links">
+        <a href="{% url 'cookie_consent:privacy_policy' %}">Privacy Policy</a>
+        <span class="separator">•</span>
+        <a href="{% url 'cookie_consent:cookie_policy' %}">Cookie Policy</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="admin-link">Esci come amministratore</a>
+        {% endif %}
+        <br class= "nascondiinpc">
+        <a href="#">Engineered by Tempora Innovation</a>
     </div>
+</div>
 
 
 <script src="{% static 'pages/js/script.min.js' %}"></script>
 <script src="{% static 'pages/js/CaruselScript.js' %}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
 <script src="{% static 'pages/js/NavigationDot.js' %}"></script>
 <!-- Include pdf.js library -->
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // --- Gestione del Menù Mobile (Rimani invariato) ---
-            const navbar = document.querySelector('.navbar');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuIcon = document.getElementById('menu-icon');
-            
-            function adjustMenuPosition() {
-                const startingOffset = 10;
-                mobileMenu.style.top = startingOffset + 'px';
-            }
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- Gestione del Menù Mobile (Rimani invariato) ---
+        const navbar = document.querySelector('.navbar');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
         
-            adjustMenuPosition();
-        
-            menuIcon.addEventListener('click', function (event) {
-                event.stopPropagation(); // Previene la chiusura immediata del menu
-                mobileMenu.classList.toggle('active');
-                this.classList.toggle('active');
-            });
-        
-            document.addEventListener('click', function (event) {
-                if (!menuIcon.contains(event.target) && !mobileMenu.contains(event.target)) {
-                    mobileMenu.classList.remove('active');
-                    menuIcon.classList.remove('active');
-                }
-            });
-        
-            document.querySelectorAll('#mobile-menu a').forEach(function(menuItem) {
-                menuItem.addEventListener('click', function() {
-                    mobileMenu.classList.remove('active');
-                    menuIcon.classList.remove('active');
-                });
-            });
-        
-            // --- Gestione del PDF ---
-            {% if latest_pdf %}
-            // Percorso del PDF caricato
-            var url = "{{ latest_pdf.file.url }}";
-            
-            var pdfDoc = null,
-                pageNum = 1,
-                pageRendering = false,
-                pageNumPending = null,
-                scale = 1.5,
-                canvas = document.getElementById('the-canvas'),
-                ctx = canvas.getContext('2d');
-            
-            // Carica il PDF
-            pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-                pdfDoc = pdfDoc_;
-    
-                // Genera i puntini
-                createPdfIndicators();
-    
-                // Renderizza la prima pagina
-                renderPage(pageNum);
-            });
-            
-            function renderPage(num) {
-                pageRendering = true;
-                pdfDoc.getPage(num).then(function(page) {
-                    var viewport = page.getViewport({ scale: scale });
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-            
-                    var renderContext = {
-                        canvasContext: ctx,
-                        viewport: viewport
-                    };
-                    var renderTask = page.render(renderContext);
-            
-                    renderTask.promise.then(function() {
-                        pageRendering = false;
-                        if (pageNumPending !== null) {
-                            renderPage(pageNumPending);
-                            pageNumPending = null;
-                        }
-    
-                        // Aggiorna gli indicatori
-                        updatePdfIndicators(num);
-                    });
-                });
-                // Aggiorna l'indicazione della pagina se necessario
-                // document.getElementById('page_num').textContent = num;
-            }
-            
-            function queueRenderPage(num) {
-                if (num < 1 || num > pdfDoc.numPages) {
-                    return;
-                }
-                if (pageRendering) {
-                    pageNumPending = num;
-                } else {
-                    renderPage(num);
-                }
-            }
-            
-            function onPrevPage() {
-                if (pageNum <= 1) {
-                    return;
-                }
-                pageNum--;
-                queueRenderPage(pageNum);
-            }
-            
-            function onNextPage() {
-                if (pageNum >= pdfDoc.numPages) {
-                    return;
-                }
-                pageNum++;
-                queueRenderPage(pageNum);
-            }
-            
-            document.getElementById('prev').addEventListener('click', onPrevPage);
-            document.getElementById('next').addEventListener('click', onNextPage);
-    
-            // Funzione per creare i puntini
-            function createPdfIndicators() {
-                var indicatorsContainer = document.getElementById('pdf-indicators');
-                indicatorsContainer.innerHTML = ''; // Pulisce eventuali puntini esistenti
-    
-                for (var i = 1; i <= pdfDoc.numPages; i++) {
-                    var dot = document.createElement('span');
-                    dot.classList.add('carousel-dot');
-                    dot.setAttribute('data-page-number', i);
-    
-                    // Aggiunge l'event listener per il click
-                    dot.addEventListener('click', function(event) {
-                        var pageNumber = Number(event.target.getAttribute('data-page-number'));
-                        pageNum = pageNumber;
-                        queueRenderPage(pageNum);
-                    });
-    
-                    indicatorsContainer.appendChild(dot);
-                }
-    
-                // Imposta il puntino della prima pagina come attivo
-                updatePdfIndicators(pageNum);
-            }
-    
-            // Funzione per aggiornare lo stato attivo dei puntini
-            function updatePdfIndicators(pageNum) {
-                var dots = document.querySelectorAll('.carousel-dot');
-                dots.forEach(function(dot) {
-                    dot.classList.remove('active');
-                });
-                var activeDot = document.querySelector('.carousel-dot[data-page-number="' + pageNum + '"]');
-                if (activeDot) {
-                    activeDot.classList.add('active');
-                }
-            }
-            
-            // --- Gestione del Drag/Swipe ---
-            const pdfContainer = document.querySelector('.pdf-container');
-            const pdfViewer = document.getElementById('pdf-viewer');
-            
-            let isDragging = false;
-            let startX = 0;
-            let currentTranslateX = 0;
-            let prevTranslateX = 0;
-            let animationID;
-            
-            // Previeni il comportamento predefinito per evitare lo zoom o lo scroll
-            pdfContainer.addEventListener('dragstart', (e) => e.preventDefault());
-            
-            // Eventi Touch
-            pdfContainer.addEventListener('touchstart', touchStart);
-            pdfContainer.addEventListener('touchend', touchEnd);
-            pdfContainer.addEventListener('touchmove', touchMove);
-            
-            // Eventi Mouse
-            pdfContainer.addEventListener('mousedown', touchStart);
-            pdfContainer.addEventListener('mouseup', touchEnd);
-            pdfContainer.addEventListener('mouseleave', touchEnd);
-            pdfContainer.addEventListener('mousemove', touchMove);
-            
-            function touchStart(event) {
-                isDragging = true;
-                startX = getPositionX(event);
-                animationID = requestAnimationFrame(animation);
-                pdfViewer.classList.add('grabbing');
-            }
-            
-            function touchMove(event) {
-                if (!isDragging) return;
-                const currentPosition = getPositionX(event);
-                const diff = currentPosition - startX;
-                currentTranslateX = prevTranslateX + diff;
-            }
-            
-            function touchEnd() {
-                cancelAnimationFrame(animationID);
-                isDragging = false;
-                const movedBy = currentTranslateX - prevTranslateX;
-                const threshold = pdfContainer.offsetWidth * 0.2;
-                
-                if (movedBy < -threshold && pageNum < pdfDoc.numPages) {
-                    pageNum++;
-                    queueRenderPage(pageNum);
-                } else if (movedBy > threshold && pageNum > 1) {
-                    pageNum--;
-                    queueRenderPage(pageNum);
-                } else {
-                    // Resta sulla stessa pagina
-                    queueRenderPage(pageNum);
-                }
-                
-                resetPosition();
-                pdfViewer.classList.remove('grabbing');
-            }
-            
-            function getPositionX(event) {
-                return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-            }
-            
-            function animation() {
-                setSliderPosition();
-                if (isDragging) {
-                    requestAnimationFrame(animation);
-                }
-            }
-            
-            function setSliderPosition() {
-                pdfViewer.style.transform = `translateX(${currentTranslateX}px)`;
-            }
-            
-            function resetPosition() {
-                currentTranslateX = 0;
-                prevTranslateX = 0;
-                pdfViewer.style.transform = `translateX(${currentTranslateX}px)`;
-            }
-            
-            {% endif %}
+        function adjustMenuPosition() {
+            const startingOffset = 10;
+            mobileMenu.style.top = startingOffset + 'px';
+        }
+
+        adjustMenuPosition();
+
+        menuIcon.addEventListener('click', function (event) {
+            event.stopPropagation(); // Previene la chiusura immediata del menu
+            mobileMenu.classList.toggle('active');
+            this.classList.toggle('active');
         });
-    </script>
+
+        document.addEventListener('click', function (event) {
+            if (!menuIcon.contains(event.target) && !mobileMenu.contains(event.target)) {
+                mobileMenu.classList.remove('active');
+                menuIcon.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(function(menuItem) {
+            menuItem.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuIcon.classList.remove('active');
+            });
+        });
+
+        // --- Gestione del PDF ---
+        {% if latest_pdf %}
+        // Percorso del PDF caricato
+        var url = "{{ latest_pdf.file.url }}";
+        
+        var pdfDoc = null,
+            pageNum = 1,
+            pageRendering = false,
+            pageNumPending = null,
+            scale = 1.5,
+            canvas = document.getElementById('the-canvas'),
+            ctx = canvas.getContext('2d');
+        
+        // Cache per le pagine pre-renderizzate
+        var pageCache = {};
+
+        // Carica il PDF
+        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+            pdfDoc = pdfDoc_;
+
+            // Genera i puntini
+            createPdfIndicators();
+
+            // Renderizza la prima pagina
+            renderPage(pageNum);
+        });
+        
+        function renderPage(num, animationDirection = null) {
+            pageRendering = true;
+
+            // Gestione delle animazioni
+            if (animationDirection === 'next') {
+                canvas.classList.add('slide-out-to-left', 'animate');
+            } else if (animationDirection === 'prev') {
+                canvas.classList.add('slide-out-to-right', 'animate');
+            }
+
+            // Attendi la fine dell'animazione di uscita
+            setTimeout(() => {
+                // Verifica se la pagina è già nella cache
+                if (pageCache[num]) {
+                    // Utilizza la pagina pre-renderizzata dalla cache
+                    ctx.putImageData(pageCache[num], 0, 0);
+                    pageRendering = false;
+                    updatePdfIndicators(num);
+                    canvas.classList.remove('slide-out-to-left', 'slide-out-to-right', 'animate');
+                    addSlideInClass(animationDirection);
+                } else {
+                    // Renderizza la pagina normalmente
+                    pdfDoc.getPage(num).then(function(page) {
+                        var viewport = page.getViewport({ scale: scale });
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+
+                        var renderContext = {
+                            canvasContext: ctx,
+                            viewport: viewport
+                        };
+                        var renderTask = page.render(renderContext);
+
+                        renderTask.promise.then(function() {
+                            pageRendering = false;
+
+                            // Salva la pagina nella cache
+                            page.renderedPage = canvas.toDataURL();
+                            var img = new Image();
+                            img.src = page.renderedPage;
+                            img.onload = function() {
+                                var offscreenCanvas = document.createElement('canvas');
+                                offscreenCanvas.width = img.width;
+                                offscreenCanvas.height = img.height;
+                                var offscreenCtx = offscreenCanvas.getContext('2d');
+                                offscreenCtx.drawImage(img, 0, 0);
+                                var imageData = offscreenCtx.getImageData(0, 0, img.width, img.height);
+                                pageCache[num] = imageData;
+                            };
+
+                            if (pageNumPending !== null) {
+                                renderPage(pageNumPending, pageNumPending > num ? 'next' : 'prev');
+                                pageNumPending = null;
+                            }
+
+                            // Rimuovi classi di animazione precedente
+                            canvas.classList.remove('slide-out-to-left', 'slide-out-to-right', 'animate');
+
+                            // Aggiungi classe per slide-in
+                            addSlideInClass(animationDirection);
+
+                            // Aggiorna gli indicatori
+                            updatePdfIndicators(num);
+                        });
+                    });
+                }
+            }, 500); // Deve corrispondere alla durata della transizione CSS (0.5s)
+        }
+        
+        function addSlideInClass(animationDirection) {
+            if (animationDirection === 'next') {
+                canvas.classList.add('slide-in-from-right', 'animate');
+            } else if (animationDirection === 'prev') {
+                canvas.classList.add('slide-in-from-left', 'animate');
+            }
+
+            // Rimuovi classe slide-in dopo l'animazione
+            setTimeout(() => {
+                canvas.classList.remove('slide-in-from-right', 'slide-in-from-left', 'animate');
+            }, 0); // Deve corrispondere alla durata della transizione CSS
+        }
+
+        function queueRenderPage(num, animationDirection = null) {
+            if (num < 1 || num > pdfDoc.numPages) {
+                return;
+            }
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num, animationDirection);
+            }
+        }
+        
+        function onPrevPage() {
+            if (pageNum <= 1) {
+                return;
+            }
+            var targetPage = pageNum - 1;
+            queueRenderPage(targetPage, 'prev');
+            pageNum = targetPage;
+        }
+        
+        function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) {
+                return;
+            }
+            var targetPage = pageNum + 1;
+            queueRenderPage(targetPage, 'next');
+            pageNum = targetPage;
+        }
+        
+        document.getElementById('prev').addEventListener('click', onPrevPage);
+        document.getElementById('next').addEventListener('click', onNextPage);
+
+        // Funzioni di Zoom
+        function zoomIn() {
+            scale += 0.25;
+            renderPage(pageNum);
+        }
+
+        function zoomOut() {
+            if (scale > 0.5) {
+                scale -= 0.25;
+                renderPage(pageNum);
+            }
+        }
+
+        // Aggiungi Event Listeners ai Pulsanti di Zoom
+        document.getElementById('zoom-in').addEventListener('click', zoomIn);
+        document.getElementById('zoom-out').addEventListener('click', zoomOut);
+
+        // Funzione per creare i puntini
+        function createPdfIndicators() {
+            var indicatorsContainer = document.getElementById('pdf-indicators');
+            indicatorsContainer.innerHTML = ''; // Pulisce eventuali puntini esistenti
+
+            for (var i = 1; i <= pdfDoc.numPages; i++) {
+                var dot = document.createElement('span');
+                dot.classList.add('carousel-dot');
+                dot.setAttribute('data-page-number', i);
+
+                // Aggiunge l'event listener per il click
+                dot.addEventListener('click', function(event) {
+                    var pageNumber = Number(event.target.getAttribute('data-page-number'));
+                    var animationDirection = pageNumber > pageNum ? 'next' : 'prev';
+                    pageNum = pageNumber;
+                    queueRenderPage(pageNumber, animationDirection);
+                });
+
+                indicatorsContainer.appendChild(dot);
+            }
+
+            // Imposta il puntino della prima pagina come attivo
+            updatePdfIndicators(pageNum);
+        }
+
+        // Funzione per aggiornare lo stato attivo dei puntini
+        function updatePdfIndicators(num) {
+            var dots = document.querySelectorAll('.carousel-dot');
+            dots.forEach(function(dot) {
+                dot.classList.remove('active');
+            });
+            var activeDot = document.querySelector('.carousel-dot[data-page-number="' + num + '"]');
+            if (activeDot) {
+                activeDot.classList.add('active');
+            }
+        }
+        
+        // --- Integrazione di Hammer.js per Swipe Gestures ---
+        const pdfCarouselWrapper = document.getElementById('pdf-carousel-wrapper');
+        const loadingIndicator = document.getElementById('loading-indicator');
+
+        // Inizializza Hammer.js
+        var hammer = new Hammer(pdfCarouselWrapper);
+
+        // Configura Hammer.js per riconoscere swipe left e swipe right
+        hammer.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+
+        hammer.on('swipeleft', function(ev) {
+            console.log('Swipe Left');
+            onNextPage();
+        });
+
+        hammer.on('swiperight', function(ev) {
+            console.log('Swipe Right');
+            onPrevPage();
+        });
+
+        // --- Miglioramenti Visivi durante lo Swipe ---
+        hammer.on('swiping', function(ev) {
+            // Aggiungi una leggera traslazione al canvas durante lo swipe
+            var deltaX = ev.deltaX;
+            pdfCarouselWrapper.style.transform = `translateX(${deltaX}px)`;
+        });
+
+        hammer.on('swipeend', function(ev) {
+            // Resetta la traslazione dopo lo swipe
+            pdfCarouselWrapper.style.transform = `translateX(0px)`;
+        });
+
+        {% endif %}
+    });
+</script>
     <script>
             // Funzione per ottenere il valore di un cookie specifico
             function getCookie(name) {
@@ -516,5 +569,38 @@
                 setMapVisibility(consent === "true");
                 updateBookingButtonVisibility(consent === "true");
             }
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const sections = document.querySelectorAll('.animate-section');
+            
+                const options = {
+                    root: null,
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -100px 0px'
+                };
+            
+                const observerCallback = (entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const index = Array.from(sections).indexOf(entry.target);
+                            if (index % 2 === 0) {
+                                entry.target.classList.add('fade-in-left');
+                            } else {
+                                entry.target.classList.add('fade-in-right');
+                            }
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                };
+            
+                const observer = new IntersectionObserver(observerCallback, options);
+            
+                sections.forEach(section => {
+                    observer.observe(section);
+                });
+            });
+            
+            
         </script>
 {% endblock %}
