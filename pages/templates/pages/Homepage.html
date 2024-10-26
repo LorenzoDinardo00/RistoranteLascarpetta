@@ -399,7 +399,7 @@
             // Rimuovi classe slide-in dopo l'animazione
             setTimeout(() => {
                 canvas.classList.remove('slide-in-from-right', 'slide-in-from-left', 'animate');
-            }, 0); // Deve corrispondere alla durata della transizione CSS
+            }, 50); // Deve corrispondere alla durata della transizione CSS
         }
 
         function queueRenderPage(num, animationDirection = null) {
