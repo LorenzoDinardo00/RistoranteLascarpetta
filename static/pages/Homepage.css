@@ -2056,7 +2056,6 @@ form{
     transition: transform 0.5s ease, opacity 0.5s ease;
     transform: translateX(0);
     opacity: 1;
-    width: 80%;
 }
 
 /* Slide out to left quando si va alla pagina successiva */
