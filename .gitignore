@@ -3,3 +3,5 @@ settings.py
 settings_local.py
 media
 .env
+# File di ambiente
+ristorante/.env
