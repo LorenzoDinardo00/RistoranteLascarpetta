@@ -14,18 +14,37 @@
 {% endblock %}
 
 {% block content %}
-<nav class="navbar" >
+<nav class="navbar">
     <div class="menu left">
-        <a href="#container1-1">Chi Siamo</a>
-        <a href="#menu">Il Menù</a> <!-- Usa il routing di Django -->
+        <!-- Italian -->
+        <a href="#container1-1" class="lang lang-it">Chi Siamo</a> <!-- modified -->
+        <a href="#menu" class="lang lang-it">Il Menù</a> <!-- modified -->
+        <!-- English -->
+        <a href="#container1-1" class="lang lang-en" style="display: none;">About Us</a> <!-- modified -->
+        <a href="#menu" class="lang lang-en" style="display: none;">Our Menu</a> <!-- modified -->
     </div>
     <div class="logo">
         <a href="#starting">
-        <img src="{% static 'pages/images/Logosvgcentrato(1).webp' %}" alt="Logo La Scarpetta">
-        </a></div>
+            <img src="{% static 'pages/images/Logosvgcentrato(1).webp' %}" alt="Logo La Scarpetta">
+        </a>
+    </div>
     <div class="menu right">
-        <a href="#contatti">Contattaci</a>
-        <a href="{% url 'prenotazioni' %}" id="booking-button">Prenota Ora</a>
+        <!-- Italian -->
+        <a href="#contatti" class="lang lang-it">Contattaci</a>
+        <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button" class="lang lang-it">Prenota Ora</a>
+        <!-- English -->
+        <a href="#contatti" class="lang lang-en" style="display: none;">Contact Us</a>
+        <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button" class="lang lang-en" style="display: none;">Book Now</a>
+        
+        <!-- Language Switcher -->
+        <div class="language-switcher"> 
+            <button onclick="setLanguage('it')" class="lang-button">
+                <img src="{% static 'pages/images/bandieraitaliana.webp' %}" alt="Italiano" class="flag-icon">
+            </button>
+            <button onclick="setLanguage('en')" class="lang-button">
+                <img src="{% static 'pages/images/us.webp' %}" alt="English" class="flag-icon">
+            </button>
+        </div>
     </div>
     <!-- Icona del menu hamburger -->
     <div class="menu-icon" id="menu-icon">
@@ -33,24 +52,48 @@
         <span></span>
         <span></span>
     </div>
-    <!-- Menu Mobile -->
-    <div class="mobile-menu" id="mobile-menu">
-        <a href="#scritta" id="chi">Chi Siamo</a>
-        <a href="#menu">Il Menù</a> <!-- Usa il routing di Django -->
-        <a href="#contattiMobile">Contattaci</a>
-        <a href="{% url 'prenotazioni' %}" id="booking-button-mobile">Prenota Ora</a>
+    <!--<!-- Menu Mobile -->
+<div class="mobile-menu" id="mobile-menu">
+    <!-- Lingua italiana -->
+    <a href="#scritta" id="chi" class="lang lang-it">Chi Siamo</a>
+    <a href="#menu" class="lang lang-it">Il Menù</a>
+    <a href="#contattiMobile" class="lang lang-it">Contattaci</a>
+    <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button-mobile" class="lang lang-it">Prenota Ora</a>
+
+    <!-- Lingua inglese -->
+    <a href="#scritta" id="chi" class="lang lang-en" style="display: none;">About Us</a>
+    <a href="#menu" class="lang lang-en" style="display: none;">Our Menu</a>
+    <a href="#contattiMobile" class="lang lang-en" style="display: none;">Contact Us</a>
+    <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button-mobile" class="lang lang-en" style="display: none;">Book Now</a>
+    <a>
+    <!-- Language Switcher per versione mobile -->
+    <div class="language-switcher-mobile">
+        <button onclick="setLanguage('it')" class="lang-button-mobile">
+            <img src="{% static 'pages/images/bandieraitaliana.webp' %}" alt="Italiano" class="flag-icon">
+        </button>
+        <button onclick="setLanguage('en')" class="lang-button-mobile">
+            <img src="{% static 'pages/images/us.webp' %}" alt="English" class="flag-icon">
+        </button>
     </div>
-    </nav>
+</a>
+</nav>
+
+
 <div id="cookie-consent-modal" style="display:none;">
     <div id="cookie-consent-content">
-        <h2>Consentimento dei Cookie</h2>
-        <p>Questo sito utilizza i cookie per migliorare l'esperienza utente. Devi accettare i nostri cookie per continuare a navigare.</p>
-        <button onclick="acceptCookies()">Accetta Cookie</button>
-        <button onclick="declineCookies()">Rifiuta Cookie</button>
+        <!-- Italian -->
+        <h2 class="lang lang-it">Consentimento dei Cookie</h2> <!-- modified -->
+        <p class="lang lang-it">Questo sito utilizza i cookie per migliorare l'esperienza utente. Devi accettare i nostri cookie per continuare a navigare.</p> <!-- modified -->
+        <button onclick="acceptCookies()" class="lang lang-it">Accetta Cookie</button> <!-- modified -->
+        <button onclick="declineCookies()" class="lang lang-it">Rifiuta Cookie</button> <!-- modified -->
+        <!-- English -->
+        <h2 class="lang lang-en" style="display: none;">Cookie Consent</h2> <!-- modified -->
+        <p class="lang lang-en" style="display: none;">This site uses cookies to enhance user experience. You must accept our cookies to continue browsing.</p> <!-- modified -->
+        <button onclick="acceptCookies()" class="lang lang-en" style="display: none;">Accept Cookies</button> <!-- modified -->
+        <button onclick="declineCookies()" class="lang lang-en" style="display: none;">Decline Cookies</button> <!-- modified -->
     </div>
 </div>
 
-<!-- Banner centrale con immagini a scorrimento -->
 <!-- Banner centrale con immagini a scorrimento -->
 <div class="hero-banner" id="starting">
     <div class="slider-container">
@@ -67,42 +110,69 @@
     </div>
 </div>
 
-<div class="container1 " id="container1-1">
+<div class="container1" id="container1-1">
     <div class="text-container animate-section">
-        <h1 id="scritta">La Scarpetta</h1>
-        <p>
+        <!-- Italian -->
+        <h1 id="scritta" class="lang lang-it">La Scarpetta</h1> <!-- modified -->
+        <p class="lang lang-it">
             Immersi nel cuore di Firenze, celebriamo la tradizione culinaria della città e della Toscana. Il nostro chef, creerà per voi esperienze di gusto indimenticabili, dall'antipasto sfizioso, alla bistecca succulenta e al dolce fatto in casa.
             In un'atmosfera calorosa, vi invitiamo a condividere i vostri momenti più belli, dove il cibo diventa parte di un'esperienza, e ogni ospite è parte della nostra famiglia.
-        </p>
-        <p>
-            Vi aspettiamo <a href="https://www.google.com/search?client=safari&sca_esv=bcf76c252b636167&hl=it-it&sxsrf=ADLYWILkdSTu3Jbqp9ZoLE4hFxW2pPSs1Q:1729566612260&q=recensioni+di+la+scarpetta+firenze&uds=ADvngMjcH0KdF7qGWtwTBrP0nt7dd3T370p1BFaxl35pjuB-JwyTMr2qmFp789noWpPFpNJlK1wl6ZTv93oPHdn9uKGVonWavN9gE8oOPmuoo9CTM152UISGIMg2gVqz0nD3a1cF-X8rSdWr6rC3rCJgeckVeYDKDIyF5Lckq5_0kyrHGZ5T1hKCd_tyxQJkRT8dDTzQCLH-&si=ACC90nwjPmqJHrCEt6ewASzksVFQDX8zco_7MgBaIawvaF4-7jGNhOVKKCWTG3Mg1YugNP_Rf3d_c6_Bjb1jSBfb5XHTcp1PEoB5c7sOs4yvyBt9p84KZuFIKKkXt-w2FqV_movk1G8ND7McalnIt_QcySuv5T1D3A%3D%3D&sa=X&ved=2ahUKEwjP3afcgaGJAxXx9bsIHcoUPCMQxKsJegQIFBAB&ictx=1&stq=1&lei=lBcXZ8_DD_Hr7_UPyqnwmQI">qui</a> per una serata indimenticabile!</p>
-</div>
+        </p> <!-- modified -->
+        <p class="lang lang-it">
+            Vi aspettiamo <a href="https://www.google.com/search?...">qui</a> per una serata indimenticabile!
+        </p> <!-- modified -->
+        <!-- English -->
+        <h1 id="scritta" class="lang lang-en" style="display: none;">La Scarpetta</h1> <!-- modified -->
+        <p class="lang lang-en" style="display: none;">
+            Immersed in the heart of Florence, we celebrate the city's and Tuscany's culinary tradition. Our chef will create unforgettable taste experiences for you, from delicious appetizers to succulent steaks and homemade desserts.
+            In a warm atmosphere, we invite you to share your most beautiful moments, where food becomes part of an experience, and every guest is part of our family.
+        </p> <!-- modified -->
+        <p class="lang lang-en" style="display: none;">
+            We await you <a href="https://www.google.com/search?...">here</a> for an unforgettable evening!
+        </p> <!-- modified -->
+    </div>
     <div class="image-container1 animate-section">
         <img src="{% static 'pages/images/Osteria.webp' %}" alt="Piatto di cibo">
     </div>
 </div>
 <!-- Sezione del Menù Gourmet -->
-<!-- Sezione del Menù Gourmet -->
 <div class="gourmet-section animate-section" id="menu">
-    <h1 class="gourmet-title">Il nostro Menù</h1>
+    <!-- Italian -->
+    <h1 class="gourmet-title lang lang-it">Il nostro Menù</h1> <!-- modified -->
+    <!-- English -->
+    <h1 class="gourmet-title lang lang-en" style="display: none;">Our Menu</h1> <!-- modified -->
 
-    <!-- Visualizzazione del PDF del menù, se disponibile -->
     <!-- Visualizzazione del PDF del menù, se disponibile -->
     {% if latest_pdf %}
     <div class="pdf-container">
         <div class="pdf-carousel-container">
             <div class="pdf-carousel-wrapper" id="pdf-carousel-wrapper">
+                <!-- Italian -->
                 <canvas id="the-canvas"></canvas>
-                <div id="loading-indicator" class="loading">Caricamento...</div>
+                <div id="loading-indicator" class="loading lang lang-it">Caricamento...</div> <!-- modified -->
+                <!-- English -->
+                <div id="loading-indicator" class="loading lang lang-en" style="display: none;">Loading...</div> <!-- modified -->
             </div>
         </div>
         <div class="pdf-controls">
-            <button id="prev" class="btn btn-secondary" data-tooltip="Pagina Precedente">❮</button>
-            <div class="carousel-indicators" id="pdf-indicators"></div>
-            <button id="next" class="btn btn-secondary" data-tooltip="Pagina Successiva">❯</button>
-            <!-- Pulsanti di Zoom -->
-            <button id="zoom-in" class="btn btn-secondary" data-tooltip="Ingrandisci">+</button>
-            <button id="zoom-out" class="btn btn-secondary" data-tooltip="Riduci">-</button>
+            <!-- Italian -->
+            <div class="lang lang-it"> <!-- modified -->
+                <button id="prev" class="btn btn-secondary" data-tooltip="Pagina Precedente">❮</button>
+                <div class="carousel-indicators" id="pdf-indicators"></div>
+                <button id="next" class="btn btn-secondary" data-tooltip="Pagina Successiva">❯</button>
+                <!-- Pulsanti di Zoom -->
+                <button id="zoom-in" class="btn btn-secondary" data-tooltip="Ingrandisci">+</button>
+                <button id="zoom-out" class="btn btn-secondary" data-tooltip="Riduci">-</button>
+            </div>
+            <!-- English -->
+            <div class="lang lang-en" style="display: none;"> <!-- modified -->
+                <button id="prev-en" class="btn btn-secondary" data-tooltip="Previous Page">❮</button> <!-- modified -->
+                <div class="carousel-indicators" id="pdf-indicators"></div>
+                <button id="next-en" class="btn btn-secondary" data-tooltip="Next Page">❯</button> <!-- modified -->
+                <!-- Zoom Buttons -->
+                <button id="zoom-in-en" class="btn btn-secondary" data-tooltip="Zoom In">+</button> <!-- modified -->
+                <button id="zoom-out-en" class="btn btn-secondary" data-tooltip="Zoom Out">-</button> <!-- modified -->
+            </div>
         </div>
     </div>
     {% endif %}
@@ -111,93 +181,140 @@
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js';
     </script>
-    
-    <!-- Script per gestire la visualizzazione del PDF e gli eventi touch -->
-    
 
-<!-- Form per caricare un nuovo PDF (visibile solo per utenti staff) -->
-{% if user.is_staff %}
-<div class="menu-upload-form">
-    <h3>Carica Nuovo Menù PDF</h3>
-    <form method="post" enctype="multipart/form-data" action="{% url 'menu_upload' %}">
-        {% csrf_token %}
-        <label for="id_file" class="btn-file-upload">Seleziona PDF del Menù</label>
-        <input id="id_file" type="file" name="file" style="display: none;" onchange="document.getElementById('file-name').innerHTML = this.files[0].name">
-        <span id="file-name"></span>
-        <button type="submit" class="btn-submit">Carica PDF</button>
-    </form>
-</div>
-{% endif %}
-</div>
-
-    <div class="carousel-container ">
-        <div class="slides-wrapper">
-            <div class="carousel-image">
-                <img src="{% static 'pages/images/Foto-29.jpg' %}" alt="Immagine 1">
-            </div>
-            <div class="carousel-image">
-                <img src="{% static 'pages/images/Foto-7.jpg' %}" alt="Immagine 2">
-            </div>
-            <div class="carousel-image">
-                <img src="{% static 'pages/images/Foto-13.jpg' %}" alt="Immagine 3">
-            </div>
-        </div>
-        <!-- Bottoni di navigazione -->
-        <a class="previous" onclick="prevSlide()">❮</a>
-        <a class="next" onclick="nextSlide()">❯</a>
+    <!-- Form per caricare un nuovo PDF (visibile solo per utenti staff) -->
+    {% if user.is_staff %}
+    <!-- Italian -->
+    <div class="menu-upload-form lang lang-it"> <!-- modified -->
+        <h3>Carica Nuovo Menù PDF</h3>
+        <form method="post" enctype="multipart/form-data" action="{% url 'menu_upload' %}">
+            {% csrf_token %}
+            <label for="id_file" class="btn-file-upload">Seleziona PDF del Menù</label>
+            <input id="id_file" type="file" name="file" style="display: none;" onchange="document.getElementById('file-name').innerHTML = this.files[0].name">
+            <span id="file-name"></span>
+            <button type="submit" class="btn-submit">Carica PDF</button>
+        </form>
     </div>
-       <!-- Assicurati che i "carousel-dot" siano definiti come segue: -->
+    <!-- English -->
+    <div class="menu-upload-form lang lang-en" style="display: none;"> <!-- modified -->
+        <h3>Upload New Menu PDF</h3>
+        <form method="post" enctype="multipart/form-data" action="{% url 'menu_upload' %}">
+            {% csrf_token %}
+            <label for="id_file" class="btn-file-upload">Select Menu PDF</label>
+            <input id="id_file_en" type="file" name="file" style="display: none;" onchange="document.getElementById('file-name-en').innerHTML = this.files[0].name"> <!-- modified -->
+            <span id="file-name-en"></span> <!-- modified -->
+            <button type="submit" class="btn-submit">Upload PDF</button> <!-- modified -->
+        </form>
+    </div>
+    {% endif %}
+</div>
+
+<div class="carousel-container">
+    <div class="slides-wrapper">
+        <div class="carousel-image">
+            <img src="{% static 'pages/images/Foto-29.jpg' %}" alt="Immagine 1">
+        </div>
+        <div class="carousel-image">
+            <img src="{% static 'pages/images/Foto-7.jpg' %}" alt="Immagine 2">
+        </div>
+        <div class="carousel-image">
+            <img src="{% static 'pages/images/Foto-13.jpg' %}" alt="Immagine 3">
+        </div>
+    </div>
+    <!-- Bottoni di navigazione -->
+    <a class="previous" onclick="prevSlide()">❮</a>
+    <a class="next" onclick="nextSlide()">❯</a>
+</div>
+<!-- Assicurati che i "carousel-dot" siano definiti come segue: -->
 <div class="carousel-indicators">
     <span class="carousel-dot" data-index="0"></span>
     <span class="carousel-dot" data-index="1"></span>
     <span class="carousel-dot" data-index="2"></span>
 </div>
-
-</div>
-
 <!-- Sezione Contatti -->
 <div class="content-container" id="contatti">
     <div class="contact-hours-container">
         <div class="contact-left">
-            <h2>Contatti</h2>
+            <!-- Italiano -->
+            <h2 class="lang lang-it">Contatti</h2> <!-- modified -->
+            <!-- Inglese -->
+            <h2 class="lang lang-en" style="display: none;">Contact Us</h2> <!-- modified -->
             <div class="contact-info animate-section">
-                <div class="contact-item"><a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p>Via del Ponte Sospeso, 7r, FI</p>
-                </a>
-                </div>
-                <div class="contact-item"> <a href="tel:055 5121510">
-                    <i class="fas fa-phone"></i>
-                    <p>055 5121510</p>
-                </a>
-                </div>
-                <div class="contact-item">
+                <!-- Italiano -->
+                <div class="contact-item lang lang-it"> <!-- modified -->
+                    <a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Via del Ponte Sospeso, 7r, FI</p>
+                    </a>
+                </div> <!-- modified -->
+                <div class="contact-item lang lang-it"> <!-- modified -->
+                    <a href="tel:055 5121510">
+                        <i class="fas fa-phone"></i>
+                        <p>055 5121510</p>
+                    </a>
+                </div> <!-- modified -->
+                <div class="contact-item lang lang-it"> <!-- modified -->
                     <i class="fab fa-instagram"></i>
                     <p><a href="https://instagram.com/lascarpettafirenze" target="_blank">@lascarpettafirenze</a></p>
-                </div>
-                <div class="contact-item">
+                </div> <!-- modified -->
+                <div class="contact-item lang lang-it"> <!-- modified -->
                     <i class="fab fa-facebook"></i>
                     <p><a href="https://facebook.com/lascarpettafirenze" target="_blank">lascarpettafirenze</a></p>
-                </div>
-                <div class="contact-item">
+                </div> <!-- modified -->
+                <div class="contact-item lang lang-it"> <!-- modified -->
                     <i class="fas fa-envelope"></i>
                     <p><a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a></p>
-                </div>
-                <div class="contact-item">
+                </div> <!-- modified -->
+                <div class="contact-item lang lang-it"> <!-- modified -->
                     <i class="fab fa-whatsapp"></i>
                     <p><a href="https://wa.me/3755374459" target="_blank">Contattaci su WhatsApp</a></p>
-                </div>
+                </div> <!-- modified -->
+
+                <!-- Inglese -->
+                <div class="contact-item lang lang-en" style="display: none;"> <!-- modified -->
+                    <a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Via del Ponte Sospeso, 7r, Florence FI</p>
+                    </a>
+                </div> <!-- modified -->
+                <div class="contact-item lang lang-en" style="display: none;"> <!-- modified -->
+                    <a href="tel:055 5121510">
+                        <i class="fas fa-phone"></i>
+                        <p>055 5121510</p>
+                    </a>
+                </div> <!-- modified -->
+                <div class="contact-item lang lang-en" style="display: none;"> <!-- modified -->
+                    <i class="fab fa-instagram"></i>
+                    <p><a href="https://instagram.com/lascarpettafirenze" target="_blank">@lascarpettafirenze</a></p>
+                </div> <!-- modified -->
+                <div class="contact-item lang lang-en" style="display: none;"> <!-- modified -->
+                    <i class="fab fa-facebook"></i>
+                    <p><a href="https://facebook.com/lascarpettafirenze" target="_blank">lascarpettafirenze</a></p>
+                </div> <!-- modified -->
+                <div class="contact-item lang lang-en" style="display: none;"> <!-- modified -->
+                    <i class="fas fa-envelope"></i>
+                    <p><a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a></p>
+                </div> <!-- modified -->
+                <div class="contact-item lang lang-en" style="display: none;"> <!-- modified -->
+                    <i class="fab fa-whatsapp"></i>
+                    <p><a href="https://wa.me/3755374459" target="_blank">Contact us on WhatsApp</a></p>
+                </div> <!-- modified -->
             </div>
         </div>
 
         <div class="hours-right animate-section">
-            <h2>Orari di apertura</h2>
+            <!-- Italiano -->
+            <h2 class="lang lang-it">Orari di apertura</h2> <!-- modified -->
+            <!-- Inglese -->
+            <h2 class="lang lang-en" style="display: none;">Opening Hours</h2> <!-- modified -->
             <div class="opening-hours">
-                <p><strong>Lunedì-Domenica:</strong> 12-15, 19-00</p>
+                <!-- Italiano -->
+                <p class="lang lang-it"><strong>Lunedì-Domenica:</strong> 12-15, 19-00</p> <!-- modified -->
+                <!-- Inglese -->
+                <p class="lang lang-en" style="display: none;"><strong>Monday-Sunday:</strong> 12-15, 19-00</p> <!-- modified -->
             </div>
             <div id="map" style="width: 100%;">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11577.48292808035!2d11.2115738!3d43.7742329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a5aa11009a4f9%3A0x7b2045d5b4037df9!2sVia%20del%20Ponte%20Sospeso%2C%2050142%20Firenze%20FI%2C%20Italia!5e0!3m2!1sit!2sus!4v1647101325581!5m2!1sit!2sus" allowfullscreen="" loading="lazy" style="border:0; width: 100%;"></iframe>
-
             </div>
         </div>      
     </div>
@@ -205,19 +322,37 @@
 
 <!-- Sezione Contatti Mobile -->
 <div class="mobile-contact-section" id="contattiMobile">
-    <h2>Contatti</h2>
+    <!-- Italiano -->
+    <h2 class="lang lang-it">Contatti</h2> <!-- modified -->
+    <!-- Inglese -->
+    <h2 class="lang lang-en" style="display: none;">Contact Us</h2> <!-- modified -->
     <ul class="contact-list animate-section">
-        <li><i class="fas fa-map-marker-alt"></i><a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank"> Via del Ponte Sospeso, 7r, 50142 Firenze FI</li> </a>
-        <li><i class="fas fa-phone"></i><a href="tel:055 5121510"> 055 5121510</li></a>
-        <li><i class="fas fa-envelope"></i> <a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a></li>
-        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/lascarpettafirenze" target="_blank">@lascarpettafirenze</a></li>
-        <li><i class="fab fa-facebook"></i> <a href="https://facebook.com/lascarpettafirenze" target="_blank">La Scarpetta</a></li>
-        <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/3755374459" target="_blank">Contattaci su WhatsApp</a></li>
+        <!-- Italiano -->
+        <li class="lang lang-it"><i class="fas fa-map-marker-alt"></i><a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank"> Via del Ponte Sospeso, 7r, 50142 Firenze FI</a></li> <!-- modified -->
+        <li class="lang lang-it"><i class="fas fa-phone"></i><a href="tel:055 5121510"> 055 5121510</a></li> <!-- modified -->
+        <li class="lang lang-it"><i class="fas fa-envelope"></i> <a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a></li> <!-- modified -->
+        <li class="lang lang-it"><i class="fab fa-instagram"></i> <a href="https://instagram.com/lascarpettafirenze" target="_blank">@lascarpettafirenze</a></li> <!-- modified -->
+        <li class="lang lang-it"><i class="fab fa-facebook"></i> <a href="https://facebook.com/lascarpettafirenze" target="_blank">La Scarpetta</a></li> <!-- modified -->
+        <li class="lang lang-it"><i class="fab fa-whatsapp"></i> <a href="https://wa.me/3755374459" target="_blank">Contattaci su WhatsApp</a></li> <!-- modified -->
+
+        <!-- Inglese -->
+        <li class="lang lang-en" style="display: none;"><i class="fas fa-map-marker-alt"></i><a href="https://www.google.com/maps/dir//la+scarpetta+ristorante/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x132a576ed6ea0063:0xd99bac45d0ba484a?sa=X&ved=1t:3061&ictx=111" target="_blank"> Via del Ponte Sospeso, 7r, 50142 Florence FI</a></li> <!-- modified -->
+        <li class="lang lang-en" style="display: none;"><i class="fas fa-phone"></i><a href="tel:055 5121510"> 055 5121510</a></li> <!-- modified -->
+        <li class="lang lang-en" style="display: none;"><i class="fas fa-envelope"></i> <a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a></li> <!-- modified -->
+        <li class="lang lang-en" style="display: none;"><i class="fab fa-instagram"></i> <a href="https://instagram.com/lascarpettafirenze" target="_blank">@lascarpettafirenze</a></li> <!-- modified -->
+        <li class="lang lang-en" style="display: none;"><i class="fab fa-facebook"></i> <a href="https://facebook.com/lascarpettafirenze" target="_blank">La Scarpetta</a></li> <!-- modified -->
+        <li class="lang lang-en" style="display: none;"><i class="fab fa-whatsapp"></i> <a href="https://wa.me/3755374459" target="_blank">Contact us on WhatsApp</a></li> <!-- modified -->
     </ul>
 
-    <h2>Orari di Apertura</h2>
+    <!-- Italiano -->
+    <h2 class="lang lang-it">Orari di Apertura</h2> <!-- modified -->
+    <!-- Inglese -->
+    <h2 class="lang lang-en" style="display: none;">Opening Hours</h2> <!-- modified -->
     <ul class="opening-hours-list animate-section">
-        <li><strong>Dal Lunedì <br> Alla Domenica</strong> 12:00 - 15:00,<br> 19:00 - 00:00</li>
+        <!-- Italiano -->
+        <li class="lang lang-it"><strong>Dal Lunedì <br> Alla Domenica</strong> 12:00 - 15:00,<br> 19:00 - 00:00</li> <!-- modified -->
+        <!-- Inglese -->
+        <li class="lang lang-en" style="display: none;"><strong>From Monday <br> To Sunday</strong> 12:00 - 15:00,<br> 19:00 - 00:00</li> <!-- modified -->
     </ul>
 </div>
 
@@ -252,7 +387,67 @@
 <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
 <script src="{% static 'pages/js/NavigationDot.js' %}"></script>
 <!-- Include pdf.js library -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const navbar = document.querySelector(".navbar");
+        const languageSwitcher = document.querySelector(".language-switcher");
+    
+        function updateLanguageSwitcherPosition() {
+            const navbarHeight = navbar.offsetHeight;
+            languageSwitcher.style.top = `${navbarHeight + 10}px`; // Posiziona le bandiere 10px sotto la navbar
+        }
+    
+        // Esegui la funzione all'avvio e ogni volta che la finestra viene ridimensionata
+        updateLanguageSwitcherPosition();
+        window.addEventListener("resize", updateLanguageSwitcherPosition);
+    });
+    
+    //modified
+    function setLanguage(lang) {
+        // Nasconde tutti gli elementi con la classe 'lang'
+        var elements = document.getElementsByClassName('lang');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].style.display = 'none';
+        }
+    
+        // Mostra gli elementi con la lingua selezionata
+        var langElements = document.getElementsByClassName('lang-' + lang);
+        for (var i = 0; i < langElements.length; i++) {
+            langElements[i].style.display = '';
+        }
+    
+        // Salva la preferenza di lingua dell'utente
+        localStorage.setItem('preferredLanguage', lang);
+    
+        // Aggiorna lo stile del pulsante attivo
+        var buttons = document.querySelectorAll('.language-switcher button');
+        buttons.forEach(function(button) {
+            if (button.getAttribute('onclick').includes("'" + lang + "'")) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
+    
+        // Attiva l'animazione di flash della pagina
+        document.body.classList.add("page-flash");
+        setTimeout(() => {
+            document.body.classList.remove("page-flash");
+        }, 500); // Deve corrispondere alla durata dell'animazione (0.5s)
+    }
+    
+    // Load the preferred language when the page loads
+    function loadPreferredLanguage() {
+        var lang = localStorage.getItem('preferredLanguage') || 'it';
+        setLanguage(lang);
+    }
+    
+    // Call the function when the page is loaded
+    document.addEventListener('DOMContentLoaded', loadPreferredLanguage);
 
+    
+    </script>
+    
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // --- Gestione del Menù Mobile (Rimani invariato) ---
@@ -544,25 +739,23 @@
             function acceptCookies() {
                 document.cookie = "cookie_consent=true; max-age=" + 60*60*24*365 + "; path=/";
                 document.getElementById('cookie-consent-modal').style.display = 'none';
-                setMapVisibility(true);  // Mostra la mappa
-                updateBookingButtonVisibility(true);  // Mostra i pulsanti di prenotazione
+                setMapVisibility(true);  // Mostra la mappa, ma non nasconde il bottone
             }
-        
+
             // Funzione chiamata quando l'utente rifiuta i cookie
             function declineCookies() {
                 document.cookie = "cookie_consent=false; max-age=" + 60*60*24*365 + "; path=/";
                 document.getElementById('cookie-consent-modal').style.display = 'none';
-                setMapVisibility(false);  // Nasconde la mappa
-                updateBookingButtonVisibility(false);  // Nasconde i pulsanti di prenotazione
+                setMapVisibility(false);  // Nasconde la mappa, ma non il bottone
             }
-        
-            // Funzione eseguita al caricamento della pagina per controllare lo stato del consenso dei cookie
+
+            // Rimuovi o commenta la chiamata a updateBookingButtonVisibility() nella funzione onload
             window.onload = function() {
                 let consent = getCookie('cookie_consent');
                 document.getElementById('cookie-consent-modal').style.display = consent === "true" ? 'none' : 'flex';
                 setMapVisibility(consent === "true");
-                updateBookingButtonVisibility(consent === "true");
             }
+         
         </script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {

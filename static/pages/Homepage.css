@@ -201,9 +201,10 @@ text-transform: uppercase;
 .container1 {
     display: flex;
     align-items: stretch;
-    max-width: 1200px;
     padding: 20px;
     background-color: #fff; /* Sfondo bianco per tutto il container */
+    margin: 0 auto; /* Aggiungi questa linea per centrare il contenitore */
+    margin-left:60px;
 }
 #scritta{
     scroll-margin: -10px;
@@ -566,7 +567,7 @@ body .IlMenu h1 {
         position: fixed;
         left: 0;
         width: 100%;
-        height: 60vh;
+        height: 75vh;
         background-color: #f0f0f0;
         margin-top: 52px;
         z-index: 1000;
@@ -851,7 +852,7 @@ body .IlMenu h1 {
 .contact-info .contact-item i {
     margin-right: 20px;
     font-size: 28px;
-    color: #DAA520; /* Colore delle icone per abbinarlo al tema */
+    color: black; /* Colore delle icone per abbinarlo al tema */
     min-width: 30px; /* Assicura che le icone siano allineate verticalmente */
 }
 
@@ -1015,7 +1016,7 @@ body .IlMenu h1 {
 
 /* Spaziatura migliorata per la lista degli orari di apertura */
 .mobile-contact-section .opening-hours-list {
-    margin: 0;
+    margin: 20px;
     padding: 0;
 }
 
@@ -1660,7 +1661,7 @@ form{
     .carousel-container {
         max-width: 100%; /* Utilizza tutta la larghezza disponibile */
         padding-bottom: 0px;
-        margin-top: 0px;
+        margin-top: -8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra ulteriormente ridotta */
     }
 }
@@ -1781,6 +1782,7 @@ form{
 .pdf-container {
     max-width: 800px;
     margin: 0 auto;
+    padding:20px;
 }
 
 #pdf-viewer {
@@ -2085,4 +2087,99 @@ form{
 /* Classe per abilitare le animazioni */
 #the-canvas.animate {
     transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.language-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px; /* Ridotto ulteriormente per evitare l'andare a capo */
+    white-space: nowrap; /* Impedisce il ritorno a capo */
+}
+
+.language-switcher-mobile {
+    display: flex;
+    justify-content: center;
+    gap: 2px; /* Ridotto ulteriormente per dispositivi mobili */
+    white-space: nowrap; /* Impedisce il ritorno a capo */
+}
+
+.lang-button, .lang-button-mobile {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    width: auto; /* Assicura che la larghezza sia adattata al contenuto */
+}
+
+.flag-icon {
+    width: 24px; /* Riduci leggermente la dimensione per adattarla meglio al layout */
+    height: auto;
+}
+/* Definisce l'animazione per il flash della pagina */
+@keyframes pageFlash {
+    0% { background-color: rgba(255, 255, 255, 0); }
+    50% { background-color: rgba(255, 255, 255, 0.7); }
+    100% { background-color: rgba(255, 255, 255, 0); }
+}
+
+/* Classe per attivare l'animazione di flash */
+.page-flash::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    animation: pageFlash 0.5s ease-in-out;
+    pointer-events: none;
+    z-index: 9999;
+}
+/* Stile per le bandiere nel menu mobile */
+.lang-button-mobile {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+.language-switcher-mobile {
+    display: flex;
+    justify-content: center;
+    gap: 2px; /* Ridotto per diminuire ulteriormente lo spazio */
+    margin-top: 10px;
+}
+
+@media (max-width: 800px) {
+    .language-switcher-mobile button {
+        width: 30px !important;
+        max-width: 30px;
+        margin: 0 5px; /* Distanza minima tra le bandiere */
+    }
+}
+.flag-icon {
+    width: 24px;
+    height: auto;
+}
+
+
+.language-switcher {
+    display: flex;
+    gap: 5px; /* Distanza minima tra le bandiere */
+    margin-left: 10px; /* Distanza dal pulsante "Prenota Ora" */
+}
+
+.flag-icon {
+    width: 24px;
+    height: auto;
+}
+.lang-button{
+    padding-right: 10px;
+}
+/* Stile per il bottone "Prenota Ora" per mantenerlo su una singola riga */
+#booking-button {
+    white-space: nowrap !important; /* Evita il ritorno a capo */
+    font-size: clamp(14px, 2vw, 18px); /* Ridimensiona il font in modo responsivo */
+    padding: 10px 15px; /* Adatta la spaziatura per le dimensioni variabili */
+    overflow: hidden; /* Nasconde eventuali eccedenze */
+    text-align: center;
 }

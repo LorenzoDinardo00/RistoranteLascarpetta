@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Gestionale{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'gestionale/gestionale.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+        <h1>Benvenuto nel Gestionale</h1>
+        <div class="button-container">
+            <a href="{% url 'gestionale:prenotazioni' %}" class="button">Gestisci Prenotazioni</a>
+            <a href="{% url 'gestionale:clienti' %}" class="button">Gestisci Clienti</a>
+            <a href="{% url 'gestionale:statistiche' %}" class="button">Visualizza Statistiche</a>
+            <a href="{% url 'gestionale:report' %}" class="button">Report</a>
+            <a href="{% url 'logout' %}" class="button logout">Logout</a>
+        </div>
+    {% else %}
+        <div class="unauthorized-message">
+            <h2>Non sei autorizzato ad accedere a questa pagina</h2>
+            <p>Per favore, accedi per visualizzare i contenuti.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

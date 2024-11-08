@@ -31,7 +31,8 @@ ALLOWED_HOSTS = [
     'ristorantelascarpetta.onrender.com',
     '*.onrender.com',
     'lascarpettafirenze.com',
-    'www.lascarpettafirenze.com'
+    'www.lascarpettafirenze.com',
+    'ristorantelascarpetta-trvj.onrender.com'
 ]
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 

@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Prenota Ora - La Scarpetta{% endblock %}
+
+{% block css_files %}
+    <!-- CSS Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- File CSS personalizzato -->
+    <link rel="stylesheet" href="{% static 'gestionale/prenota_tavolo.css' %}">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Google Fonts -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Glacial+Indifference&family=Engagement&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    
+<body>
+    <nav class="navbar">
+        <div class="menu left">
+            <!-- Italian -->
+            <a href="{% url 'Homepage' %}#container1-1" class="lang lang-it">Chi Siamo</a> <!-- modified -->
+            <a href="{% url 'Homepage' %}#menu" class="lang lang-it">Il Menù</a> <!-- modified -->
+            <!-- English -->
+            <a href="{% url 'Homepage' %}#container1-1" class="lang lang-en" style="display: none;">About Us</a> <!-- modified -->
+            <a href="{% url 'Homepage' %}#menu" class="lang lang-en" style="display: none;">Our Menu</a> <!-- modified -->
+        </div>
+        <div class="logo">
+            <a href="{% url 'Homepage' %}#starting">
+                <img src="{% static 'pages/images/Logosvgcentrato(1).webp' %}" alt="Logo La Scarpetta">
+            </a>
+        </div>
+        <div class="menu right">
+            <!-- Italian -->
+            <a href="{% url 'Homepage' %}#contatti" class="lang lang-it">Contattaci</a>
+            <a href="{% url 'prenotazioni' %}" id="booking-button" class="lang lang-it">Prenota Ora</a>
+            <!-- English -->
+            <a href="{% url 'Homepage' %}#contatti" class="lang lang-en" style="display: none;">Contact Us</a>
+            <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button" class="lang lang-en" style="display: none;">Book Now</a>
+            
+            <!-- Language Switcher -->
+            <div class="language-switcher"> 
+                <button onclick="setLanguage('it')" class="lang-button">
+                    <img src="{% static 'pages/images/bandieraitaliana.webp' %}" alt="Italiano" class="flag-icon">
+                </button>
+                <button onclick="setLanguage('en')" class="lang-button">
+                    <img src="{% static 'pages/images/us.webp' %}" alt="English" class="flag-icon">
+                </button>
+            </div>
+        </div>
+        <!-- Icona del menu hamburger -->
+        <div class="menu-icon" id="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <!--<!-- Menu Mobile -->
+    <div class="mobile-menu" id="mobile-menu">
+        <!-- Lingua italiana -->
+        <a href="#scritta" id="chi" class="lang lang-it">Chi Siamo</a>
+        <a href="#menu" class="lang lang-it">Il Menù</a>
+        <a href="#contattiMobile" class="lang lang-it">Contattaci</a>
+        <a href="{% url 'prenotazioni' %}" id="booking-button-mobile" class="lang lang-it">Prenota Ora</a>
+    
+        <!-- Lingua inglese -->
+        <a href="#scritta" id="chi" class="lang lang-en" style="display: none;">About Us</a>
+        <a href="#menu" class="lang lang-en" style="display: none;">Our Menu</a>
+        <a href="#contattiMobile" class="lang lang-en" style="display: none;">Contact Us</a>
+        <a href="{% url 'prenotazioni' %}" id="booking-button-mobile" class="lang lang-en" style="display: none;">Book Now</a>
+        <a>
+        <!-- Language Switcher per versione mobile -->
+        <div class="language-switcher-mobile">
+            <button onclick="setLanguage('it')" class="lang-button-mobile">
+                <img src="{% static 'pages/images/bandieraitaliana.webp' %}" alt="Italiano" class="flag-icon">
+            </button>
+            <button onclick="setLanguage('en')" class="lang-button-mobile">
+                <img src="{% static 'pages/images/us.webp' %}" alt="English" class="flag-icon">
+            </button>
+        </div>
+    </a>
+    </nav>
+    <div class="content-wrapper">
+        <div class="reservation-container">
+            <h1 class="lang lang-it">Prenota il tuo Tavolo</h1>
+            <h1 class="lang lang-en" style="display: none;">Book Your Table</h1>
+        
+            <form method="post" action="{% url 'gestionale:prenota_tavolo' %}">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+        
+                <div class="form-group">
+                    <label for="id_first_name" class="lang lang-it">Nome</label>
+                    <label for="id_first_name" class="lang lang-en" style="display: none;">First Name</label>
+                    {{ form.first_name }}
+                </div>
+        
+                <div class="form-group">
+                    <label for="id_last_name" class="lang lang-it">Cognome</label>
+                    <label for="id_last_name" class="lang lang-en" style="display: none;">Last Name</label>
+                    {{ form.last_name }}
+                </div>
+        
+                <div class="form-group">
+                    <label for="id_phone_number" class="lang lang-it">Numero di Telefono</label>
+                    <label for="id_phone_number" class="lang lang-en" style="display: none;">Phone Number</label>
+                    {{ form.phone_number }}
+                </div>
+        
+                <div class="form-group">
+                    <label for="id_guests" class="lang lang-it">Numero di Persone</label>
+                    <label for="id_guests" class="lang lang-en" style="display: none;">Number of Guests</label>
+                    {{ form.guests }}
+                </div>
+        
+                <div class="form-group">
+                    <label for="id_reservation_date" class="lang lang-it">Data</label>
+                    <label for="id_reservation_date" class="lang lang-en" style="display: none;">Date</label>
+                    {{ form.reservation_date }}
+                </div>
+        
+                <div class="form-group">
+                    <label for="id_reservation_time" class="lang lang-it">Ora</label>
+                    <label for="id_reservation_time" class="lang lang-en" style="display: none;">Time</label>
+                    {{ form.reservation_time }}
+                </div>
+        
+                <!-- Consensi -->
+                <h2 class="lang lang-it">Consensi</h2>
+                <h2 class="lang lang-en" style="display: none;">Consents</h2>
+        
+                <div class="consent-group">
+                    {{ form.cookie_consent }} 
+                    <label for="id_cookie_consent" class="lang lang-it">Accetto i cookie e la privacy policy (obbligatorio)</label>
+                    <label for="id_cookie_consent" class="lang lang-en" style="display: none;">I accept cookies and the privacy policy (required)</label>
+                </div>
+                <div class="consent-group">
+                    {{ form.profiling_consent }} 
+                    <label for="id_profiling_consent" class="lang lang-it">Accetto la profilazione dei dati</label>
+                    <label for="id_profiling_consent" class="lang lang-en" style="display: none;">I agree to data profiling</label>
+                </div>
+                <div class="consent-group">
+                    {{ form.promotional_sms_consent }} 
+                    <label for="id_promotional_sms_consent" class="lang lang-it">Accetto di ricevere SMS promozionali</label>
+                    <label for="id_promotional_sms_consent" class="lang lang-en" style="display: none;">I agree to receive promotional SMS</label>
+                </div>
+                
+                <div class="accept-all">
+                    {{ form.accept_all }} 
+                    <label for="id_accept_all" class="lang lang-it">Accetta tutto</label>
+                    <label for="id_accept_all" class="lang lang-en" style="display: none;">Accept all</label>
+                </div>
+                
+                <!-- Bottoni di prenotazione -->
+                <button type="submit" class="submit-btn lang lang-it">Prenota</button>
+                <button type="submit" class="submit-btn lang lang-en" style="display: none;">Book</button></form>
+        </div>
+</div> 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- Gestione del Menù Mobile (Rimani invariato) ---
+        const navbar = document.querySelector('.navbar');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        
+        function adjustMenuPosition() {
+            const startingOffset = 10;
+            mobileMenu.style.top = startingOffset + 'px';
+        }
+
+        adjustMenuPosition();
+
+        menuIcon.addEventListener('click', function (event) {
+            event.stopPropagation(); // Previene la chiusura immediata del menu
+            mobileMenu.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!menuIcon.contains(event.target) && !mobileMenu.contains(event.target)) {
+                mobileMenu.classList.remove('active');
+                menuIcon.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(function(menuItem) {
+            menuItem.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                menuIcon.classList.remove('active');
+            });
+        });
+    });
+    </script>
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const navbar = document.querySelector(".navbar");
+        const reservationContainer = document.querySelector(".reservation-container");
+    
+        function updateReservationPosition() {
+            const navbarHeight = navbar.offsetHeight;
+            document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
+        }
+    
+        // Esegui la funzione all'avvio e ogni volta che la finestra viene ridimensionata
+        updateReservationPosition();
+        window.addEventListener("resize", updateReservationPosition);
+    });
+</script>
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        const acceptAllCheckbox = document.querySelector(".accept-all input[type='checkbox']");
+        const consentCheckboxes = document.querySelectorAll(".consent-group input[type='checkbox']");
+
+        if (acceptAllCheckbox) {
+            acceptAllCheckbox.addEventListener("change", function() {
+                consentCheckboxes.forEach(checkbox => checkbox.checked = this.checked);
+            });
+        }
+    });
+</script>
+
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const navbar = document.querySelector(".navbar");
+        const languageSwitcher = document.querySelector(".language-switcher");
+    
+        function updateLanguageSwitcherPosition() {
+            const navbarHeight = navbar.offsetHeight;
+            languageSwitcher.style.top = `${navbarHeight + 10}px`; // Posiziona le bandiere 10px sotto la navbar
+        }
+    
+        // Esegui la funzione all'avvio e ogni volta che la finestra viene ridimensionata
+        updateLanguageSwitcherPosition();
+        window.addEventListener("resize", updateLanguageSwitcherPosition);
+    });
+    
+    //modified
+    function setLanguage(lang) {
+        // Nasconde tutti gli elementi con la classe 'lang'
+        var elements = document.getElementsByClassName('lang');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].style.display = 'none';
+        }
+    
+        // Mostra gli elementi con la lingua selezionata
+        var langElements = document.getElementsByClassName('lang-' + lang);
+        for (var i = 0; i < langElements.length; i++) {
+            langElements[i].style.display = '';
+        }
+    
+        // Salva la preferenza di lingua dell'utente
+        localStorage.setItem('preferredLanguage', lang);
+    
+        // Aggiorna lo stile del pulsante attivo
+        var buttons = document.querySelectorAll('.language-switcher button');
+        buttons.forEach(function(button) {
+            if (button.getAttribute('onclick').includes("'" + lang + "'")) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
+    
+        // Attiva l'animazione di flash della pagina
+        document.body.classList.add("page-flash");
+        setTimeout(() => {
+            document.body.classList.remove("page-flash");
+        }, 500); // Deve corrispondere alla durata dell'animazione (0.5s)
+    }
+    
+    // Load the preferred language when the page loads
+    function loadPreferredLanguage() {
+        var lang = localStorage.getItem('preferredLanguage') || 'it';
+        setLanguage(lang);
+    }
+    
+    // Call the function when the page is loaded
+    document.addEventListener('DOMContentLoaded', loadPreferredLanguage);
+
+    
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const timeInput = document.getElementById("id_reservation_time");
+    
+            // Definisci gli orari validi
+            const validTimes = [
+                "12:00", "12:30", "13:00", "13:30", "14:00",
+                "19:00", "19:30", "20:00", "20:30", "21:00",
+                "21:30", "22:00", "22:30", "23:00"
+            ];
+    
+            // Sostituisci l'input con un menu a tendina con gli orari specifici
+            const select = document.createElement("select");
+            select.name = timeInput.name;
+            select.id = timeInput.id;
+            select.classList.add(...timeInput.classList); // Mantieni le classi originali
+    
+            // Popola il menu a tendina con le opzioni di orario
+            validTimes.forEach(time => {
+                const option = document.createElement("option");
+                option.value = time;
+                option.textContent = time;
+                select.appendChild(option);
+            });
+    
+            // Sostituisci l'input con il nuovo menu a tendina
+            timeInput.replaceWith(select);
+        });
+    </script>
+{% endblock %}

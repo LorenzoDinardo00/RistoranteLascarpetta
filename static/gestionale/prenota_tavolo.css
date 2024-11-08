@@ -1,0 +1,547 @@
+ /* CSS per il layout */
+ body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Allinea il container in alto ma al centro orizzontalmente */
+    min-height: 100vh; /* Imposta l'altezza minima per posizionare gli elementi correttamente */
+    margin: 0;
+    padding-top: calc(var(--navbar-height) + 20px); /* Aggiungi un padding per posizionare il container sotto il menu */
+}
+
+.reservation-container {
+    width: 100%; /* Aumenta la larghezza totale, adattandosi a schermi più piccoli */
+    max-width: 900px !important; /* Imposta una larghezza massima per rendere il container più ampio */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* Margine superiore per separarlo dal menu */
+}
+.reservation-container h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group input[type="time"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+.consent-group, .accept-all {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+.consent-group label, .accept-all label {
+    margin-left: 8px;
+}
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+.submit-btn:hover {
+    background-color: #45a049;
+}
+.consent-group input[type="checkbox"],
+.accept-all input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #4CAF50;
+    cursor: pointer;
+}
+@media (max-width: 400px) {
+    .reservation-container {
+        padding: 15px;
+    }
+    .reservation-container h1 {
+        font-size: 20px;
+    }
+    .form-group label, .consent-group label, .accept-all label {
+        font-size: 12px;
+    }
+    .submit-btn {
+        font-size: 14px;
+    }
+}
+.mobile-menu {
+    display: none;
+}
+
+/* Titoli di sezione */
+.section-title {
+    color: #ff9900;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 30px;
+    width: 100%;
+    font-family: cursive;
+}
+/* Stile generale per la navbar */
+.navbar{
+display: grid;
+grid-template-columns: 1fr auto 1fr; /* Tre colonne: sinistra, centro (logo), destra */
+align-items: center;
+width: 100%;
+position: fixed;
+top: 0;
+z-index: 10;
+padding: 10px 20px;
+background: radial-gradient(circle at center, #ffffff 0%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%);
+backdrop-filter: blur(10px);
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+text-transform: uppercase;
+
+}
+
+/* Stile per il logo centrale */
+.logo {
+    grid-column: 2 / 3; /* Seconda colonna */
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente */
+    align-items: center;     /* Centra verticalmente */
+}
+
+.logo img {
+    max-width: 120px;
+    height: auto;
+    display: block;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+/* Stile per i menu */
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra gli elementi del menu vicino al logo */
+}
+
+/* Stile per i menu di sinistra e destra */
+.menu.left {
+    grid-column: 1 / 2; /* Prima colonna */
+    display: flex;
+    justify-content: flex-end; /* Allinea i link verso destra all'interno del menu sinistro */
+    align-items: center;
+}
+
+.menu.right {
+    grid-column: 3 / 4; /* Terza colonna */
+    display: flex;
+    justify-content: flex-start; /* Allinea i link verso sinistra all'interno del menu destro */
+    align-items: center;
+}
+.menu.left a,
+.menu.right a {
+    text-decoration: none;
+    color: #000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    font-size: clamp(10px, 5vw, 20px);
+    margin: 0 15px; /* Spaziatura orizzontale tra i link */
+    font-family: 'Glacial Indifference', sans-serif;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Ombra sottile nera */
+    font-size: clamp(10px, 5vw, 20px);
+    font-family: 'Glacial Indifference', sans-serif;
+    font-weight: 700; /* Mantieni lo spessore anche al passaggio del mouse */
+
+
+}
+
+.menu.left a:hover,
+.menu.right a:hover {
+    color: #DAA520;
+}
+
+/* Stile per i link del menu */
+.menu a {
+    text-decoration: none;
+    color: #000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Ombra sottile nera */
+    font-size: clamp(10px, 5vw, 20px);
+    padding: 0 8vh; /* Distanza uniforme tra i link del menu */
+    font-family: 'Glacial Indifference', sans-serif;
+}
+@media (max-width: 1200px) {
+    .menu a{
+        white-space: nowrap; /* Impedisce il ritorno a capo */
+        font-size: clamp(10px, 5vw, 20px);
+        padding: 0 4vh;
+    }
+}
+@media (max-width: 1000px) {
+    .menu a{
+        white-space: nowrap; /* Impedisce il ritorno a capo */
+        font-size: clamp(10px, 5vw, 20px);
+        padding: 0 2vh;
+    }
+}
+
+.menu a:hover {
+    color: #DAA520;
+}
+
+/* Stile per l'icona del menu hamburger (mobile) */
+.menu-icon {
+    display: none;
+}
+/* Media Query per dispositivi mobili */
+@media (max-width: 800px) {
+    .navbar {
+        justify-content: space-between;
+        padding: 10px 0; /* Riduce il padding orizzontale */
+        padding-top: 14% !important;
+    }
+
+    /* Mostra l'icona hamburger */
+   
+
+    /* Logo centrato con la correzione per non sforare */
+    .navbar {
+        justify-content: flex-start; /* Allinea tutti gli elementi della navbar all'inizio */
+    }
+    .logo{
+        grid-column: 1 / -1; /* Assumendo che il logo debba estendersi per tutto il grid */
+        justify-self: center;
+    }
+    .logo img {
+        max-width: 120px; /* Controlla la dimensione massima del logo */
+        display: block; /* Assicurati che l'immagine del logo sia un blocco */
+        margin-top: -2%;
+        margin-left: 10px; /* Aggiunge un piccolo margine sinistro per non attaccarlo completamente al bordo */
+    }
+
+    .mobile-menu {
+        width: 100%; /* Assicura che il menu mobile occupi tutta la larghezza */
+        box-sizing: border-box; /* Include padding e border nel calcolo della larghezza */
+        left: 0.1vh !important;
+    }
+
+    /* Stile per i link del menu mobile */
+    .mobile-menu a {
+        text-decoration: none;
+        color: #000;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        font-size: clamp(10px, 5vw, 20px);
+        margin: 0 15px; /* Spaziatura orizzontale tra i link */
+        font-family: 'Glacial Indifference', sans-serif;
+        text-align: center; /* Centra il testo nei link */
+        width: auto; /* Rimuove la larghezza fissa per evitare sforamenti */
+        padding: 12px; /* Aumento del padding per una migliore area tattile */
+    }
+     /* Nascondi i menu desktop */
+     .menu.left,
+     .menu.right {
+         display: none;
+     }
+ 
+  /* Position and style the menu icon */
+ .menu-icon {
+     display: block;
+     right: 20px; /* Adjust the right margin for better alignment */
+     top: 20px; /* Adjust top margin to align with your design */
+     cursor: pointer;
+     z-index: 1001; /* Ensures it stays on top of other content */
+     position: absolute;
+     width: 30px; /* Width of the hamburger icon */
+     height: 30px; /* Height of the hamburger icon */
+     background-color: transparent; /* Ensures no background color */
+ 
+ }
+ 
+ .menu-icon span {
+     display: block;
+     width: 100%; /* Full width of the container */
+     height: 2px; /* Height of each line */
+     background-color: #333; /* Color of the hamburger lines */
+     margin-bottom: 8px; /* Space between the lines */
+     transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+ }
+ 
+ .menu-icon.active span:nth-child(1) {
+     transform: rotate(45deg) translate(7px, 7px); /* Adjust translation to align cross center */
+ }
+ 
+ .menu-icon.active span:nth-child(2) {
+     opacity: 0; /* Middle bar disappears */
+ }
+ 
+ .menu-icon.active span:nth-child(3) {
+     transform: rotate(-45deg) translate(7px, -7px); /* Adjust translation to align cross center */
+ }
+ 
+     /* Logo centrato */
+     .logo {
+         position: absolute;
+         left: 18%;
+         top: 10%;
+         transform: translateX(-50%);
+     }
+     .carousel-image img {
+         width: 100%;
+         padding: 12px;
+         height: auto;
+         display: block;
+         margin: 0 auto;
+         border-radius: 10px;
+         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+     }
+     .containerMenu {
+         margin: 0px auto;
+         padding: 10px !important; 
+         padding-top: 20px !important;
+         text-align: center;
+     }
+     .mobile-menu {
+         top: -100%; /* Spostato fuori schermo inizialmente */
+         position: fixed;
+         left: 0;
+         width: 100%;
+         height: 70vh;
+         background-color: #f0f0f0;
+         margin-top: 52px;
+         z-index: 1000;
+         overflow-y: auto;
+         box-sizing: border-box;
+         display: flex;
+         flex-direction: column;
+         justify-content: space-around;
+         align-items: center;
+         transition: top 1s ease, opacity 1s ease, visibility 1s ease;
+         opacity: 0;
+         visibility: hidden;
+     }
+     
+     .mobile-menu.active {
+         top: 10px; /* Parte da 10px dall'alto quando viene attivato */
+         opacity: 1;
+         visibility: visible;
+     }
+ 
+     .mobile-menu a {
+         width: 90%;
+         padding: 12px;
+         margin: 10px 0;
+         text-align: center;
+         color: #000;
+         text-decoration: none;
+         font-size: 21px;
+         transition: background-color 0.3s ease;
+         position: relative; /* Necessario per la posizione della linea decorativa */
+     }
+ 
+     .mobile-menu a:hover {
+         background-color: #ededed;
+     }
+ 
+     .mobile-menu a::after {
+         content: ""; /* Aggiunge un elemento decorativo dopo ogni link eccetto l'ultimo */
+         display: block;
+         height: 2px; /* Altezza della linea decorativa */
+         background-color: #DAA520; /* Colore della linea */
+         width: 50%; /* Lunghezza della linea, regolabile secondo necessità */
+         margin: 8px auto 0; /* Posiziona la linea un po' sotto il link */
+     }
+
+    }
+    /* Media Query per schermi molto piccoli */
+@media (max-width: 480px) {
+    /* Ridimensionamento del logo */
+    .logo img {
+        width: 120px;
+    }
+}
+
+.language-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px; /* Ridotto ulteriormente per evitare l'andare a capo */
+    white-space: nowrap; /* Impedisce il ritorno a capo */
+}
+
+.language-switcher-mobile {
+    display: flex;
+    justify-content: center;
+    gap: 2px; /* Ridotto ulteriormente per dispositivi mobili */
+    white-space: nowrap; /* Impedisce il ritorno a capo */
+}
+
+.lang-button, .lang-button-mobile {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    width: auto; /* Assicura che la larghezza sia adattata al contenuto */
+}
+
+.flag-icon {
+    width: 24px; /* Riduci leggermente la dimensione per adattarla meglio al layout */
+    height: auto;
+}
+/* Definisce l'animazione per il flash della pagina */
+@keyframes pageFlash {
+    0% { background-color: rgba(255, 255, 255, 0); }
+    50% { background-color: rgba(255, 255, 255, 0.7); }
+    100% { background-color: rgba(255, 255, 255, 0); }
+}
+
+/* Classe per attivare l'animazione di flash */
+.page-flash::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    animation: pageFlash 0.5s ease-in-out;
+    pointer-events: none;
+    z-index: 9999;
+}
+/* Stile per le bandiere nel menu mobile */
+.lang-button-mobile {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+.language-switcher-mobile {
+    display: flex;
+    justify-content: center;
+    gap: 2px; /* Ridotto per diminuire ulteriormente lo spazio */
+    margin-top: 10px;
+}
+
+@media (max-width: 800px) {
+    .language-switcher-mobile button {
+        width: 30px !important;
+        max-width: 30px;
+        margin: 0 5px; /* Distanza minima tra le bandiere */
+    }
+}
+.flag-icon {
+    width: 24px;
+    height: auto;
+}
+
+
+.language-switcher {
+    display: flex;
+    gap: 5px; /* Distanza minima tra le bandiere */
+    margin-left: 10px; /* Distanza dal pulsante "Prenota Ora" */
+}
+
+.flag-icon {
+    width: 24px;
+    height: auto;
+}
+.lang-button{
+    padding-right: 10px;
+}
+/* Stile per il bottone "Prenota Ora" per mantenerlo su una singola riga */
+#booking-button {
+    white-space: nowrap !important; /* Evita il ritorno a capo */
+    font-size: clamp(14px, 2vw, 18px); /* Ridimensiona il font in modo responsivo */
+    padding: 10px 15px; /* Adatta la spaziatura per le dimensioni variabili */
+    overflow: hidden; /* Nasconde eventuali eccedenze */
+    text-align: center;
+}
+/* Stile per i checkbox */
+.consent-group input[type="checkbox"],
+.accept-all input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #4CAF50;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Stile per il checkbox selezionato */
+.consent-group input[type="checkbox"]:checked,
+.accept-all input[type="checkbox"]:checked {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.consent-group input[type="checkbox"]:checked::before,
+.accept-all input[type="checkbox"]:checked::before {
+    content: '✔';
+    color: #fff;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Stile per la sezione "Accetta tutto" */
+.accept-all {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    padding: 10px;
+    border: 2px solid #FFD700; /* Colore oro per dare maggiore risalto */
+    border-radius: 8px;
+    background-color: #FFF8DC;
+    font-weight: bold;
+    font-size: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.accept-all:hover {
+    background-color: #FFEFD5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.accept-all label {
+    margin-left: 10px;
+    color: #333;
+}
+
+/* Stile per il testo degli altri consensi */
+.consent-group label {
+    font-weight: normal;
+    color: #333;
+}
+
+/* Effetto hover sui checkbox */
+.consent-group input[type="checkbox"]:hover,
+.accept-all input[type="checkbox"]:hover {
+    border-color: #91a045;
+}

@@ -1,6 +1,8 @@
+/* Body styling */
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #e9ecef;
+    font-family: 'Playfair Display', serif;
+    background-color: #faf8f5;
+    color: #333;
     margin: 0;
     padding: 0;
     display: flex;
@@ -8,68 +10,94 @@ body {
     align-items: center;
     min-height: 100vh;
 }
+
+/* Login container */
 .login-container {
     background: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    max-width: 450px;
     width: 100%;
-    max-width: 400px;
+    border: 1px solid #e2e2e2;
+    transition: box-shadow 0.3s ease;
 }
+.login-container:hover {
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+}
+
+/* Heading */
 h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
     text-align: center;
-    margin-bottom: 20px;
-    font-weight: 600;
-    font-size: 24px;
-    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #2c3e50;
 }
+
+/* Form group */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 label {
+    font-size: 16px;
+    color: #333;
     font-weight: 500;
-    font-size: 14px;
-    color: #555;
     margin-bottom: 8px;
     display: block;
 }
+
+/* Input fields */
 input[type="text"],
 input[type="password"] {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
+    padding: 14px;
+    border: 1px solid #dcdcdc;
     border-radius: 8px;
-    font-size: 14px;
-    background-color: #f9f9f9;
+    font-size: 16px;
+    background-color: #fafafa;
+    color: #333;
     transition: border-color 0.3s ease;
 }
 input[type="text"]:focus,
 input[type="password"]:focus {
-    border-color: #007bff;
+    border-color: #a52a2a;
     outline: none;
+    background-color: #f9f9f9;
 }
+
+/* Buttons */
 button {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     border: none;
     border-radius: 8px;
-    background-color: #007bff;
+    background-color: #a52a2a;
     color: #fff;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin-bottom: 16px;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+button.btn-secondary {
+    background-color: #8b0000;
 }
 button:hover {
-    background-color: #0056b3;
+    background-color: #8b0000;
+    transform: translateY(-2px);
 }
+
+/* Link to registration or forgot password */
 .register-link {
     text-align: center;
-    margin-top: 15px;
-    font-size: 14px;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
 }
 .register-link a {
-    color: #007bff;
+    color: #a52a2a;
     text-decoration: none;
     font-weight: 500;
 }

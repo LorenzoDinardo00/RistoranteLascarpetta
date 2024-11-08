@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Prenotazioni{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'gestionale/prenotazioni.css' %}">
+{% endblock %}
+{% block content %}
+<div class="reservation-container">
+    <h2>Gestione Prenotazioni - {{ selected_date }}</h2>
+    
+    <!-- Contenitore per navigazione e selettore di data -->
+    <div class="navigation-container">
+        <!-- Bottone per tornare alla homepage del gestionale -->
+        <a href="{% url 'gestionale:gestionale' %}" class="back-to-home">Torna alla Homepage del Gestionale</a>
+        
+        <!-- Navigazione tra i giorni -->
+        <div class="navigation">
+            <a href="{% url 'gestionale:prenotazioni' %}?date={{ prev_date }}" class="nav-button">Giorno Precedente</a>
+            <a href="{% url 'gestionale:prenotazioni' %}?date={{ next_date }}" class="nav-button">Giorno Successivo</a>
+        </div>
+        
+        <!-- Selezionatore di data per navigazione rapida -->
+        <form method="get" action="{% url 'gestionale:prenotazioni' %}" class="date-selector-form">
+            <label for="date-selector">Oppure seleziona una data:</label>
+            <input type="date" id="date-selector" name="date" value="{{ selected_date }}" onchange="this.form.submit()">
+        </form>
+    </div>
+    
+    <div class="reservation-list">
+        <div class="meal-section">
+            <h3>Pranzo</h3>
+            <ul>
+                {% for reservation in lunch_reservations %}
+                    <li>
+                        <a href="{% url 'gestionale:prenotazione_dettaglio' reservation.id %}">
+                            <span class="time">{{ reservation.reservation_time }}</span>
+                            <span class="name">{{ reservation.first_name }} {{ reservation.last_name }}</span>
+                            <span class="guests">{{ reservation.guests }} ospiti</span>
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="no-reservation">Nessuna prenotazione per il pranzo</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="meal-section">
+            <h3>Cena</h3>
+            <ul>
+                {% for reservation in dinner_reservations %}
+                    <li>
+                        <a href="{% url 'gestionale:prenotazione_dettaglio' reservation.id %}">
+                            <span class="time">{{ reservation.reservation_time }}</span>
+                            <span class="name">{{ reservation.first_name }} {{ reservation.last_name }}</span>
+                            <span class="guests">{{ reservation.guests }} ospiti</span>
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="no-reservation">Nessuna prenotazione per la cena</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

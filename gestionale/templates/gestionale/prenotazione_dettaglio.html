@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}prenotazione_dettaglio{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'gestionale/prenotazione_dettaglio.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="reservation-detail-container">
+    <h2>Dettagli Prenotazione</h2>
+    
+    <p><strong>Nome:</strong> {{ reservation.first_name }} {{ reservation.last_name }}</p>
+    <p><strong>Numero di Telefono:</strong> {{ reservation.phone_number }}</p>
+    <p><strong>Numero di Ospiti:</strong> {{ reservation.guests }}</p>
+    <p><strong>Data:</strong> {{ reservation.reservation_date }}</p>
+    <p><strong>Orario:</strong> {{ reservation.reservation_time }}</p>
+    <p><strong>Consenso Cookie:</strong> {{ reservation.cookie_consent|yesno:"Sì,No" }}</p>
+    <p><strong>Consenso Profilazione:</strong> {{ reservation.profiling_consent|yesno:"Sì,No" }}</p>
+    <p><strong>Consenso SMS Promozionali:</strong> {{ reservation.promotional_sms_consent|yesno:"Sì,No" }}</p>
+    <p><strong>Accetta Tutti:</strong> {{ reservation.accept_all|yesno:"Sì,No" }}</p>
+
+    <a href="{% url 'gestionale:prenotazioni' %}" class="back-button">Torna alla lista delle prenotazioni</a>
+</div>
+{% endblock %}

@@ -18,6 +18,7 @@ urlpatterns = [
     path('create-superuser/', views.create_superuser, name='create_superuser'),
     path('pdf/upload/', views.upload_pdf, name='upload_pdf'),     # Caricamento PDF
     path('', include('cookie_consent.urls')), 
+    
 
 ]
 if settings.DEBUG:

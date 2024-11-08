@@ -1,0 +1,141 @@
+/* Contenitore principale */
+.reservation-container {
+    font-family: 'Playfair Display', serif;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+/* Titolo */
+.reservation-container h2 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+/* Contenitore per la navigazione e il selettore di data */
+.navigation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.navigation {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.nav-button, .back-to-home {
+    padding: 10px 20px;
+    border: 1px solid #a52a2a;
+    border-radius: 8px;
+    background-color: #a52a2a;
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.nav-button:hover, .back-to-home:hover {
+    background-color: #8b0000;
+}
+
+/* Bottone per tornare alla homepage del gestionale */
+.back-to-home {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Stile per il selettore di data */
+.date-selector-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.date-selector-form label {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.date-selector-form input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    max-width: 180px;
+}
+
+/* Sezione pasti */
+.reservation-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.meal-section {
+    flex: 1;
+}
+
+.meal-section h3 {
+    font-weight: 600;
+    font-size: 22px;
+    color: #a52a2a;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Elenco prenotazioni */
+.meal-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid #ddd;
+}
+
+.meal-section li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    font-size: 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+.meal-section li.no-reservation {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}
+
+.time {
+    font-weight: 500;
+    color: #333;
+}
+
+.name {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.guests {
+    font-weight: 400;
+    color: #555;
+}
+
+/* Media query per mobile */
+@media (max-width: 768px) {
+    .reservation-list {
+        flex-direction: column;
+        gap: 20px;
+    }
+}

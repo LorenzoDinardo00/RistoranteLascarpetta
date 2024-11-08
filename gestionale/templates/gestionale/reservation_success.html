@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Prenotazione Confermata</title>
+    <style>
+        /* Stile generale per il corpo della pagina */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Stile per il titolo */
+        h1 {
+            font-size: 2em;
+            color: #4CAF50; /* Verde per rappresentare il successo */
+            margin-bottom: 10px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* Stile per il messaggio */
+        p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* Stile per un'animazione di fading */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Stile per un'icona di successo */
+        .icon-success {
+            font-size: 4em;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: popIn 1s ease-in-out;
+        }
+
+        /* Animazione per far comparire l'icona con effetto "pop" */
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            80% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+    <script>
+        // Reindirizza alla homepage dopo 5 secondi (5000 millisecondi)
+        setTimeout(function() {
+            window.location.href = "{% url 'Homepage' %}#starting";
+        }, 5000);
+    </script>
+</head>
+<body>
+    <!-- Icona di successo -->
+    <div class="icon-success">✔️</div>
+
+    <h1>La tua prenotazione è stata confermata! Verrai reindirizzato alla homepage tra 5 secondi.</h1>
+    <p>Grazie per aver prenotato con noi. Ti aspettiamo!</p>
+</body>
+</html>

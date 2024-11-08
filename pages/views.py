@@ -53,6 +53,7 @@ def menu_upload(request):
 # View per la pagina del menu (da personalizzare)
 def menu_page(request):
     return render(request, 'pages/Menu.html')  # Assicurati che il percorso del template sia corretto
+from django.urls import reverse
 
 # View per gestire il login dell'utente
 def user_login(request):
@@ -60,13 +61,22 @@ def user_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+        
         if user is not None:
             login(request, user)
-            return redirect('Homepage')  # Redirige alla homepage dopo il login
+            
+            # Controlla quale pulsante è stato premuto
+            if 'login_gestionale' in request.POST:
+                # Redirige alla pagina del gestionale se il pulsante "Accedi e vai al gestionale" è stato cliccato
+                return redirect('/gestionale/')  # Inserisci l'URL della pagina gestionale
+            else:
+                # Redirige alla homepage se il pulsante normale di login è stato cliccato
+                return redirect('Homepage')
         else:
+            # In caso di credenziali non valide
             return render(request, 'pages/Login.html', {'error': 'Invalid username or password'})
+    
     return render(request, 'pages/Login.html')
-
 # View per gestire il logout
 def user_logout(request):
     logout(request)
