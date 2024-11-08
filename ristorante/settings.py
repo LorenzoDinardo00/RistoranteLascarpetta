@@ -41,6 +41,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 # Application definition
 INSTALLED_APPS = [
+    'gestionale'
     'cookie_consent',                  # Cookie consent banner
     'whitenoise.runserver_nostatic',  # Serve static files without Django's staticfiles app
     'django.contrib.staticfiles',     # Keep the staticfiles app
