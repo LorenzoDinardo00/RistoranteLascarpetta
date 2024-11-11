@@ -145,7 +145,7 @@
     <!-- Visualizzazione del PDF del menù, se disponibile -->
     {% if latest_pdf %}
     <div class="pdf-container">
-        <div class="pdf-carousel-container">
+        <div class="pdf-carousel-container" id="MenuPDF">
             <div class="pdf-carousel-wrapper" id="pdf-carousel-wrapper">
                 <!-- Italian -->
                 <canvas id="the-canvas"></canvas>
@@ -154,7 +154,7 @@
                 <div id="loading-indicator" class="loading lang lang-en" style="display: none;">Loading...</div> <!-- modified -->
             </div>
         </div>
-        <div class="pdf-controls">
+        <div class="pdf-controls" >
             <!-- Italian -->
             <div class="lang lang-it"> <!-- modified -->
                 <button id="prev" class="btn btn-secondary" data-tooltip="Pagina Precedente">❮</button>
