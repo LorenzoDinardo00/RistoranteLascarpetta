@@ -678,3 +678,43 @@ body {
         font-size: 14px;
     }
 }
+ /* Stile per le bandiere nel menu mobile */
+.lang-button-mobile {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+.language-switcher-mobile {
+    display: flex;
+    justify-content: center;
+    gap: 2px; /* Ridotto per diminuire ulteriormente lo spazio */
+    margin-top: 10px;
+}
+
+@media (max-width: 800px) {
+    .language-switcher-mobile button {
+        width: 30px !important;
+        max-width: 30px;
+        margin: 0 5px; /* Distanza minima tra le bandiere */
+    }
+}
+.flag-icon {
+    width: 24px;
+    height: 16px;
+}
+
+
+.language-switcher {
+    display: flex;
+    gap: 5px; /* Distanza minima tra le bandiere */
+    margin-left: 10px; /* Distanza dal pulsante "Prenota Ora" */
+}
+
+.flag-icon {
+    width: 24px;
+    height: 16px;
+}
+.lang-button{
+    padding-right: 10px;
+}
