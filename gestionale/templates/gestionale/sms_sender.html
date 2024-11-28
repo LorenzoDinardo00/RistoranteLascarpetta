@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'gestionale/shared.css' %}">
+{% endblock %}
+{% block content %}
+<div class="reservation-container">
+    <a href="{% url 'gestionale:gestionale' %}" class="back-to-home">Torna alla Homepage del Gestionale</a>
+    <h2>Invia SMS</h2>
+
+    <!-- Form per inviare SMS ai clienti selezionati -->
+    <form method="post" class="date-selector-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="message">Messaggio:</label>
+            <textarea id="message" name="message" rows="4" class="form-control"></textarea>
+        </div>
+        
+        <h3>Clienti Selezionati</h3>
+        {% if selected_customers %}
+            <ul class="reservation-list">
+                {% for customer in selected_customers %}
+                    <li class="meal-section">
+                        {{ customer.first_name }} {{ customer.last_name }} - {{ customer.phone_number }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-reservation">Nessun cliente selezionato.</p>
+        {% endif %}
+
+        <button type="submit" name="send_sms" class="nav-button mt-3">Invia SMS</button>
+    </form>
+
+    <hr>
+
+    <!-- Form per cercare clienti -->
+    <h3>Aggiungi Clienti</h3>
+    <form method="get" action="{% url 'gestionale:send_sms' %}" class="date-selector-form">
+        <label for="search">Cerca Clienti:</label>
+        <input type="text" id="search" name="search" value="{{ search_query }}" class="form-control" placeholder="Nome o Cognome">
+        <button type="submit" class="nav-button mt-2">Cerca</button>
+    </form>
+
+    <!-- Mostra i risultati della ricerca -->
+    {% if search_results %}
+        <form method="post" class="reservation-list">
+            {% csrf_token %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Seleziona</th>
+                        <th>Nome</th>
+                        <th>Cognome</th>
+                        <th>Numero di Telefono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in search_results %}
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="selected_customers" value="{{ customer.id }}">
+                            </td>
+                            <td>{{ customer.first_name }}</td>
+                            <td>{{ customer.last_name }}</td>
+                            <td>{{ customer.phone_number }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="nav-button mt-3">Aggiungi Selezionati</button>
+        </form>
+    {% elif search_query %}
+        <p class="no-reservation">Nessun cliente trovato per "{{ search_query }}".</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Conferma Eliminazione{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-danger">Attenzione!</h1>
+    <p>Sei sicuro di voler eliminare <strong>tutte</strong> le prenotazioni? Questa azione è irreversibile.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Elimina Tutto</button>
+        <a href="{% url 'gestionale:prenotazioni' %}" class="btn btn-secondary">Annulla</a>
+    </form>
+</div>
+{% endblock %}

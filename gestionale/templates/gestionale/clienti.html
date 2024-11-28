@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'gestionale/shared.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Gestione Clienti</h2>
+
+    <a href="{% url 'gestionale:gestionale' %}" class="back-to-home">Torna alla Homepage del Gestionale</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Numero di Telefono</th>
+                <th>Hashtag</th>
+                <th>Numero Prenotazioni</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.first_name }}</td>
+                    <td>{{ customer.last_name }}</td>
+                    <td>{{ customer.phone_number }}</td>
+                    <td>
+                        <form method="post" action="{% url 'gestionale:update_hashtag' customer.id %}">
+                            {% csrf_token %}
+                            <input type="text" id="hashtag_{{ customer.id }}" name="hashtag" 
+                                   value="{{ customer.hashtag }}" class="form-control" 
+                                   list="suggested-hashtags"
+                                   oninput="validateHashtagCount(this)" />
+                            <button type="submit" class="btn btn-primary mt-2">Salva</button>
+                        </form>
+                    </td>
+                    <td>{{ customer.numero_prenotazioni }}</td>
+                    <td>
+                        <a href="{% url 'gestionale:delete_customer' customer.id %}" class="btn btn-danger">Elimina</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <datalist id="suggested-hashtags">
+        {% for hashtag in unique_hashtags %}
+            <option value="{{ hashtag }}"></option>
+        {% endfor %}
+    </datalist>
+</div>
+{% endblock %}

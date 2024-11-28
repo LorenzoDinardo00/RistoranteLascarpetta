@@ -139,3 +139,31 @@
         gap: 20px;
     }
 }
+
+/* Centrare il bottone senza farlo estendere da bordo a bordo */
+.button-container {
+    display: flex; /* Usa flexbox per centrare il contenuto */
+    justify-content: center; /* Centra il bottone orizzontalmente */
+    margin: 20px 0; /* Spazio sopra e sotto */
+}
+
+/* Stile per il bottone */
+.btn-danger {
+    padding: 10px 30px; /* Spazio interno per il bottone */
+    font-size: 18px; /* Dimensione del testo */
+    font-weight: bold; /* Testo in grassetto */
+    color: white; /* Colore del testo */
+    background-color:#a52a2a;
+    border: none; /* Nessun bordo */
+    border-radius: 5px; /* Angoli arrotondati */
+    cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+    text-transform: uppercase; /* Testo in maiuscolo */
+    text-align: center; /* Allinea il testo */
+    transition: background-color 0.3s ease; /* Transizione per il cambio colore */
+}
+
+/* Effetto hover */
+.btn-danger:hover {
+    background-color:#a52a2a;
+    ; /* Rosso scuro */
+}

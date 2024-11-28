@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Invio Completato</h2>
+    <p>Gli SMS sono stati inviati con successo ai clienti selezionati.</p>
+    <a href="{% url 'gestionale:send_sms' %}" class="btn btn-primary mt-2">Torna alla pagina di invio SMS</a>
+    <a href="{% url 'gestionale:gestionale' %}" class="btn btn-secondary mt-2">Torna al Gestionale</a>
+</div>
+{% endblock %}

@@ -13,5 +13,17 @@ urlpatterns = [
     path('statistiche/', views.statistiche, name='statistiche'),
     path('report/', views.report, name='report'),
     path('prenotazioni/<int:reservation_id>/', views.prenotazione_dettaglio, name='prenotazione_dettaglio'),
+    path('clienti/<int:customer_id>/update/', views.update_hashtag, name='update_hashtag'),
+    path('clienti/<int:customer_id>/delete/', views.delete_customer, name='delete_customer'),
+    path('clienti/ricerca/', views.search_customers_by_hashtag, name='search_customers_by_hashtag'),
+     # Rotta per la vista di invio SMS
+    path('send-sms/', views.send_sms, name='send_sms'),
+    # Rotta per la conferma di invio SMS (success page)
+    path('sms-success/', views.sms_success, name='sms_success'),
+    path('clienti/<int:customer_id>/update/', views.update_hashtag, name='update_hashtag'),
+    path('modifica/<int:reservation_id>/', views.modifica_prenotazione, name='modifica_prenotazione'),
+    path('elimina/<int:reservation_id>/', views.elimina_prenotazione, name='elimina_prenotazione'),
+    path('prenotazioni/elimina_tutte/', views.elimina_tutte_prenotazioni, name='elimina_tutte_prenotazioni'),
+
 
 ]

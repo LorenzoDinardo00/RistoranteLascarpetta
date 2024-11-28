@@ -39,10 +39,10 @@
         <!-- Language Switcher -->
         <div class="language-switcher"> 
             <button onclick="setLanguage('it')" class="lang-button">
-                <img src="{% static 'pages/images/bandieraitaliana.webp' %}" alt="Italiano" class="flag-icon">
+                <img src="{% static 'pages/images/bandieraitaliana.png' %}" alt="Italiano" class="flag-icon">
             </button>
             <button onclick="setLanguage('en')" class="lang-button">
-                <img src="{% static 'pages/images/us.webp' %}" alt="English" class="flag-icon">
+                <img src="{% static 'pages/images/usa-flag.png' %}" alt="English" class="flag-icon">
             </button>
         </div>
     </div>
@@ -69,10 +69,10 @@
     <!-- Language Switcher per versione mobile -->
     <div class="language-switcher-mobile">
         <button onclick="setLanguage('it')" class="lang-button-mobile">
-            <img src="{% static 'pages/images/bandieraitaliana.webp' %}" alt="Italiano" class="flag-icon">
+            <img src="{% static 'pages/images/bandieraitaliana.png' %}" alt="Italiano" class="flag-icon">
         </button>
         <button onclick="setLanguage('en')" class="lang-button-mobile">
-            <img src="{% static 'pages/images/us.webp' %}" alt="English" class="flag-icon">
+            <img src="{% static 'pages/images/usa-flag.png' %}" alt="English" class="flag-icon">
         </button>
     </div>
 </a>
@@ -303,15 +303,20 @@
         </div>
 
         <div class="hours-right animate-section">
-            <!-- Italiano -->
-            <h2 class="lang lang-it">Orari di apertura</h2> <!-- modified -->
-            <!-- Inglese -->
-            <h2 class="lang lang-en" style="display: none;">Opening Hours</h2> <!-- modified -->
+            <!-- Titolo -->
+            <h2 class="lang lang-it">Orari di Apertura</h2>
+            <h2 class="lang lang-en" style="display: none;">Opening Hours</h2>
+        
+            <!-- Contenuto orari -->
             <div class="opening-hours">
-                <!-- Italiano -->
-                <p class="lang lang-it"><strong>Lunedì-Domenica:</strong> 12-15, 19-00</p> <!-- modified -->
-                <!-- Inglese -->
-                <p class="lang lang-en" style="display: none;"><strong>Monday-Sunday:</strong> 12-15, 19-00</p> <!-- modified -->
+                <p>
+                    <strong>Dal Lunedì:</strong> 
+                    <span>12:00 - 15:00,</span>
+                </p>
+                <p>
+                    <strong>Alla Domenica:</strong> 
+                    <span>19:00 - 00:00</span>
+                </p>
             </div>
             <div id="map" style="width: 100%;">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11577.48292808035!2d11.2115738!3d43.7742329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a5aa11009a4f9%3A0x7b2045d5b4037df9!2sVia%20del%20Ponte%20Sospeso%2C%2050142%20Firenze%20FI%2C%20Italia!5e0!3m2!1sit!2sus!4v1647101325581!5m2!1sit!2sus" allowfullscreen="" loading="lazy" style="border:0; width: 100%;"></iframe>
@@ -480,6 +485,13 @@
                 mobileMenu.classList.remove('active');
                 menuIcon.classList.remove('active');
             });
+            // Chiudi il menu quando si effettua lo scroll
+    window.addEventListener('scroll', function () {
+        if (mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            menuIcon.classList.remove('active');
+        }
+    });
         });
 
         // --- Gestione del PDF ---

@@ -5,21 +5,34 @@ from twilio.rest import Client
 from .form import ReservationForm
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-
 def prenota_tavolo(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
         if form.is_valid():
-            reservation = form.save()
-            
-            # Invia l'SMS di conferma con Twilio solo se i cookie sono stati accettati
+            reservation = form.save(commit=False)
+            # Garantisce che il valore di reservation_time sia nel formato 'HH:MM'
+            reservation.reservation_time = reservation.reservation_time.strip()
+            reservation.save()
+
+            # Creazione o aggiornamento del cliente se il consenso è dato
+            if reservation.profiling_consent:
+                customer, created = Customer.objects.get_or_create(
+                    first_name=reservation.first_name,
+                    last_name=reservation.last_name,
+                    phone_number=reservation.phone_number,
+                )
+                customer.numero_prenotazioni += 1
+                customer.save()
+
+            # Invia SMS solo se i cookie sono stati accettati
             if reservation.phone_number and reservation.cookie_consent:
-                # send_confirmation_sms(reservation)
-                pass  # Commentato temporaneamente per evitare l'invio di SMS
+                # send_confirmation_sms(reservation)  # Commentato temporaneamente
+                pass
             return redirect(reverse('gestionale:reservation_success'))
     else:
         form = ReservationForm()
     return render(request, 'gestionale/prenota_tavolo.html', {'form': form})
+
 
 def send_confirmation_sms(reservation):
     try:
@@ -59,8 +72,8 @@ def prenotazioni(request):
     reservations = Reservation.objects.filter(reservation_date=selected_date).order_by('reservation_time')
     
     # Suddividi le prenotazioni in pranzo e cena
-    lunch_reservations = reservations.filter(reservation_time__lt=datetime.strptime('15:00', '%H:%M').time())
-    dinner_reservations = reservations.filter(reservation_time__gte=datetime.strptime('15:00', '%H:%M').time())
+    lunch_reservations = reservations.filter(reservation_time__lt="15:00")
+    dinner_reservations = reservations.filter(reservation_time__gte="15:00")
     
     # Calcola le date precedente e successiva per la navigazione
     prev_date = (selected_date - timedelta(days=1)).isoformat()
@@ -76,30 +89,176 @@ def prenotazioni(request):
     
     return render(request, 'gestionale/prenotazioni.html', context)
 
+
 from django.shortcuts import render, get_object_or_404
 from .models import Reservation
-
 def prenotazione_dettaglio(request, reservation_id):
-    try:
-        # Recupera la prenotazione o mostra un errore 404 se non esiste
-        reservation = get_object_or_404(Reservation, id=reservation_id)
-    except Reservation.DoesNotExist:
-        # Gestisce il caso in cui l'ID non corrisponda ad alcuna prenotazione
-        return render(request, 'gestionale/prenotazione_dettaglio.html', {
-            'error': 'Prenotazione non trovata.'
-        })
-    
-    context = {
-        'reservation': reservation,
-    }
-    
-    return render(request, 'gestionale/prenotazione_dettaglio.html', context)
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+    return render(request, 'gestionale/prenotazione_dettaglio.html', {'reservation': reservation})
 
+
+from .models import Customer
+
+from django.db.models import Value
+from django.db.models.functions import Concat
+
+@login_required
 def clienti(request):
-    return render(request, 'gestionale/clienti.html')
-
+    customers = Customer.objects.all().order_by('last_name', 'first_name')
+    hashtags = (
+        Customer.objects
+        .exclude(hashtag="")
+        .values_list('hashtag', flat=True)
+    )
+    # Dividi gli hashtag in una lista univoca
+    unique_hashtags = set(tag.strip() for tags in hashtags for tag in tags.split(',') if tag.strip())
+    return render(request, 'gestionale/clienti.html', {
+        'customers': customers,
+        'unique_hashtags': unique_hashtags,
+    })
+    
 def statistiche(request):
     return render(request, 'gestionale/statistiche.html')
 
 def report(request):
     return render(request, 'gestionale/report.html')
+
+from django.shortcuts import render
+@login_required
+def update_hashtag(request, customer_id):
+    customer = get_object_or_404(Customer, id=customer_id)
+    if request.method == 'POST':
+        hashtag = request.POST.get('hashtag', '').strip()
+        customer.hashtag = hashtag
+        customer.save()
+    return redirect(reverse('gestionale:clienti'))
+
+
+@login_required
+def delete_customer(request, customer_id):
+    customer = get_object_or_404(Customer, id=customer_id)
+    customer.delete()
+    return redirect(reverse('gestionale:clienti'))
+
+
+from django.db.models import Q
+
+from django.db.models import Q
+from django.db.models import Q
+from django.shortcuts import render  # Assicurati che sia importato
+from django.contrib.auth.decorators import login_required
+from .models import Customer
+
+@login_required
+def search_customers_by_hashtag(request):
+    hashtag_query = request.GET.get('hashtag', '').strip()
+    if hashtag_query:
+        customers = Customer.objects.filter(hashtag__icontains=hashtag_query)
+    else:
+        customers = Customer.objects.all()
+
+    hashtags = (
+        Customer.objects
+        .exclude(hashtag="")
+        .values_list('hashtag', flat=True)
+    )
+    unique_hashtags = set(tag.strip() for tags in hashtags for tag in tags.split(',') if tag.strip())
+
+    return render(request, 'gestionale/search_customers.html', {
+        'customers': customers,
+        'hashtag_query': hashtag_query,
+        'unique_hashtags': unique_hashtags,
+    })
+    
+from django.contrib.auth.decorators import login_required
+from .models import Customer
+# from twilio.rest import Client
+# from django.conf import settings
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Customer
+@login_required
+def send_sms(request):
+    selected_customer_ids = request.POST.getlist('selected_customers')  # Ottieni gli ID dei clienti selezionati
+    search_query = request.GET.get('search', '').strip()  # Ottieni il termine di ricerca, se presente
+
+    # Recupera i clienti selezionati
+    selected_customers = Customer.objects.filter(id__in=selected_customer_ids)
+
+    # Recupera i risultati della ricerca
+    search_results = Customer.objects.filter(
+        first_name__icontains=search_query
+    ) | Customer.objects.filter(
+        last_name__icontains=search_query
+    ) if search_query else []
+
+    if request.method == 'POST' and 'send_sms' in request.POST:
+        # Invio degli SMS
+        message = request.POST.get('message', '')
+        for customer in selected_customers:
+            if customer.phone_number:
+                # Simulazione di invio SMS (Twilio commentato)
+                print(f"SMS simulato inviato a {customer.phone_number} con messaggio: {message}")
+        return redirect('gestionale:sms_success')
+
+    return render(request, 'gestionale/sms_sender.html', {
+        'selected_customers': selected_customers,
+        'search_results': search_results,
+        'search_query': search_query,
+    })
+# Funzione per inviare SMS tramite Twilio (commentata per ora)
+# def send_sms_to_customer(phone_number, message):
+#     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+#     client.messages.create(
+#         body=message,
+#         from_=settings.TWILIO_SENDER_ID,
+#         to=phone_number
+#     )
+
+@login_required
+def sms_success(request):
+    return render(request, 'gestionale/sms_success.html')
+
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import Reservation
+
+def modifica_prenotazione(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+    is_restaurateur = request.user.is_staff  # Supponendo che i ristoratori siano staff
+
+    if request.method == 'POST':
+        form = ReservationForm(request.POST, instance=reservation, is_restaurateur=is_restaurateur)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            # Assicura che reservation_time sia nel formato 'HH:MM'
+            reservation.reservation_time = reservation.reservation_time.strip()
+            reservation.save()
+            return redirect('gestionale:prenotazioni')
+    else:
+        form = ReservationForm(instance=reservation, is_restaurateur=is_restaurateur)
+
+    return render(request, 'gestionale/modifica_prenotazione.html', {'form': form, 'reservation': reservation})
+
+
+def elimina_prenotazione(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+    if request.method == 'POST':
+        reservation.delete()
+        return redirect('gestionale:prenotazioni')
+    return render(request, 'gestionale/elimina_prenotazione.html', {'reservation': reservation})
+
+from django.shortcuts import redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .models import Reservation
+
+@login_required
+def elimina_tutte_prenotazioni(request):
+    if request.method == 'POST':
+        # Cancella tutte le prenotazioni
+        Reservation.objects.all().delete()
+        messages.success(request, "Tutte le prenotazioni sono state eliminate con successo.")
+        return redirect('gestionale:prenotazioni')  # Reindirizza alla lista delle prenotazioni
+    
+    # Mostra una pagina di conferma
+    return render(request, 'gestionale/elimina_tutte.html')

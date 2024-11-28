@@ -34,11 +34,16 @@
             <ul>
                 {% for reservation in lunch_reservations %}
                     <li>
+                        <!-- Link ai dettagli della prenotazione -->
                         <a href="{% url 'gestionale:prenotazione_dettaglio' reservation.id %}">
                             <span class="time">{{ reservation.reservation_time }}</span>
                             <span class="name">{{ reservation.first_name }} {{ reservation.last_name }}</span>
                             <span class="guests">{{ reservation.guests }} ospiti</span>
                         </a>
+                        <!-- Pulsante Modifica -->
+                        <a href="{% url 'gestionale:modifica_prenotazione' reservation.id %}" class="edit-button">Modifica</a>
+                        <!-- Pulsante Elimina -->
+                        <a href="{% url 'gestionale:elimina_prenotazione' reservation.id %}" class="delete-button">Elimina</a>
                     </li>
                 {% empty %}
                     <li class="no-reservation">Nessuna prenotazione per il pranzo</li>
@@ -50,18 +55,28 @@
             <h3>Cena</h3>
             <ul>
                 {% for reservation in dinner_reservations %}
-                    <li>
-                        <a href="{% url 'gestionale:prenotazione_dettaglio' reservation.id %}">
-                            <span class="time">{{ reservation.reservation_time }}</span>
-                            <span class="name">{{ reservation.first_name }} {{ reservation.last_name }}</span>
-                            <span class="guests">{{ reservation.guests }} ospiti</span>
-                        </a>
-                    </li>
+                <li>
+                    <!-- Link ai dettagli della prenotazione -->
+                    <a href="{% url 'gestionale:prenotazione_dettaglio' reservation.id %}">
+                        <span class="time">{{ reservation.reservation_time }}</span>
+                        <span class="name">{{ reservation.first_name }} {{ reservation.last_name }}</span>
+                        <span class="guests">{{ reservation.guests }} ospiti</span>
+                    </a>
+                    <!-- Pulsante Modifica -->
+                    <a href="{% url 'gestionale:modifica_prenotazione' reservation.id %}" class="edit-button">Modifica</a>
+                    <!-- Pulsante Elimina -->
+                    <a href="{% url 'gestionale:elimina_prenotazione' reservation.id %}" class="delete-button">Elimina</a>
+                </li>
                 {% empty %}
                     <li class="no-reservation">Nessuna prenotazione per la cena</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
+
 </div>
-{% endblock %}
+<div class="button-container">
+    <a href="{% url 'gestionale:elimina_tutte_prenotazioni' %}" class="btn btn-danger">
+        Elimina Tutte le Prenotazioni
+    </a>
+</div>{% endblock %}

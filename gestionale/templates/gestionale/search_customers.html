@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'gestionale/shared.css' %}">
+{% endblock %}
+{% block content %}
+<div class="reservation-container">
+    <a href="{% url 'gestionale:gestionale' %}" class="back-to-home">Torna alla Homepage del Gestionale</a>
+    <h2>Ricerca Clienti per Hashtag</h2>
+
+    <!-- Form per la ricerca -->
+    <form method="get" action="{% url 'gestionale:search_customers_by_hashtag' %}" class="date-selector-form">
+        <label for="hashtag">Inserisci Hashtag:</label>
+        <input type="text" id="hashtag" name="hashtag" value="{{ hashtag_query }}" class="form-control" list="suggested-hashtags" />
+        <datalist id="suggested-hashtags">
+            {% for hashtag in unique_hashtags %}
+                <option value="{{ hashtag }}"></option>
+            {% endfor %}
+        </datalist>
+        <button type="submit" class="nav-button mt-2">Filtra</button>
+    </form>
+
+    {% if customers %}
+        <!-- Risultati della ricerca -->
+        <form method="post" action="{% url 'gestionale:send_sms' %}">
+            {% csrf_token %}
+            <h3 class="mt-4">Risultati per "{{ hashtag_query|default_if_none:'tutti i clienti' }}"</h3>
+            <div class="reservation-list">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Seleziona</th>
+                            <th>Nome</th>
+                            <th>Cognome</th>
+                            <th>Numero di Telefono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for customer in customers %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="selected_customers" value="{{ customer.id }}">
+                                </td>
+                                <td>{{ customer.first_name }}</td>
+                                <td>{{ customer.last_name }}</td>
+                                <td>{{ customer.phone_number }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <button type="submit" class="nav-button mt-3">Invia SMS ai Selezionati</button>
+        </form>
+    {% else %}
+        <p class="no-reservation mt-4">Nessun cliente trovato.</p>
+    {% endif %}
+</div>
+{% endblock %}

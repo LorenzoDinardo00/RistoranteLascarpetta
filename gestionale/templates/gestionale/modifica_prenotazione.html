@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Modifica Prenotazione</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save-button">Salva</button>
+    <a href="{% url 'gestionale:prenotazioni' %}" class="cancel-button">Annulla</a>
+</form>
+{% endblock %}

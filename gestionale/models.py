@@ -6,7 +6,7 @@ class Reservation(models.Model):
     phone_number = models.CharField(max_length=20)
     guests = models.IntegerField(default=1)
     reservation_date = models.DateField()
-    reservation_time = models.TimeField()
+    reservation_time = models.CharField(max_length=5)  # Mantieni sempre il formato 'HH:MM'
     cookie_consent = models.BooleanField(default=False)
     profiling_consent = models.BooleanField(default=False)
     promotional_sms_consent = models.BooleanField(default=False)
@@ -14,3 +14,13 @@ class Reservation(models.Model):
     
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.reservation_date} {self.reservation_time}"
+    
+class Customer(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=20)
+    hashtag = models.CharField(max_length=100, blank=True, null=True, default="")
+    numero_prenotazioni = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} ({self.phone_number})"

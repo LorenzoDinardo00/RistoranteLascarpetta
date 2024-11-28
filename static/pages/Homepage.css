@@ -2113,7 +2113,7 @@ form{
 
 .flag-icon {
     width: 24px; /* Riduci leggermente la dimensione per adattarla meglio al layout */
-    height: auto;
+    height: 16px;
 }
 /* Definisce l'animazione per il flash della pagina */
 @keyframes pageFlash {
@@ -2158,7 +2158,7 @@ form{
 }
 .flag-icon {
     width: 24px;
-    height: auto;
+    height: 16px;
 }
 
 
@@ -2170,7 +2170,7 @@ form{
 
 .flag-icon {
     width: 24px;
-    height: auto;
+    height: 16px;
 }
 .lang-button{
     padding-right: 10px;
@@ -2182,4 +2182,20 @@ form{
     padding: 10px 15px; /* Adatta la spaziatura per le dimensioni variabili */
     overflow: hidden; /* Nasconde eventuali eccedenze */
     text-align: center;
+}
+.opening-hours {
+    display: grid;
+    grid-template-columns: auto auto; /* Due colonne: una per il testo e una per gli orari */
+    column-gap:0px; /* Spazio tra le colonne */
+    align-items: center; /* Allinea verticalmente il contenuto */
+}
+
+.opening-hours p {
+    margin: 0; /* Rimuove i margini dei paragrafi */
+    display: contents; /* Rende flessibile il contenuto interno */
+}
+
+.opening-hours strong {
+    text-align: left; /* Allinea il testo a sinistra */
+    display: inline-block; /* Evita che si sovrapponga */
 }

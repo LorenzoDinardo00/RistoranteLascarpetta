@@ -14,8 +14,8 @@
         <div class="button-container">
             <a href="{% url 'gestionale:prenotazioni' %}" class="button">Gestisci Prenotazioni</a>
             <a href="{% url 'gestionale:clienti' %}" class="button">Gestisci Clienti</a>
-            <a href="{% url 'gestionale:statistiche' %}" class="button">Visualizza Statistiche</a>
-            <a href="{% url 'gestionale:report' %}" class="button">Report</a>
+            <a href="{% url 'gestionale:search_customers_by_hashtag' %}" class="button">Ricerca Clienti per Hashtag</a>
+            <a href="{% url 'gestionale:send_sms' %}" class="button">Invia SMS</a>
             <a href="{% url 'logout' %}" class="button logout">Logout</a>
         </div>
     {% else %}

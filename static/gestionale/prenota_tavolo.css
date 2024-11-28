@@ -468,80 +468,213 @@ text-transform: uppercase;
 }
 .lang-button{
     padding-right: 10px;
+}/* General Styles */
+body {
+    font-family: 'Glacial Indifference', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding-top: 70px; /* Adjust padding to accommodate fixed navbar */
 }
-/* Stile per il bottone "Prenota Ora" per mantenerlo su una singola riga */
-#booking-button {
-    white-space: nowrap !important; /* Evita il ritorno a capo */
-    font-size: clamp(14px, 2vw, 18px); /* Ridimensiona il font in modo responsivo */
-    padding: 10px 15px; /* Adatta la spaziatura per le dimensioni variabili */
-    overflow: hidden; /* Nasconde eventuali eccedenze */
+
+.navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.logo-img {
+    max-height: 40px;
+}
+
+.flag-icon {
+    width: 24px;
+    height: auto;
+}
+
+.nav-link {
+    color: #555;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.nav-link.active {
+    color: #333;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #333;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-nav .nav-link {
+        font-size: 18px;
+        margin-left: 0;
+        padding: 10px 0;
+    }
+}
+
+/* Content Wrapper */
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 15px;
+}
+
+.reservation-container {
+    background-color: #fff;
+    border-radius: 16px; /* Increased border-radius for more rounded corners */
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.reservation-container h1 {
     text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: #333;
 }
-/* Stile per i checkbox */
-.consent-group input[type="checkbox"],
-.accept-all input[type="checkbox"] {
-    appearance: none;
+
+.reservation-container h1 i {
+    color: #333;
+    margin-right: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 12px; /* Increased border-radius for input fields */
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-group i {
+    color: #333;
+    margin-right: 8px;
+}
+
+.consents h2 {
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.consents h2 i {
+    color: #333;
+    margin-right: 8px;
+}
+
+.consent-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.consent-group input[type="checkbox"] {
+    margin-right: 10px;
     width: 18px;
     height: 18px;
-    border: 2px solid #4CAF50;
-    border-radius: 4px;
-    position: relative;
-    cursor: pointer;
-    outline: none;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Stile per il checkbox selezionato */
-.consent-group input[type="checkbox"]:checked,
-.accept-all input[type="checkbox"]:checked {
-    background-color: #4CAF50;
-    border-color: #4CAF50;
-}
-
-.consent-group input[type="checkbox"]:checked::before,
-.accept-all input[type="checkbox"]:checked::before {
-    content: '✔';
-    color: #fff;
+.consent-group label {
     font-size: 14px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    color: #555;
 }
 
-/* Stile per la sezione "Accetta tutto" */
 .accept-all {
     display: flex;
     align-items: center;
-    margin: 15px 0;
-    padding: 10px;
-    border: 2px solid #FFD700; /* Colore oro per dare maggiore risalto */
-    border-radius: 8px;
-    background-color: #FFF8DC;
-    font-weight: bold;
-    font-size: 15px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.accept-all:hover {
-    background-color: #FFEFD5;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.accept-all input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
 }
 
 .accept-all label {
-    margin-left: 10px;
+    font-size: 16px;
+    font-weight: bold;
     color: #333;
 }
 
-/* Stile per il testo degli altri consensi */
-.consent-group label {
-    font-weight: normal;
-    color: #333;
+.submit-btn {
+    margin-top: 30px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 12px; /* Rounded button */
+    background-color: #333; /* Changed button color */
+    border: none;
 }
 
-/* Effetto hover sui checkbox */
-.consent-group input[type="checkbox"]:hover,
-.accept-all input[type="checkbox"]:hover {
-    border-color: #91a045;
+.submit-btn i {
+    margin-right: 8px;
+}
+
+.submit-btn:hover {
+    background-color: #555;
+}
+
+@media (max-width: 576px) {
+    .navbar-brand img {
+        max-height: 35px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+        margin-left: 5px;
+    }
+
+    .reservation-container {
+        padding: 20px;
+    }
+
+    .reservation-container h1 {
+        font-size: 22px;
+    }
+
+    .form-group label {
+        font-size: 12px;
+    }
+
+    .form-group input,
+    .form-group select {
+        font-size: 12px;
+    }
+
+    .consents h2 {
+        font-size: 18px;
+    }
+
+    .consent-group label {
+        font-size: 12px;
+    }
+
+    .accept-all label {
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+    }
 }

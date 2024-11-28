@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Eliminare la prenotazione?</h2>
+<p>Sei sicuro di voler eliminare la prenotazione di {{ reservation.first_name }} {{ reservation.last_name }} per il {{ reservation.reservation_date }} alle {{ reservation.reservation_time }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="delete-button">Sì, elimina</button>
+    <a href="{% url 'gestionale:prenotazioni' %}" class="cancel-button">Annulla</a>
+</form>
+{% endblock %}
