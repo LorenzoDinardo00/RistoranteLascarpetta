@@ -95,7 +95,7 @@ class DisabledDateForm(forms.ModelForm):
         help_text="Seleziona la data di inizio"
     )
     end_date = forms.DateField(
-        required=False,  # Non obbligatoria lato form, verrà gestita dal backend
+        required=False,
         widget=forms.DateInput(attrs={'type': 'date'}),
         help_text="Seleziona la data di fine (opzionale, si autocompila con la data di inizio)"
     )
@@ -109,12 +109,11 @@ class DisabledDateForm(forms.ModelForm):
         start_date = cleaned_data.get('start_date')
         end_date = cleaned_data.get('end_date')
 
-        # Imposta end_date uguale a start_date se non è stato fornito
+        # Se end_date non è fornito, impostalo uguale a start_date
         if not end_date:
-            end_date = start_date
-            cleaned_data['end_date'] = end_date
+            cleaned_data['end_date'] = start_date
 
-        # Verifica che start_date <= end_date
+        # Verifica che start_date sia prima o uguale a end_date
         if start_date and end_date and start_date > end_date:
             raise forms.ValidationError("La data di inizio non può essere successiva alla data di fine.")
 

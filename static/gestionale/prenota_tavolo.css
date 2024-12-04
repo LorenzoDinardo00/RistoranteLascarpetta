@@ -719,15 +719,3 @@ body {
     padding-right: 10px;
 }
 
-.flatpickr-day.flatpickr-disabled-with-reason {
-    background-color: #f9d6d5; /* Colore di sfondo per giorni disabilitati */
-    color: #a52a2a; /* Colore del testo */
-    border-radius: 50%; /* Rende i giorni circolari */
-    cursor: not-allowed; /* Cambia il cursore */
-}
-
-.flatpickr-day.flatpickr-disabled-with-reason:hover {
-    background-color: #e5b1b0; /* Colore di sfondo al passaggio del mouse */
-    color: #8b0000; /* Cambia il colore del testo al passaggio del mouse */
-    cursor: help; /* Mostra un cursore di aiuto */
-}

@@ -300,25 +300,34 @@ def manage_disabled_dates(request):
             end_date = form.cleaned_data.get('end_date')
             reason = form.cleaned_data.get('reason')
 
-            # Crea una voce per ogni data nell'intervallo
+            # Aggiungi tutte le date nell'intervallo specificato
             current_date = start_date
             while current_date <= end_date:
                 DisabledDate.objects.get_or_create(date=current_date, defaults={'reason': reason})
                 current_date += timedelta(days=1)
 
             return redirect('gestionale:manage_disabled_dates')
+
     else:
         form = DisabledDateForm()
 
-    disabled_dates = DisabledDate.objects.all()
+    # Recupera tutte le date disabilitate, inclusi gli ID
+    disabled_dates = DisabledDate.objects.all()  # Recupera tutti gli oggetti completi
+
     return render(request, 'gestionale/manage_disabled_dates.html', {
         'form': form,
-        'disabled_dates': disabled_dates,
+        'disabled_dates': disabled_dates,  # Passa oggetti completi con `id`
     })
-
+from django.shortcuts import get_object_or_404, redirect
+from django.http import HttpResponse
+from .models import DisabledDate
 @login_required
 def delete_disabled_date(request, pk):
-    disabled_date = get_object_or_404(DisabledDate, pk=pk)
-    disabled_date.delete()
-    return redirect('gestionale:manage_disabled_dates')
-
+    """
+    Rimuove una data disabilitata identificata dalla chiave primaria (pk).
+    """
+    if request.method == 'POST':
+        disabled_date = get_object_or_404(DisabledDate, pk=pk)
+        disabled_date.delete()
+        return redirect('gestionale:manage_disabled_dates')
+    return HttpResponse(status=405)  # Metodo non consentito

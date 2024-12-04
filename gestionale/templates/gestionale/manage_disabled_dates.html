@@ -14,7 +14,6 @@
         <button type="submit">Aggiungi</button>
     </form>
 
-    <!-- Lista delle date disabilitate -->
     <div class="disabled-dates-list-container">
         <h3>Giorni Disabilitati</h3>
         <ul class="disabled-dates-list">
@@ -23,7 +22,7 @@
                     <span>{{ date.date }} - {{ date.reason }}</span>
                     <form method="post" action="{% url 'gestionale:delete_disabled_date' date.id %}">
                         {% csrf_token %}
-                        <button type="submit">Rimuovi</button>
+                        <button type="submit" class="btn btn-danger">Rimuovi</button>
                     </form>
                 </li>
             {% endfor %}
