@@ -6229,3 +6229,18 @@ Traceback (most recent call last):
     raise self.error(
 django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 1: 'static'. Did you forget to register or load this tag?
 "GET /gestionale/manage-disabled-dates/ HTTP/1.1" 500 140795
+Internal Server Error: /gestionale/prenota-tavolo/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lore/Desktop/progetti/ristorante/RistoranteLascarpetta/gestionale/views.py", line 52, in prenota_tavolo
+    form = ReservationForm()
+           ^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/django/forms/models.py", line 360, in __init__
+    raise ValueError("ModelForm has no model class specified.")
+ValueError: ModelForm has no model class specified.
+"GET /gestionale/prenota-tavolo/ HTTP/1.1" 500 68033

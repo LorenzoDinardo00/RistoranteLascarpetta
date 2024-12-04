@@ -13,7 +13,24 @@ class ReservationForm(forms.ModelForm):
             'class': 'form-control',
         })
     )
+    def clean_reservation_date(self):
+        """
+        Verifica che la data della prenotazione non sia in un giorno disabilitato.
+        """
+        reservation_date = self.cleaned_data.get('reservation_date')
 
+        # Controlla se la data è disabilitata
+        from .models import DisabledDate
+        if DisabledDate.objects.filter(date=reservation_date).exists():
+            raise forms.ValidationError("La data selezionata non è disponibile per le prenotazioni.")
+
+        return reservation_date
+
+    def clean_cookie_consent(self):
+        cookie_consent = self.cleaned_data.get('cookie_consent')
+        if not cookie_consent:
+            raise forms.ValidationError("Devi accettare i cookie per prenotare.")
+        return cookie_consent
     class Meta:
         model = Reservation
         fields = [
