@@ -5,7 +5,25 @@ from twilio.rest import Client
 from .form import ReservationForm
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .models import DisabledDate
+
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from .models import DisabledDate
+from .form import ReservationForm
+
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from .models import DisabledDate, Reservation
+from .form import ReservationForm
+
 def prenota_tavolo(request):
+    # Recupera tutte le date disabilitate con la loro motivazione
+    disabled_dates = DisabledDate.objects.values_list('date', 'reason')  # Ritorna una lista di tuple (date, reason)
+    formatted_disabled_dates = [
+        {'date': date.strftime("%Y-%m-%d"), 'reason': reason or "Non specificata"} for date, reason in disabled_dates
+    ]
+
     if request.method == 'POST':
         form = ReservationForm(request.POST)
         if form.is_valid():
@@ -28,12 +46,17 @@ def prenota_tavolo(request):
             if reservation.phone_number and reservation.cookie_consent:
                 # send_confirmation_sms(reservation)  # Commentato temporaneamente
                 pass
+
             return redirect(reverse('gestionale:reservation_success'))
     else:
         form = ReservationForm()
-    return render(request, 'gestionale/prenota_tavolo.html', {'form': form})
 
-
+    # Passa le date disabilitate con motivazioni al template
+    return render(request, 'gestionale/prenota_tavolo.html', {
+        'form': form,
+        'disabled_dates': formatted_disabled_dates,  # Lista di dizionari con date e motivazioni
+    })
+    
 def send_confirmation_sms(reservation):
     try:
         client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
@@ -262,3 +285,40 @@ def elimina_tutte_prenotazioni(request):
     
     # Mostra una pagina di conferma
     return render(request, 'gestionale/elimina_tutte.html')
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import DisabledDate
+from .form import DisabledDateForm
+from datetime import timedelta
+@login_required
+def manage_disabled_dates(request):
+    if request.method == 'POST':
+        form = DisabledDateForm(request.POST)
+        if form.is_valid():
+            start_date = form.cleaned_data.get('start_date')
+            end_date = form.cleaned_data.get('end_date')
+            reason = form.cleaned_data.get('reason')
+
+            # Crea una voce per ogni data nell'intervallo
+            current_date = start_date
+            while current_date <= end_date:
+                DisabledDate.objects.get_or_create(date=current_date, defaults={'reason': reason})
+                current_date += timedelta(days=1)
+
+            return redirect('gestionale:manage_disabled_dates')
+    else:
+        form = DisabledDateForm()
+
+    disabled_dates = DisabledDate.objects.all()
+    return render(request, 'gestionale/manage_disabled_dates.html', {
+        'form': form,
+        'disabled_dates': disabled_dates,
+    })
+
+@login_required
+def delete_disabled_date(request, pk):
+    disabled_date = get_object_or_404(DisabledDate, pk=pk)
+    disabled_date.delete()
+    return redirect('gestionale:manage_disabled_dates')
+

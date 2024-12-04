@@ -24,3 +24,7 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.phone_number})"
+    
+class DisabledDate(models.Model):
+    date = models.DateField(unique=True, help_text="Date to disable for reservations")
+    reason = models.TextField(blank=True, help_text="Optional reason for disabling the date")

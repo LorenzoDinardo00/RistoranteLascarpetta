@@ -64,3 +64,41 @@ def clean_cookie_consent(self):
         if not cookie_consent:
             raise forms.ValidationError("Devi accettare i cookie per prenotare.")
         return cookie_consent
+    
+
+
+
+from django import forms
+from .models import DisabledDate
+
+class DisabledDateForm(forms.ModelForm):
+    start_date = forms.DateField(
+        required=True,
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        help_text="Seleziona la data di inizio"
+    )
+    end_date = forms.DateField(
+        required=False,  # Non obbligatoria lato form, verrà gestita dal backend
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        help_text="Seleziona la data di fine (opzionale, si autocompila con la data di inizio)"
+    )
+
+    class Meta:
+        model = DisabledDate
+        fields = ['reason']  # La ragione rimane opzionale
+
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get('start_date')
+        end_date = cleaned_data.get('end_date')
+
+        # Imposta end_date uguale a start_date se non è stato fornito
+        if not end_date:
+            end_date = start_date
+            cleaned_data['end_date'] = end_date
+
+        # Verifica che start_date <= end_date
+        if start_date and end_date and start_date > end_date:
+            raise forms.ValidationError("La data di inizio non può essere successiva alla data di fine.")
+
+        return cleaned_data

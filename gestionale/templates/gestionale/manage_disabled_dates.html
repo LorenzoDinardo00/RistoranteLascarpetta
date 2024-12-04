@@ -1,0 +1,32 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'gestionale/manage_disabled_dates.css' %}">
+
+<div class="disabled-dates-container">
+    <!-- Titolo -->
+    <h2>Gestione Giorni Disabilitati</h2>
+
+    <!-- Form per aggiungere date disabilitate -->
+    <form method="post" class="disabled-dates-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><strong>Nota:</strong> La data di fine si autocompila con la data di inizio se lasciata vuota. 
+            Modificala solo se desideri disabilitare un intervallo di giorni.</p>
+        <button type="submit">Aggiungi</button>
+    </form>
+
+    <!-- Lista delle date disabilitate -->
+    <div class="disabled-dates-list-container">
+        <h3>Giorni Disabilitati</h3>
+        <ul class="disabled-dates-list">
+            {% for date in disabled_dates %}
+                <li>
+                    <span>{{ date.date }} - {{ date.reason }}</span>
+                    <form method="post" action="{% url 'gestionale:delete_disabled_date' date.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Rimuovi</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

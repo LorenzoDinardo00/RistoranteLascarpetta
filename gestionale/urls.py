@@ -24,6 +24,8 @@ urlpatterns = [
     path('modifica/<int:reservation_id>/', views.modifica_prenotazione, name='modifica_prenotazione'),
     path('elimina/<int:reservation_id>/', views.elimina_prenotazione, name='elimina_prenotazione'),
     path('prenotazioni/elimina_tutte/', views.elimina_tutte_prenotazioni, name='elimina_tutte_prenotazioni'),
-
+    path('manage-disabled-dates/', views.manage_disabled_dates, name='manage_disabled_dates'),
+    path('delete-disabled-date/<int:pk>/', views.delete_disabled_date, name='delete_disabled_date'),
+    
 
 ]

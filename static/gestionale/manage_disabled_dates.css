@@ -1,0 +1,139 @@
+/* Contenitore principale */
+.disabled-dates-container {
+    font-family: 'Playfair Display', serif;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+/* Titolo */
+.disabled-dates-container h2 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 26px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Form principale */
+.disabled-dates-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.disabled-dates-form label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+/* Campi di input */
+.disabled-dates-form input[type="text"],
+.disabled-dates-form input[type="date"],
+.disabled-dates-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+/* Note */
+.disabled-dates-form p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0 10px;
+    text-align: center;
+}
+
+/* Pulsante */
+.disabled-dates-form button[type="submit"] {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #a52a2a;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.disabled-dates-form button[type="submit"]:hover {
+    background-color: #8b0000;
+}
+
+/* Sezione della lista */
+.disabled-dates-list-container {
+    margin-top: 30px;
+}
+
+.disabled-dates-list-container h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.disabled-dates-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid #ddd;
+}
+
+.disabled-dates-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.disabled-dates-list li span {
+    font-weight: 500;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Pulsante per rimuovere */
+.disabled-dates-list li form button {
+    padding: 6px 12px;
+    border: 1px solid #a52a2a;
+    border-radius: 8px;
+    background-color: #a52a2a;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.disabled-dates-list li form button:hover {
+    background-color: #8b0000;
+}
+
+/* Media query per mobile */
+@media (max-width: 768px) {
+    .disabled-dates-form {
+        gap: 15px;
+    }
+
+    .disabled-dates-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .disabled-dates-form button[type="submit"] {
+        width: 100%;
+    }
+}
