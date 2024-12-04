@@ -62,7 +62,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from datetime import timedelta, datetime
 from .models import Reservation
-
+@login_required
 def prenotazioni(request):
     # Ottieni la data selezionata dal parametro GET, con default alla data odierna
     selected_date_str = request.GET.get('date', timezone.now().date().isoformat())
@@ -221,7 +221,7 @@ def sms_success(request):
 
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Reservation
-
+@login_required
 def modifica_prenotazione(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
     is_restaurateur = request.user.is_staff  # Supponendo che i ristoratori siano staff
@@ -239,7 +239,7 @@ def modifica_prenotazione(request, reservation_id):
 
     return render(request, 'gestionale/modifica_prenotazione.html', {'form': form, 'reservation': reservation})
 
-
+@login_required
 def elimina_prenotazione(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
     if request.method == 'POST':

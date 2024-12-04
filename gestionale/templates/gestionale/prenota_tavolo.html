@@ -60,15 +60,15 @@
         <!-- Menu Mobile -->
     <div class="mobile-menu" id="mobile-menu">
         <!-- Lingua italiana -->
-        <a href="#scritta" id="chi" class="lang lang-it">Chi Siamo</a>
-        <a href="#menu" class="lang lang-it">Il Menù</a>
-        <a href="#contattiMobile" class="lang lang-it">Contattaci</a>
+        <a href="{% url 'Homepage'%}#scritta" id="chi" class="lang lang-it">Chi Siamo</a>
+        <a href="{% url 'Homepage'%}#menu" class="lang lang-it">Il Menù</a>
+        <a href="{% url 'Homepage'%}#contattiMobile" class="lang lang-it">Contattaci</a>
         <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button-mobile" class="lang lang-it">Prenota Ora</a>
     
         <!-- Lingua inglese -->
-        <a href="#scritta" id="chi" class="lang lang-en" style="display: none;">About Us</a>
-        <a href="#menu" class="lang lang-en" style="display: none;">Our Menu</a>
-        <a href="#contattiMobile" class="lang lang-en" style="display: none;">Contact Us</a>
+        <a href="{% url 'Homepage'%}#scritta" id="chi" class="lang lang-en" style="display: none;">About Us</a>
+        <a href="{% url 'Homepage'%}#menu" class="lang lang-en" style="display: none;">Our Menu</a>
+        <a href="{% url 'Homepage'%}#contattiMobile" class="lang lang-en" style="display: none;">Contact Us</a>
         <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button-mobile" class="lang lang-en" style="display: none;">Book Now</a>
         <a>
         <!-- Language Switcher per versione mobile -->
