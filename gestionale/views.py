@@ -340,7 +340,7 @@ def test_email(request):
             subject='Test Email - La Scarpetta',
             message='Questa è una email di prova inviata dal sistema di prenotazione La Scarpetta.',
             from_email='assistenza.lorenzodinardo@gmail.com',  # Mittente verificato in SendGrid
-            recipient_list=['lorenzodinardo030@gamil.com'],  # Sostituisci con un tuo indirizzo reale
+            recipient_list=['lorenzodinardo030@gmail.com'],  # Sostituisci con un tuo indirizzo reale
             fail_silently=False,
         )
         logger.info("Email di test inviata con successo.")
