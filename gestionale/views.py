@@ -49,10 +49,9 @@ Gentile Titolare,
 - Numero di Persone: {reservation.guests}
 
 Cordiali saluti,
-Il Sistema di Prenotazione
-                    """,
+Tempora Innovation                   """,
                     from_email=settings.DEFAULT_FROM_EMAIL,  # Mittente configurato in settings.py
-                    recipient_list=['lorenzodinardo030@gmail.com'],  # Email del titolare
+                    recipient_list=['temporainnovation@gmail.com', 'lascarpettafirenze@gmail.com', 'artursiko4@gmail.com']      
                     fail_silently=False,
                 )
             except Exception as e:
@@ -377,7 +376,7 @@ def test_email(request):
             subject='Test Email - La Scarpetta',
             message='Questa è una email di prova inviata dal sistema di prenotazione La Scarpetta.',
             from_email='assistenza.lorenzodinardo@gmail.com',  # Mittente verificato in SendGrid
-            recipient_list=['lorenzodinardo030@gmail.com'],  # Sostituisci con un tuo indirizzo reale
+            recipient_list=['temporainnovation@gmail.com', 'lascarpettafirenze@gmail.com', 'artursiko4@gmail.com']      
             fail_silently=False,
         )
         logger.info("Email di test inviata con successo.")
