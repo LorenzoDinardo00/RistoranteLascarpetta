@@ -323,21 +323,24 @@ def delete_disabled_date(request, pk):
 from django.core.mail import send_mail
 from django.http import HttpResponse
 import logging
+from django.core.mail import send_mail
+from django.http import HttpResponse
+import logging
 
 # Configura il logger
 logger = logging.getLogger(__name__)
 
 def test_email(request):
     """
-    Simula l'invio di una email per verificare che il servizio di posta funzioni.
+    Simula l'invio di una email per verificare che il servizio di posta funzioni correttamente con SendGrid.
     """
     try:
-        logger.info("Tentativo di invio email di test.")
+        logger.info("Tentativo di invio email di test tramite SendGrid.")
         send_mail(
             subject='Test Email - La Scarpetta',
             message='Questa è una email di prova inviata dal sistema di prenotazione La Scarpetta.',
-            from_email='assistenza.lorenzodinardo@gmail.com',  # Assicurati che questa sia verificata
-            recipient_list=['tuoindirizzo@email.com'],  # Sostituisci con un tuo indirizzo
+            from_email='assistenza.lorenzodinardo@gmail.com',  # Mittente verificato in SendGrid
+            recipient_list=['tuoindirizzo@email.com'],  # Sostituisci con un tuo indirizzo reale
             fail_silently=False,
         )
         logger.info("Email di test inviata con successo.")

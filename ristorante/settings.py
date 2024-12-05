@@ -189,10 +189,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import os
 
 # Configurazione dell'email
+# Configurazione dell'email per SendGrid
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')  # Default: Gmail SMTP
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))  # Default: Porta 587
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'  # Default: True
-EMAIL_HOST_USER = 'apikey'  # Letteralmente 'apikey'
-EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY')  # Password o password per le app
-DEFAULT_FROM_EMAIL = 'assistenza.lorenzodinardo@gmail.com'  # L'email verificata come mittente
+EMAIL_HOST = 'smtp.sendgrid.net'  # Host del server SMTP di SendGrid
+EMAIL_PORT = 465  # Porta per connessione SSL
+EMAIL_USE_SSL = True  # Utilizza SSL per la connessione
+EMAIL_USE_TLS = False  # Disabilita TLS (utilizziamo SSL)
+EMAIL_HOST_USER = 'apikey'  # Nome utente richiesto da SendGrid (fisso "apikey")
+EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY')  # Chiave API configurata come variabile d'ambiente
+DEFAULT_FROM_EMAIL = 'assistenza.lorenzodinardo@gmail.com'  # Mittente verificato su SendGrid
