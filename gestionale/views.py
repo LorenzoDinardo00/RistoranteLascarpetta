@@ -11,11 +11,10 @@ from .models import DisabledDate, Reservation
 from .form import ReservationForm
 from django.core.mail import send_mail
 from django.conf import settings
+import logging
+# Configura il logger
+logger = logging.getLogger(__name__)
 
-from django.core.mail import send_mail
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from .models import DisabledDate, Customer
 def prenota_tavolo(request):
     # Recupera tutte le date disabilitate con la loro motivazione
     disabled_dates = DisabledDate.objects.values_list('date', 'reason')
@@ -26,10 +25,18 @@ def prenota_tavolo(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
 
+        # Log per il controllo dei dati POST
+        logger.debug(f"Dati POST ricevuti: {request.POST}")
+
         if form.is_valid():
+            # Log per il modulo valido
+            logger.info("Modulo valido. Inizio salvataggio prenotazione.")
             reservation = form.save(commit=False)
             reservation.reservation_time = reservation.reservation_time.strip()
             reservation.save()
+
+            # Log per confermare il salvataggio
+            logger.info(f"Prenotazione salvata: {reservation}")
 
             # Invio email di conferma al proprietario
             try:
@@ -54,17 +61,23 @@ def prenota_tavolo(request):
                     recipient_list=['lorenzodinardo030@email.com'],  # Email del proprietario
                     fail_silently=False,
                 )
-                print("Email inviata al proprietario.")
+                # Log per email inviata con successo
+                logger.info("Email inviata con successo al proprietario.")
             except Exception as e:
-                print(f"Errore nell'invio dell'email: {e}")
+                # Log per errore durante l'invio dell'email
+                logger.error(f"Errore nell'invio dell'email: {e}")
 
+            # Reindirizzamento a pagina di successo
+            logger.info("Reindirizzamento a reservation_success.")
             return redirect(reverse('gestionale:reservation_success'))
         else:
-            print("Modulo non valido:", form.errors)
-
+            # Log per modulo non valido
+            logger.warning(f"Modulo non valido: {form.errors}")
     else:
         form = ReservationForm()
 
+    # Passa le date disabilitate con motivazioni al template
+    logger.debug("Rendering del template 'prenota_tavolo.html'.")
     return render(request, 'gestionale/prenota_tavolo.html', {
         'form': form,
         'disabled_dates': formatted_disabled_dates,
