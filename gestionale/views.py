@@ -10,15 +10,12 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import DisabledDate, Reservation
 from .form import ReservationForm
-
 def prenota_tavolo(request):
     """
-    Gestisce la prenotazione di un tavolo.
-    Recupera le date disabilitate, valida i dati del modulo, salva la prenotazione,
-    invia un'email al titolare del ristorante come promemoria,
-    e redireziona alla pagina di successo.
+    Gestisce la prenotazione del tavolo, inclusa la gestione dei consensi,
+    l'invio dell'email e l'aggiornamento della lista clienti.
     """
-    # Recupera tutte le date disabilitate con la loro motivazione
+    # Recupera tutte le date disabilitate
     disabled_dates = DisabledDate.objects.values_list('date', 'reason')
     formatted_disabled_dates = [
         {'date': date.strftime("%Y-%m-%d"), 'reason': reason or "Non specificata"} for date, reason in disabled_dates
@@ -33,7 +30,23 @@ def prenota_tavolo(request):
             reservation.reservation_time = reservation.reservation_time.strip()
             reservation.save()
 
-            # Invia una email al titolare con i dettagli della prenotazione
+            # Verifica se il consenso alla profilazione è stato accettato
+            if form.cleaned_data.get('profiling_consent'):
+                customer, created = Customer.objects.get_or_create(
+                    phone_number=reservation.phone_number,
+                    defaults={
+                        'first_name': reservation.first_name,
+                        'last_name': reservation.last_name,
+                        # Altri valori di default se necessari
+                    }
+                )
+                if not created:
+                    # Aggiorna i dati del cliente esistente
+                    customer.first_name = reservation.first_name
+                    customer.last_name = reservation.last_name
+                    customer.save()
+
+            # Invia un'email al titolare
             try:
                 send_mail(
                     subject='Nuova Prenotazione - La Scarpetta',
@@ -49,24 +62,25 @@ Gentile Titolare,
 - Numero di Persone: {reservation.guests}
 
 Cordiali saluti,
-Tempora Innovation
+Il Team di La Scarpetta
 """,
-                    from_email=settings.DEFAULT_FROM_EMAIL,  # Mittente configurato in settings.py
-                    recipient_list=['temporainnovation@gmail.com','lascarpettafirenze@gmail.com','artursiko4@gmail.com'],  # Email del titolare
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=['titolare@example.com'],  # Sostituisci con email del titolare
                     fail_silently=False,
                 )
             except Exception as e:
-                print(f"Errore durante l'invio dell'email al titolare: {e}")
+                print(f"Errore durante l'invio dell'email: {e}")
 
             # Redireziona alla pagina di successo
             return redirect(reverse('gestionale:reservation_success'))
         else:
-            # Se il modulo non è valido, ritorna il modulo con gli errori
+            # Ritorna errori del modulo
             return render(request, 'gestionale/prenota_tavolo.html', {
                 'form': form,
                 'disabled_dates': formatted_disabled_dates,
             })
     else:
+        # Mostra il modulo vuoto
         form = ReservationForm()
 
     # Rendi il template con il modulo e le date disabilitate
