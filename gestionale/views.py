@@ -58,7 +58,7 @@ def prenota_tavolo(request):
                     Il Sistema di Prenotazione
                     """,
                     from_email='assistenza.lorenzodinardo@gmail.com',  # Mittente verificato
-                    recipient_list=['lorenzodinardo030@email.com'],  # Email del proprietario
+                    recipient_list=['lorenzodinardo030@gmail.com'],  # Email del proprietario
                     fail_silently=False,
                 )
                 # Log per email inviata con successo
