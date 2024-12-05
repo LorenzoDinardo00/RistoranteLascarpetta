@@ -186,3 +186,13 @@ LOGGING = {
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+import os
+
+# Configurazione dell'email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')  # Default: Gmail SMTP
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))  # Default: Porta 587
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'  # Default: True
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'False') == 'True'  # Default: False
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  # Email mittente
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # Password o password per le app
