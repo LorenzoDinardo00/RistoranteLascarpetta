@@ -29,12 +29,12 @@
 
 .navigation {
     display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 15px; /* Maggiore spazio tra i bottoni */
+    margin-bottom: 20px;
 }
 
 .nav-button, .back-to-home {
-    padding: 10px 20px;
+    padding: 12px 25px; /* Aumentato lo spazio interno */
     border: 1px solid #a52a2a;
     border-radius: 8px;
     background-color: #a52a2a;
@@ -42,11 +42,13 @@
     font-size: 16px;
     text-decoration: none;
     font-weight: 500;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease; /* Effetti di transizione più fluidi */
 }
 
 .nav-button:hover, .back-to-home:hover {
-    background-color: #8b0000;
+    background-color: #8b0000; /* Colore più scuro al passaggio del mouse */
+    border-color: #8b0000;
+    transform: scale(1.05); /* Leggero ingrandimento per l'effetto hover */
 }
 
 /* Bottone per tornare alla homepage del gestionale */
@@ -69,11 +71,17 @@
 }
 
 .date-selector-form input[type="date"] {
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
     max-width: 180px;
+    transition: border-color 0.3s ease; /* Effetto al focus */
+}
+
+.date-selector-form input[type="date"]:focus {
+    border-color: #a52a2a; /* Cambia colore al focus */
+    outline: none;
 }
 
 /* Sezione pasti */
@@ -106,9 +114,15 @@
 .meal-section li {
     display: flex;
     justify-content: space-between;
-    padding: 12px;
+    align-items: center;
+    padding: 12px 15px; /* Migliora gli spazi interni */
     font-size: 16px;
     border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.meal-section li:hover {
+    background-color: #f9f9f9; /* Evidenziazione al passaggio del mouse */
 }
 
 .meal-section li.no-reservation {
@@ -132,6 +146,18 @@
     color: #555;
 }
 
+/* Rimuovi sottolineatura dai link */
+a {
+    text-decoration: none;
+    color: #0056b3;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #a52a2a;
+    text-decoration: underline; /* Aggiunge la sottolineatura al passaggio del mouse */
+}
+
 /* Media query per mobile */
 @media (max-width: 768px) {
     .reservation-list {
@@ -149,21 +175,33 @@
 
 /* Stile per il bottone */
 .btn-danger {
-    padding: 10px 30px; /* Spazio interno per il bottone */
-    font-size: 18px; /* Dimensione del testo */
-    font-weight: bold; /* Testo in grassetto */
-    color: white; /* Colore del testo */
-    background-color:#a52a2a;
-    border: none; /* Nessun bordo */
-    border-radius: 5px; /* Angoli arrotondati */
-    cursor: pointer; /* Cambia il cursore al passaggio del mouse */
-    text-transform: uppercase; /* Testo in maiuscolo */
-    text-align: center; /* Allinea il testo */
-    transition: background-color 0.3s ease; /* Transizione per il cambio colore */
+    padding: 12px 35px; /* Spazio interno per il bottone */
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #a52a2a;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-align: center;
+    transition: all 0.3s ease; /* Migliora la transizione */
 }
 
 /* Effetto hover */
 .btn-danger:hover {
-    background-color:#a52a2a;
-    ; /* Rosso scuro */
+    background-color: #8b0000; /* Rosso scuro */
+    transform: scale(1.05); /* Ingrandimento al passaggio del mouse */
+}
+/* Aggiunge spazio tra i link "Modifica" ed "Elimina" */
+.meal-section a {
+    margin-right: 10px; /* Aggiunge spazio tra i link */
+    color: #0056b3; /* Mantiene il colore dei link */
+    text-decoration: none; /* Nessuna sottolineatura */
+    transition: color 0.3s ease; /* Transizione per il cambio colore */
+}
+
+.meal-section a:hover {
+    color: #a52a2a; /* Colore diverso al passaggio del mouse */
+    text-decoration: underline; /* Sottolinea al passaggio del mouse */
 }

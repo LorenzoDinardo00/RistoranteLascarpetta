@@ -16,23 +16,29 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import DisabledDate, Reservation
 from .form import ReservationForm
-
 def prenota_tavolo(request):
     # Recupera tutte le date disabilitate con la loro motivazione
-    disabled_dates = DisabledDate.objects.values_list('date', 'reason')  # Ritorna una lista di tuple (date, reason)
+    disabled_dates = DisabledDate.objects.values_list('date', 'reason')
     formatted_disabled_dates = [
         {'date': date.strftime("%Y-%m-%d"), 'reason': reason or "Non specificata"} for date, reason in disabled_dates
     ]
 
     if request.method == 'POST':
         form = ReservationForm(request.POST)
+        
+        # Debug per verificare i dati del modulo
+        print("Dati POST ricevuti:", request.POST)
+
         if form.is_valid():
+            # Debug per confermare che il modulo è valido
+            print("Modulo valido. Prenotazione in corso di salvataggio.")
             reservation = form.save(commit=False)
-            # Garantisce che il valore di reservation_time sia nel formato 'HH:MM'
             reservation.reservation_time = reservation.reservation_time.strip()
             reservation.save()
 
-            # Creazione o aggiornamento del cliente se il consenso è dato
+            # Debug per confermare il salvataggio
+            print("Prenotazione salvata:", reservation)
+
             if reservation.profiling_consent:
                 customer, created = Customer.objects.get_or_create(
                     first_name=reservation.first_name,
@@ -42,21 +48,23 @@ def prenota_tavolo(request):
                 customer.numero_prenotazioni += 1
                 customer.save()
 
-            # Invia SMS solo se i cookie sono stati accettati
             if reservation.phone_number and reservation.cookie_consent:
-                # send_confirmation_sms(reservation)  # Commentato temporaneamente
+                # send_confirmation_sms(reservation)
                 pass
 
             return redirect(reverse('gestionale:reservation_success'))
+        else:
+            # Debug per verificare errori nel modulo
+            print("Modulo non valido:", form.errors)
+
     else:
         form = ReservationForm()
 
     # Passa le date disabilitate con motivazioni al template
     return render(request, 'gestionale/prenota_tavolo.html', {
         'form': form,
-        'disabled_dates': formatted_disabled_dates,  # Lista di dizionari con date e motivazioni
+        'disabled_dates': formatted_disabled_dates,
     })
-    
 def send_confirmation_sms(reservation):
     try:
         client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
@@ -247,21 +255,28 @@ from .models import Reservation
 @login_required
 def modifica_prenotazione(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
-    is_restaurateur = request.user.is_staff  # Supponendo che i ristoratori siano staff
+    valid_times = [
+        "12:00", "12:30", "13:00", "13:30", "14:00",
+        "19:00", "19:30", "20:00", "20:30", "21:00",
+        "21:30", "22:00", "22:30", "23:00"
+    ]
 
     if request.method == 'POST':
-        form = ReservationForm(request.POST, instance=reservation, is_restaurateur=is_restaurateur)
+        form = ReservationForm(request.POST, instance=reservation)
         if form.is_valid():
-            reservation = form.save(commit=False)
-            # Assicura che reservation_time sia nel formato 'HH:MM'
-            reservation.reservation_time = reservation.reservation_time.strip()
-            reservation.save()
-            return redirect('gestionale:prenotazioni')
+            form.save()
+            return redirect('gestionale:prenotazioni')  # Sostituisci con la tua URL di successo
+        else:
+            print(form.errors)  # Debug: Mostra errori di validazione
     else:
-        form = ReservationForm(instance=reservation, is_restaurateur=is_restaurateur)
+        form = ReservationForm(instance=reservation)
 
-    return render(request, 'gestionale/modifica_prenotazione.html', {'form': form, 'reservation': reservation})
-
+    return render(request, 'gestionale/modifica_prenotazione.html', {
+        'form': form,
+        'reservation': reservation,
+        'valid_times': valid_times
+    })
+    
 @login_required
 def elimina_prenotazione(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)

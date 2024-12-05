@@ -6,7 +6,7 @@ class Reservation(models.Model):
     phone_number = models.CharField(max_length=20)
     guests = models.IntegerField(default=1)
     reservation_date = models.DateField()
-    reservation_time = models.CharField(max_length=5)  # Mantieni sempre il formato 'HH:MM'
+    reservation_time = models.CharField(max_length=10)  # Mantieni sempre il formato 'HH:MM'
     cookie_consent = models.BooleanField(default=False)
     profiling_consent = models.BooleanField(default=False)
     promotional_sms_consent = models.BooleanField(default=False)

@@ -3,13 +3,13 @@
 {% block title %}Conferma Eliminazione{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-5 text-center">
     <h1 class="text-danger">Attenzione!</h1>
-    <p>Sei sicuro di voler eliminare <strong>tutte</strong> le prenotazioni? Questa azione è irreversibile.</p>
-    <form method="post">
+    <p class="mt-3">Sei sicuro di voler eliminare <strong>tutte</strong> le prenotazioni? Questa azione è irreversibile.</p>
+    <form method="post" class="mt-4">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Elimina Tutto</button>
-        <a href="{% url 'gestionale:prenotazioni' %}" class="btn btn-secondary">Annulla</a>
+        <button type="submit" class="btn btn-danger btn-lg">Elimina Tutto</button>
+        <a href="{% url 'gestionale:prenotazioni' %}" class="btn btn-secondary btn-lg ms-3">Annulla</a>
     </form>
 </div>
 {% endblock %}
