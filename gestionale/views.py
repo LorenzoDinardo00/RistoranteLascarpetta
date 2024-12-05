@@ -12,6 +12,12 @@ from .models import DisabledDate, Reservation
 from .form import ReservationForm
 
 def prenota_tavolo(request):
+    """
+    Gestisce la prenotazione di un tavolo.
+    Recupera le date disabilitate, valida i dati del modulo, salva la prenotazione,
+    invia un'email al titolare del ristorante come promemoria,
+    e redireziona alla pagina di successo.
+    """
     # Recupera tutte le date disabilitate con la loro motivazione
     disabled_dates = DisabledDate.objects.values_list('date', 'reason')
     formatted_disabled_dates = [
@@ -27,8 +33,39 @@ def prenota_tavolo(request):
             reservation.reservation_time = reservation.reservation_time.strip()
             reservation.save()
 
+            # Invia una email al titolare con i dettagli della prenotazione
+            try:
+                send_mail(
+                    subject='Nuova Prenotazione - La Scarpetta',
+                    message=f"""
+Gentile Titolare,
+
+È stata effettuata una nuova prenotazione presso il ristorante La Scarpetta:
+
+- Nome Cliente: {reservation.first_name} {reservation.last_name}
+- Telefono Cliente: {reservation.phone_number}
+- Data Prenotazione: {reservation.reservation_date.strftime('%d/%m/%Y')}
+- Ora Prenotazione: {reservation.reservation_time}
+- Numero di Persone: {reservation.guests}
+
+Cordiali saluti,
+Il Sistema di Prenotazione
+                    """,
+                    from_email=settings.DEFAULT_FROM_EMAIL,  # Mittente configurato in settings.py
+                    recipient_list=['lorenzodinardo030@gmail.com'],  # Email del titolare
+                    fail_silently=False,
+                )
+            except Exception as e:
+                print(f"Errore durante l'invio dell'email al titolare: {e}")
+
             # Redireziona alla pagina di successo
             return redirect(reverse('gestionale:reservation_success'))
+        else:
+            # Se il modulo non è valido, ritorna il modulo con gli errori
+            return render(request, 'gestionale/prenota_tavolo.html', {
+                'form': form,
+                'disabled_dates': formatted_disabled_dates,
+            })
     else:
         form = ReservationForm()
 
