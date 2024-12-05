@@ -6,14 +6,10 @@ from .form import ReservationForm
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import DisabledDate, Reservation
 from .form import ReservationForm
-from django.core.mail import send_mail
-from django.conf import settings
-import logging
-# Configura il logger
-logger = logging.getLogger(__name__)
 
 def prenota_tavolo(request):
     # Recupera tutte le date disabilitate con la loro motivazione
@@ -25,59 +21,18 @@ def prenota_tavolo(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
 
-        # Log per il controllo dei dati POST
-        logger.debug(f"Dati POST ricevuti: {request.POST}")
-
         if form.is_valid():
-            # Log per il modulo valido
-            logger.info("Modulo valido. Inizio salvataggio prenotazione.")
+            # Salva la prenotazione
             reservation = form.save(commit=False)
             reservation.reservation_time = reservation.reservation_time.strip()
             reservation.save()
 
-            # Log per confermare il salvataggio
-            logger.info(f"Prenotazione salvata: {reservation}")
-
-            # Invio email di conferma al proprietario
-            try:
-                send_mail(
-                    subject='Nuova Prenotazione - La Scarpetta',
-                    message=f"""
-                    Gentile Proprietario,
-
-                    È stata effettuata una nuova prenotazione presso il ristorante:
-                    
-                    Dettagli della prenotazione:
-                    - Nome: {reservation.first_name} {reservation.last_name}
-                    - Telefono: {reservation.phone_number}
-                    - Data: {reservation.reservation_date.strftime('%d/%m/%Y')}
-                    - Ora: {reservation.reservation_time}
-                    - Numero di persone: {reservation.guests}
-
-                    Cordiali saluti,
-                    Il Sistema di Prenotazione
-                    """,
-                    from_email='assistenza.lorenzodinardo@gmail.com',  # Mittente verificato
-                    recipient_list=['lorenzodinardo030@gmail.com'],  # Email del proprietario
-                    fail_silently=False,
-                )
-                # Log per email inviata con successo
-                logger.info("Email inviata con successo al proprietario.")
-            except Exception as e:
-                # Log per errore durante l'invio dell'email
-                logger.error(f"Errore nell'invio dell'email: {e}")
-
-            # Reindirizzamento a pagina di successo
-            logger.info("Reindirizzamento a reservation_success.")
+            # Redireziona alla pagina di successo
             return redirect(reverse('gestionale:reservation_success'))
-        else:
-            # Log per modulo non valido
-            logger.warning(f"Modulo non valido: {form.errors}")
     else:
         form = ReservationForm()
 
-    # Passa le date disabilitate con motivazioni al template
-    logger.debug("Rendering del template 'prenota_tavolo.html'.")
+    # Rendi il template con il modulo e le date disabilitate
     return render(request, 'gestionale/prenota_tavolo.html', {
         'form': form,
         'disabled_dates': formatted_disabled_dates,
@@ -364,3 +319,29 @@ def delete_disabled_date(request, pk):
         disabled_date.delete()
         return redirect('gestionale:manage_disabled_dates')
     return HttpResponse(status=405)  # Metodo non consentito
+
+from django.core.mail import send_mail
+from django.http import HttpResponse
+import logging
+
+# Configura il logger
+logger = logging.getLogger(__name__)
+
+def test_email(request):
+    """
+    Simula l'invio di una email per verificare che il servizio di posta funzioni.
+    """
+    try:
+        logger.info("Tentativo di invio email di test.")
+        send_mail(
+            subject='Test Email - La Scarpetta',
+            message='Questa è una email di prova inviata dal sistema di prenotazione La Scarpetta.',
+            from_email='assistenza.lorenzodinardo@gmail.com',  # Assicurati che questa sia verificata
+            recipient_list=['tuoindirizzo@email.com'],  # Sostituisci con un tuo indirizzo
+            fail_silently=False,
+        )
+        logger.info("Email di test inviata con successo.")
+        return HttpResponse("Email di test inviata con successo!")
+    except Exception as e:
+        logger.error(f"Errore durante l'invio dell'email di test: {e}")
+        return HttpResponse(f"Errore durante l'invio dell'email di test: {e}")

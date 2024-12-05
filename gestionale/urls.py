@@ -26,6 +26,6 @@ urlpatterns = [
     path('prenotazioni/elimina_tutte/', views.elimina_tutte_prenotazioni, name='elimina_tutte_prenotazioni'),
     path('manage-disabled-dates/', views.manage_disabled_dates, name='manage_disabled_dates'),
     path('delete-disabled-date/<int:pk>/', views.delete_disabled_date, name='delete_disabled_date'),
-    
+    path('test-email/', views.test_email, name='test_email'),
 
 ]
