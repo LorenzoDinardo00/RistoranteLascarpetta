@@ -12,6 +12,10 @@ from .form import ReservationForm
 from django.core.mail import send_mail
 from django.conf import settings
 
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from .models import DisabledDate, Customer
 def prenota_tavolo(request):
     # Recupera tutte le date disabilitate con la loro motivazione
     disabled_dates = DisabledDate.objects.values_list('date', 'reason')
@@ -22,77 +26,50 @@ def prenota_tavolo(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
 
-        # Debug per verificare i dati del modulo
-        print("Dati POST ricevuti:", request.POST)
-
         if form.is_valid():
-            # Debug per confermare che il modulo è valido
-            print("Modulo valido. Prenotazione in corso di salvataggio.")
             reservation = form.save(commit=False)
             reservation.reservation_time = reservation.reservation_time.strip()
             reservation.save()
 
-            # Debug per confermare il salvataggio
-            print("Prenotazione salvata:", reservation)
-
             # Invio email di conferma al proprietario
             try:
-                # Costruisci il messaggio dell'email
-                email_message = f"""
-                Gentile Proprietario,
-
-                È stata effettuata una nuova prenotazione presso il ristorante:
-                
-                Dettagli della prenotazione:
-                - Nome: {reservation.first_name} {reservation.last_name}
-                - Telefono: {reservation.phone_number}
-                - Data: {reservation.reservation_date.strftime('%d/%m/%Y')}
-                - Ora: {reservation.reservation_time}
-                - Numero di persone: {reservation.guests}
-
-                Cordiali saluti,
-                Il Sistema di Prenotazione
-                """
-
-                # Invia l'email
                 send_mail(
                     subject='Nuova Prenotazione - La Scarpetta',
-                    message=email_message,
-                    from_email=settings.EMAIL_HOST_USER,
-                    recipient_list=['lorenzodinardo030@gmail.com'],  # Cambia con l'email del proprietario
+                    message=f"""
+                    Gentile Proprietario,
+
+                    È stata effettuata una nuova prenotazione presso il ristorante:
+                    
+                    Dettagli della prenotazione:
+                    - Nome: {reservation.first_name} {reservation.last_name}
+                    - Telefono: {reservation.phone_number}
+                    - Data: {reservation.reservation_date.strftime('%d/%m/%Y')}
+                    - Ora: {reservation.reservation_time}
+                    - Numero di persone: {reservation.guests}
+
+                    Cordiali saluti,
+                    Il Sistema di Prenotazione
+                    """,
+                    from_email='assistenza.lorenzodinardo@gmail.com',  # Mittente verificato
+                    recipient_list=['lorenzodinardo030@email.com'],  # Email del proprietario
+                    fail_silently=False,
                 )
                 print("Email inviata al proprietario.")
             except Exception as e:
                 print(f"Errore nell'invio dell'email: {e}")
 
-            # Salva i dati aggiuntivi per i clienti (se abilitato)
-            if reservation.profiling_consent:
-                customer, created = Customer.objects.get_or_create(
-                    first_name=reservation.first_name,
-                    last_name=reservation.last_name,
-                    phone_number=reservation.phone_number,
-                )
-                customer.numero_prenotazioni += 1
-                customer.save()
-
-            # Placeholder per eventuali funzionalità future (SMS, ecc.)
-            if reservation.phone_number and reservation.cookie_consent:
-                # Potrebbe essere utilizzato in futuro per SMS
-                pass
-
             return redirect(reverse('gestionale:reservation_success'))
         else:
-            # Debug per verificare errori nel modulo
             print("Modulo non valido:", form.errors)
 
     else:
         form = ReservationForm()
 
-    # Passa le date disabilitate con motivazioni al template
     return render(request, 'gestionale/prenota_tavolo.html', {
         'form': form,
         'disabled_dates': formatted_disabled_dates,
     })
+    
 def send_confirmation_sms(reservation):
     try:
         client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
