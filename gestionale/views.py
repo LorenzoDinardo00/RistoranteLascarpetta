@@ -5,17 +5,13 @@ from twilio.rest import Client
 from .form import ReservationForm
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import DisabledDate
-
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from .models import DisabledDate
-from .form import ReservationForm
-
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import DisabledDate, Reservation
 from .form import ReservationForm
+from django.core.mail import send_mail
+from django.conf import settings
+
 def prenota_tavolo(request):
     # Recupera tutte le date disabilitate con la loro motivazione
     disabled_dates = DisabledDate.objects.values_list('date', 'reason')
@@ -25,7 +21,7 @@ def prenota_tavolo(request):
 
     if request.method == 'POST':
         form = ReservationForm(request.POST)
-        
+
         # Debug per verificare i dati del modulo
         print("Dati POST ricevuti:", request.POST)
 
@@ -39,6 +35,37 @@ def prenota_tavolo(request):
             # Debug per confermare il salvataggio
             print("Prenotazione salvata:", reservation)
 
+            # Invio email di conferma al proprietario
+            try:
+                # Costruisci il messaggio dell'email
+                email_message = f"""
+                Gentile Proprietario,
+
+                È stata effettuata una nuova prenotazione presso il ristorante:
+                
+                Dettagli della prenotazione:
+                - Nome: {reservation.first_name} {reservation.last_name}
+                - Telefono: {reservation.phone_number}
+                - Data: {reservation.reservation_date.strftime('%d/%m/%Y')}
+                - Ora: {reservation.reservation_time}
+                - Numero di persone: {reservation.guests}
+
+                Cordiali saluti,
+                Il Sistema di Prenotazione
+                """
+
+                # Invia l'email
+                send_mail(
+                    subject='Nuova Prenotazione - La Scarpetta',
+                    message=email_message,
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=['lorenzodinardo030@gmail.com'],  # Cambia con l'email del proprietario
+                )
+                print("Email inviata al proprietario.")
+            except Exception as e:
+                print(f"Errore nell'invio dell'email: {e}")
+
+            # Salva i dati aggiuntivi per i clienti (se abilitato)
             if reservation.profiling_consent:
                 customer, created = Customer.objects.get_or_create(
                     first_name=reservation.first_name,
@@ -48,8 +75,9 @@ def prenota_tavolo(request):
                 customer.numero_prenotazioni += 1
                 customer.save()
 
+            # Placeholder per eventuali funzionalità future (SMS, ecc.)
             if reservation.phone_number and reservation.cookie_consent:
-                # send_confirmation_sms(reservation)
+                # Potrebbe essere utilizzato in futuro per SMS
                 pass
 
             return redirect(reverse('gestionale:reservation_success'))
