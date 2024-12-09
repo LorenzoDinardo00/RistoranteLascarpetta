@@ -242,6 +242,7 @@
         adjustMenuPosition();
         window.addEventListener("resize", adjustMenuPosition);
     });
+    
 </script>
 
 <script>
@@ -254,7 +255,20 @@
         languageSwitcher.style.top = `${navbarHeight + 10}px`;
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenu = document.getElementById("mobile-menu");
+        const menuIcon = document.getElementById("menu-icon");
 
+        // Aggiungi un listener per lo scorrimento della finestra
+        window.addEventListener("scroll", function () {
+            if (mobileMenu.classList.contains("active")) {
+                mobileMenu.classList.remove("active");
+                menuIcon.classList.remove("active");
+            }
+        });
+    });
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const acceptAllCheckbox = document.querySelector(".accept-all input[type='checkbox']");
@@ -293,4 +307,6 @@ document.addEventListener('DOMContentLoaded', function () {
     setLanguage(preferredLanguage);
 });
 </script>
+
+    
             {% endblock %}
