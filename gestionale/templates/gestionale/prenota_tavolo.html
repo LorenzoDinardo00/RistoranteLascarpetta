@@ -159,39 +159,72 @@
 </body>
 <script>
     // Initialize Flatpickr on the date input field
-document.addEventListener("DOMContentLoaded", function () {
-    flatpickr("#id_reservation_date", {
-        dateFormat: "Y-m-d",
-        minDate: "today",
-        locale: {
-            firstDayOfWeek: 1, // Start the week on Monday
-            // Optional: Set the locale to Italian
-            // locale: "it",
-        },
-        onChange: function(selectedDates, dateStr, instance) {
-            instance.close(); // Close the calendar after selecting a date
-        },
+    document.addEventListener("DOMContentLoaded", function () {
+        flatpickr("#id_reservation_date", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            onChange: function (selectedDates, dateStr) {
+                fetchDisabledTimeSlots(dateStr); // Aggiorna gli slot disabilitati alla selezione della data
+            }
+        });
     });
-});
+
+    // Funzione per recuperare le fasce orarie disabilitate per una data specifica
+    function fetchDisabledTimeSlots(date) {
+        fetch(`/gestionale/get-disabled-time-slots/?date=${date}`)
+            .then(response => response.json())
+            .then(data => {
+                updateTimeSlots(data.disabled_time_slots);
+            })
+            .catch(error => {
+                console.error("Errore nel recupero delle fasce orarie disabilitate:", error);
+            });
+    }
+
+    // Funzione per aggiornare gli orari disponibili nel menu a tendina
+    function updateTimeSlots(disabledTimeSlots) {
+        const timeSelect = document.getElementById("id_reservation_time");
+        const options = timeSelect.options;
+
+        // Reimposta tutti gli orari come abilitati
+        for (let i = 0; i < options.length; i++) {
+            options[i].disabled = false;
+            options[i].textContent = options[i].value; // Ripristina il testo originale
+        }
+
+        // Disabilita gli orari che rientrano nelle fasce disabilitate
+        disabledTimeSlots.forEach(slot => {
+            const slotStart = slot.start_time;
+            const slotEnd = slot.end_time;
+
+            for (let i = 0; i < options.length; i++) {
+                const optionTime = options[i].value;
+                if (optionTime >= slotStart && optionTime < slotEnd) {
+                    options[i].disabled = true;
+                    if (!options[i].textContent.includes("(Non disponibile)")) {
+                        options[i].textContent += " (Non disponibile)";
+                    }
+                }
+            }
+        });
+
+        console.log("Orari aggiornati con le fasce disabilitate:", disabledTimeSlots);
+    }
+</script>
+
+<script>
     document.addEventListener('DOMContentLoaded', function () {
-        // --- Gestione del Menù Mobile (Rimani invariato) ---
         const navbar = document.querySelector('.navbar');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
-        
-        function adjustMenuPosition() {
-            const startingOffset = 10;
-            mobileMenu.style.top = startingOffset + 'px';
-        }
 
-        adjustMenuPosition();
-
-        menuIcon.addEventListener('click', function (event) {
-            event.stopPropagation(); // Previene la chiusura immediata del menu
+        // Mostra/Nasconde il menu mobile al clic sull'icona
+        menuIcon.addEventListener('click', function () {
             mobileMenu.classList.toggle('active');
             this.classList.toggle('active');
         });
 
+        // Chiude il menu mobile cliccando fuori
         document.addEventListener('click', function (event) {
             if (!menuIcon.contains(event.target) && !mobileMenu.contains(event.target)) {
                 mobileMenu.classList.remove('active');
@@ -199,167 +232,41 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        document.querySelectorAll('#mobile-menu a').forEach(function(menuItem) {
-            menuItem.addEventListener('click', function() {
-                mobileMenu.classList.remove('active');
-                menuIcon.classList.remove('active');
-            });
-        });
-    });
-    </script>
-<script>
-    
-    document.addEventListener("DOMContentLoaded", function () {
-        const navbar = document.querySelector(".navbar");
-        const reservationContainer = document.querySelector(".reservation-container");
-    
-        function updateReservationPosition() {
+        // Aggiorna la posizione della navbar
+        function adjustMenuPosition() {
             const navbarHeight = navbar.offsetHeight;
             document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
         }
-    
-        // Esegui la funzione all'avvio e ogni volta che la finestra viene ridimensionata
-        updateReservationPosition();
-        window.addEventListener("resize", updateReservationPosition);
+
+        adjustMenuPosition();
+        window.addEventListener("resize", adjustMenuPosition);
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Include Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const acceptAllCheckbox = document.querySelector(".accept-all input[type='checkbox']");
-        const consentCheckboxes = document.querySelectorAll(".consent-group input[type='checkbox']");
-
-        if (acceptAllCheckbox) {
-            acceptAllCheckbox.addEventListener("change", function() {
-                consentCheckboxes.forEach(checkbox => checkbox.checked = this.checked);
-            });
-        }
-    });
-    
-</script>
-    
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const navbar = document.querySelector(".navbar");
         const languageSwitcher = document.querySelector(".language-switcher");
-    
-        function updateLanguageSwitcherPosition() {
-            const navbarHeight = navbar.offsetHeight;
-            languageSwitcher.style.top = `${navbarHeight + 10}px`; // Posiziona le bandiere 10px sotto la navbar
-        }
-    
-        // Esegui la funzione all'avvio e ogni volta che la finestra viene ridimensionata
-        updateLanguageSwitcherPosition();
-        window.addEventListener("resize", updateLanguageSwitcherPosition);
-    });
-    
-    //modified
-    function setLanguage(lang) {
-        // Nasconde tutti gli elementi con la classe 'lang'
-        var elements = document.getElementsByClassName('lang');
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].style.display = 'none';
-        }
-    
-        // Mostra gli elementi con la lingua selezionata
-        var langElements = document.getElementsByClassName('lang-' + lang);
-        for (var i = 0; i < langElements.length; i++) {
-            langElements[i].style.display = '';
-        }
-    
-        // Salva la preferenza di lingua dell'utente
-        localStorage.setItem('preferredLanguage', lang);
-    
-        // Aggiorna lo stile del pulsante attivo
-        var buttons = document.querySelectorAll('.language-switcher button');
-        buttons.forEach(function(button) {
-            if (button.getAttribute('onclick').includes("'" + lang + "'")) {
-                button.classList.add('active');
-            } else {
-                button.classList.remove('active');
-            }
-        });
-    
-        // Attiva l'animazione di flash della pagina
-        document.body.classList.add("page-flash");
-        setTimeout(() => {
-            document.body.classList.remove("page-flash");
-        }, 500); // Deve corrispondere alla durata dell'animazione (0.5s)
-    }
-    
-    // Load the preferred language when the page loads
-    function loadPreferredLanguage() {
-        var lang = localStorage.getItem('preferredLanguage') || 'it';
-        setLanguage(lang);
-    }
-    
-    // Call the function when the page is loaded
-    document.addEventListener('DOMContentLoaded', loadPreferredLanguage);
 
-    
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const timeInput = document.getElementById("id_reservation_time");
-    
-            // Definisci gli orari validi
-            const validTimes = [
-                "12:00", "12:30", "13:00", "13:30", "14:00",
-                "19:00", "19:30", "20:00", "20:30", "21:00",
-                "21:30", "22:00", "22:30", "23:00"
-            ];
-    
-            // Sostituisci l'input con un menu a tendina con gli orari specifici
-            const select = document.createElement("select");
-            select.name = timeInput.name;
-            select.id = timeInput.id;
-            select.classList.add(...timeInput.classList); // Mantieni le classi originali
-    
-            // Popola il menu a tendina con le opzioni di orario
-            validTimes.forEach(time => {
-                const option = document.createElement("option");
-                option.value = time;
-                option.textContent = time;
-                select.appendChild(option);
+        // Posiziona il selettore della lingua sotto la navbar
+        const navbarHeight = navbar.offsetHeight;
+        languageSwitcher.style.top = `${navbarHeight + 10}px`;
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const acceptAllCheckbox = document.querySelector(".accept-all input[type='checkbox']");
+        const consentCheckboxes = document.querySelectorAll(".consent-group input[type='checkbox']");
+
+        // Seleziona/Deseleziona tutti i consensi
+        if (acceptAllCheckbox) {
+            acceptAllCheckbox.addEventListener("change", function () {
+                consentCheckboxes.forEach(checkbox => checkbox.checked = this.checked);
             });
-    
-            // Sostituisci l'input con il nuovo menu a tendina
-            timeInput.replaceWith(select);
-        });
-    </script>
-    <script>
-        console.log("Date disabilitate:", {{ disabled_dates|safe }});
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Recupera i dati delle date disabilitate passati dal backend
-            const disabledDates = {{ disabled_dates|safe }}; // Assicurati che il backend passi i dati correttamente
-        
-            // Debug: verifica i dati ricevuti
-            console.log("Date disabilitate:", disabledDates);
-        
-            // Configura Flatpickr con i dati corretti
-            flatpickr("#id_reservation_date", {
-                dateFormat: "Y-m-d",
-                minDate: "today",
-                disable: disabledDates.map(d => d.date), // Disabilita solo le date specifiche
-                onDayCreate: function (dObj, dStr, fp, dayElem) {
-                    // Cerca corrispondenza per la data corrente
-                    const match = disabledDates.find(d => d.date === dayElem.dateObj.toISOString().split('T')[0]);
-                    if (match) {
-                        // Disabilita il giorno con il tooltip
-                        dayElem.title = match.reason || "Data non disponibile";
-                        dayElem.style.cursor = "not-allowed";
-                        dayElem.classList.add("flatpickr-disabled-with-reason");
-                    }
-                },
-                locale: {
-                    firstDayOfWeek: 1, // La settimana inizia da lunedì
-                },
-            });
-        });
-        </script>
+        }
+    });
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
             {% endblock %}

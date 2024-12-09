@@ -399,3 +399,55 @@ def test_email(request):
     except Exception as e:
         logger.error(f"Errore durante l'invio dell'email di test: {e}")
         return HttpResponse(f"Errore durante l'invio dell'email di test: {e}")
+    
+# views.py
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse, HttpResponse
+from .models import DisabledDate, DisabledTimeSlot, Reservation, Customer
+from .form import ReservationForm, DisabledDateForm, DisabledTimeSlotForm
+from django.core.mail import send_mail
+from django.conf import settings
+from twilio.rest import Client
+from datetime import datetime, timedelta   
+
+@login_required
+def manage_disabled_time_slots(request):
+    if request.method == "POST":
+        form = DisabledTimeSlotForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('gestionale:manage_disabled_time_slots')
+    else:
+        form = DisabledTimeSlotForm()
+    disabled_time_slots = DisabledTimeSlot.objects.all()
+    return render(request, 'gestionale/manage_disabled_time_slots.html', {
+        'form': form,
+        'disabled_time_slots': disabled_time_slots,
+    })
+@login_required
+def delete_disabled_time_slot(request, pk):
+    slot = get_object_or_404(DisabledTimeSlot, pk=pk)
+    if request.method == "POST":
+        slot.delete()
+        return redirect('gestionale:manage_disabled_time_slots')
+    
+    
+from django.http import JsonResponse
+from .models import DisabledTimeSlot
+
+
+def get_disabled_time_slots(request):
+    date = request.GET.get('date')
+    if date:
+        disabled_slots = DisabledTimeSlot.objects.filter(date=date)
+        data = {
+            'disabled_time_slots': [
+                {'start_time': slot.start_time.strftime('%H:%M'), 'end_time': slot.end_time.strftime('%H:%M')}
+                for slot in disabled_slots
+            ]
+        }
+    else:
+        data = {'disabled_time_slots': []}
+    return JsonResponse(data)

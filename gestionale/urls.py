@@ -27,5 +27,8 @@ urlpatterns = [
     path('manage-disabled-dates/', views.manage_disabled_dates, name='manage_disabled_dates'),
     path('delete-disabled-date/<int:pk>/', views.delete_disabled_date, name='delete_disabled_date'),
     path('test-email/', views.test_email, name='test_email'),
-
+    path('manage-disabled-dates/', views.manage_disabled_dates, name='manage_disabled_dates'),
+    path('manage-disabled-time-slots/', views.manage_disabled_time_slots, name='manage_disabled_time_slots'),
+    path('delete-disabled-time-slot/<int:pk>/', views.delete_disabled_time_slot, name='delete_disabled_time_slot'),
+    path('get-disabled-time-slots/', views.get_disabled_time_slots, name='get_disabled_time_slots'),
 ]
