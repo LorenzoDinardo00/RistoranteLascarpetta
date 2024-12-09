@@ -719,3 +719,10 @@ body {
     padding-right: 10px;
 }
 
+
+#booking-button {
+    white-space: nowrap; /* Impedisce la divisione su più righe */
+    overflow: hidden; /* Nasconde eventuali contenuti in eccesso */
+    text-overflow: ellipsis; /* Aggiunge "..." se il testo è troppo lungo */
+    display: inline-block; /* Mantiene il contenitore compatto */
+}

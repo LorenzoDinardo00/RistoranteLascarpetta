@@ -269,4 +269,27 @@
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+function setLanguage(lang) {
+    const elementsIt = document.querySelectorAll('.lang-it');
+    const elementsEn = document.querySelectorAll('.lang-en');
+
+    if (lang === 'it') {
+        elementsIt.forEach(el => el.style.display = 'inline');
+        elementsEn.forEach(el => el.style.display = 'none');
+    } else if (lang === 'en') {
+        elementsIt.forEach(el => el.style.display = 'none');
+        elementsEn.forEach(el => el.style.display = 'inline');
+    }
+
+    // Salva la scelta della lingua in localStorage
+    localStorage.setItem('preferredLanguage', lang);
+}
+
+// Imposta la lingua iniziale al caricamento della pagina
+document.addEventListener('DOMContentLoaded', function () {
+    const preferredLanguage = localStorage.getItem('preferredLanguage') || 'it'; // Default italiano
+    setLanguage(preferredLanguage);
+});
+</script>
             {% endblock %}
