@@ -3,34 +3,244 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <!-- Aggiunta del meta tag viewport per la responsività -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestione Fasce Orarie Disabilitate</title>
-    <link rel="stylesheet" href="{% static 'gestionale/manage_disabled_time_slots.css' %}">
+    <link rel="stylesheet" href="{% static 'gestionale/prenotazioni.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        /* Container Principale */
+        .reservation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Intestazione */
+        .reservation-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        /* Navigazione */
+        .navigation-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .back-to-home {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: 1px solid currentColor;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-to-home:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form di Selezione Data e Orari */
+        .date-selector-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 600px) {
+            .date-selector-form {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 900px) {
+            .date-selector-form {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        /* Bottone di Invio */
+        .form-group.submit-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        /* Lista delle Fasce Orarie Disabilitate */
+        .reservation-list h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .reservation-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .reservation-list li {
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .reservation-list li:hover {
+            background-color: #e2e6ea;
+        }
+
+        .reservation-list li span {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .reservation-list li form {
+            align-self: flex-start;
+        }
+
+        @media (min-width: 600px) {
+            .reservation-list li {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .reservation-list li span {
+                flex: 1;
+                margin-bottom: 0;
+                padding-right: 20px;
+            }
+
+            .reservation-list li form {
+                align-self: center;
+            }
+        }
+
+        /* Nessuna Fascia Oraria */
+        .no-reservation {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <a href="{% url 'gestionale:gestionale' %}" class="back-to-home">Torna alla Homepage del Gestionale</a>
-    <div class="disabled-time-slots-container">
+    <div class="reservation-container">
         <h2>Gestione Fasce Orarie Disabilitate</h2>
-        <form method="post" class="disabled-time-slots-form">
+
+        <div class="navigation-container">
+            <a href="{% url 'gestionale:gestionale' %}" class="back-to-home">Torna alla Homepage del Gestionale</a>
+        </div>
+
+        <form method="post" class="date-selector-form">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Aggiungi Fascia Oraria</button>
+            <div class="form-group">
+                <label for="id_date"><strong>Data</strong></label>
+                <input type="text" id="id_date" name="date" placeholder="Seleziona una data" required>
+            </div>
+            <div class="form-group">
+                <label for="id_start_time"><strong>Orario di Inizio</strong></label>
+                <select id="id_start_time" name="start_time" class="time-dropdown" required>
+                    {% for time in time_slots %}
+                        <option value="{{ time }}">{{ time }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="id_end_time"><strong>Orario di Fine</strong></label>
+                <select id="id_end_time" name="end_time" class="time-dropdown" required>
+                    {% for time in time_slots %}
+                        <option value="{{ time }}">{{ time }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="id_reason"><strong>Motivo</strong></label>
+                <input type="text" id="id_reason" name="reason" placeholder="Inserisci il motivo" required>
+            </div>
+            <div class="form-group submit-group">
+                <button type="submit" class="btn btn-danger">Aggiungi Fascia Oraria</button>
+            </div>
         </form>
-        <div>
+
+        <div class="reservation-list">
             <h3>Fasce Orarie Disabilitate</h3>
             <ul>
                 {% for slot in disabled_time_slots %}
                     <li>
-                        <span>{{ slot.date }}: {{ slot.start_time }} - {{ slot.end_time }} - {{ slot.reason }}</span>
+                        <span><strong>{{ slot.date }}</strong> - {{ slot.start_time }} - {{ slot.end_time }}: {{ slot.reason }}</span>
                         <form method="post" action="{% url 'gestionale:delete_disabled_time_slot' slot.pk %}">
                             {% csrf_token %}
-                            <button type="submit">Rimuovi</button>
+                            <button type="submit" class="btn btn-secondary">Rimuovi</button>
                         </form>
                     </li>
                 {% empty %}
-                    <li>Nessuna fascia oraria disabilitata.</li>
+                    <li class="no-reservation">Nessuna fascia oraria disabilitata</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
+
+    <script>
+        // Inizializza Flatpickr per la selezione della data
+        document.addEventListener("DOMContentLoaded", function () {
+            flatpickr("#id_date", {
+                dateFormat: "Y-m-d",
+                minDate: "today"
+            });
+        });
+    </script>
 </body>
 </html>

@@ -411,9 +411,15 @@ from django.core.mail import send_mail
 from django.conf import settings
 from twilio.rest import Client
 from datetime import datetime, timedelta   
-
 @login_required
 def manage_disabled_time_slots(request):
+    # Lista di orari preimpostati
+    time_slots = [
+        "12:00", "12:30", "13:00", "13:30", "14:00",
+        "19:00", "19:30", "20:00", "20:30", "21:00",
+        "21:30", "22:00", "22:30", "23:00"
+    ]
+
     if request.method == "POST":
         form = DisabledTimeSlotForm(request.POST)
         if form.is_valid():
@@ -421,18 +427,23 @@ def manage_disabled_time_slots(request):
             return redirect('gestionale:manage_disabled_time_slots')
     else:
         form = DisabledTimeSlotForm()
+
+    # Recupera tutte le fasce orarie disabilitate
     disabled_time_slots = DisabledTimeSlot.objects.all()
+
     return render(request, 'gestionale/manage_disabled_time_slots.html', {
         'form': form,
         'disabled_time_slots': disabled_time_slots,
+        'time_slots': time_slots,  # Passa gli orari preimpostati al template
     })
+
+
 @login_required
 def delete_disabled_time_slot(request, pk):
     slot = get_object_or_404(DisabledTimeSlot, pk=pk)
     if request.method == "POST":
         slot.delete()
-        return redirect('gestionale:manage_disabled_time_slots')
-    
+        return redirect('gestionale:manage_disabled_time_slots') 
     
 from django.http import JsonResponse
 from .models import DisabledTimeSlot
