@@ -65,7 +65,7 @@ Cordiali saluti,
 Il Team di La Scarpetta
 """,
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=['temporainnovation@gmail.com','lascarpettafirenze@gmail.com','artursiko4@gmail.com'],  # Sostituisci con un tuo indirizzo reale
+                    recipient_list=['lascarpettafirenze@gmail.com','artursiko4@gmail.com'],  # Sostituisci con un tuo indirizzo reale
                     fail_silently=False,
                 )
             except Exception as e:
