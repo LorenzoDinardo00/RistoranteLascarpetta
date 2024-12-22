@@ -197,4 +197,4 @@ EMAIL_USE_SSL = True  # Utilizza SSL per la connessione
 EMAIL_USE_TLS = False  # Disabilita TLS (utilizziamo SSL)
 EMAIL_HOST_USER = 'apikey'  # Nome utente richiesto da SendGrid (fisso "apikey")
 EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY')  # Chiave API configurata come variabile d'ambiente
-DEFAULT_FROM_EMAIL = 'assistenza.lorenzodinardo@gmail.com'  # Mittente verificato su SendGrid
+DEFAULT_FROM_EMAIL = 'lascarpettafirenze@gmail.com'  # Mittente verificato su SendGrid
