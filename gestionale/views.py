@@ -144,10 +144,43 @@ def reservation_success(request):
     return render(request, 'gestionale/reservation_success.html')
 
 
+def annulla_prenotazione(request, reservation_id, token):
+    signer = TimestampSigner()
+    try:
+        signer.unsign(token, max_age=172800)  # token valido per 48 ore
+    except (BadSignature, SignatureExpired):
+        return HttpResponse("Link non valido o scaduto", status=400)
 
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    # Invia notifica al titolare
+    send_mail(
+        subject='Prenotazione Annullata - La Scarpetta',
+        message=f"""
+Prenotazione ANNULLATA dal cliente:
+
+- Nome: {reservation.first_name} {reservation.last_name}
+- Telefono: {reservation.phone_number}
+- Email: {reservation.email}
+- Data: {reservation.reservation_date}
+- Ora: {reservation.reservation_time}
+- Persone: {reservation.guests}
+""",
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com'],
+    )
+
+    return redirect(reverse('gestionale:reservation_cancelled'))
 
 def gestionale(request):
     return render(request, 'gestionale/gestionale.html')
+from django.shortcuts import render
+
+def reservation_cancelled(request):
+    """
+    Mostra una pagina di conferma dell'annullamento prenotazione.
+    """
+    return render(request, 'gestionale/reservation_cancelled.html')
 from django.shortcuts import render
 from django.utils import timezone
 from datetime import timedelta, datetime
