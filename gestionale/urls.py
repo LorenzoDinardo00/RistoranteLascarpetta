@@ -31,4 +31,6 @@ urlpatterns = [
     path('manage-disabled-time-slots/', views.manage_disabled_time_slots, name='manage_disabled_time_slots'),
     path('delete-disabled-time-slot/<int:pk>/', views.delete_disabled_time_slot, name='delete_disabled_time_slot'),
     path('get-disabled-time-slots/', views.get_disabled_time_slots, name='get_disabled_time_slots'),
+    path('annulla-prenotazione/<int:reservation_id>/<str:token>/', views.annulla_prenotazione, name='annulla_prenotazione'),
+    path('prenotazione-cancellata/', views.reservation_cancelled, name='reservation_cancelled'),
 ]
