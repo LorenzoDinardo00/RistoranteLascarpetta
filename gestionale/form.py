@@ -2,6 +2,9 @@
 from django import forms
 from .models import Reservation, DisabledDate, DisabledTimeSlot
 
+from django import forms
+from .models import Reservation, DisabledDate, DisabledTimeSlot
+
 class ReservationForm(forms.ModelForm):
     reservation_date = forms.DateField(
         widget=forms.TextInput(attrs={
@@ -14,6 +17,13 @@ class ReservationForm(forms.ModelForm):
         widget=forms.Select(attrs={
             'class': 'form-control',
         })
+    )
+
+    # Inserisci il nuovo campo email
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control'}),
+        label="Email",
+        required=True
     )
     
     def __init__(self, *args, **kwargs):
@@ -69,6 +79,7 @@ class ReservationForm(forms.ModelForm):
             'guests',
             'reservation_date',
             'reservation_time',
+            'email',  # Aggiungi il campo email qui
             'cookie_consent',
             'profiling_consent',
             'promotional_sms_consent',

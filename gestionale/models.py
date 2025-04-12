@@ -11,6 +11,8 @@ class Reservation(models.Model):
     profiling_consent = models.BooleanField(default=False)
     promotional_sms_consent = models.BooleanField(default=False)
     accept_all = models.BooleanField(default=False)
+    email = models.EmailField(null=True, blank=True)  
+
     
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.reservation_date} {self.reservation_time}"
