@@ -1,6 +1,17 @@
 from django.db import models
 
 class Reservation(models.Model):
+    RESTAURANT_CHOICES = [
+        ('SCARPETTA', 'La Scarpetta'),
+        ('BRACERIA', 'La Braceria'),
+    ]
+    
+    restaurant_id = models.CharField(
+        max_length=20, 
+        choices=RESTAURANT_CHOICES, 
+        default='SCARPETTA',
+        help_text="Identificativo del ristorante"
+    )
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=20)

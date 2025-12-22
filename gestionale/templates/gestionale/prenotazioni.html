@@ -4,53 +4,69 @@
 {% block title %}Prenotazioni{% endblock %}
 
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'gestionale/prenotazioni.css' %}">
+<link rel="stylesheet" href="{% static 'gestionale/prenotazioni.css' %}">
 {% endblock %}
 {% block content %}
 <div class="reservation-container">
     <h2>Gestione Prenotazioni - {{ selected_date }}</h2>
-    
+
     <!-- Contenitore per navigazione e selettore di data -->
     <div class="navigation-container">
         <!-- Bottone per tornare alla homepage del gestionale -->
         <a href="{% url 'gestionale:gestionale' %}" class="back-to-home">Torna alla Homepage del Gestionale</a>
-        
+
         <!-- Navigazione tra i giorni -->
         <div class="navigation">
-            <a href="{% url 'gestionale:prenotazioni' %}?date={{ prev_date }}" class="nav-button">Giorno Precedente</a>
-            <a href="{% url 'gestionale:prenotazioni' %}?date={{ next_date }}" class="nav-button">Giorno Successivo</a>
+            <a href="{% url 'gestionale:prenotazioni' %}?date={{ prev_date }}{% if selected_restaurant %}&restaurant={{ selected_restaurant }}{% endif %}"
+                class="nav-button">Giorno Precedente</a>
+            <a href="{% url 'gestionale:prenotazioni' %}?date={{ next_date }}{% if selected_restaurant %}&restaurant={{ selected_restaurant }}{% endif %}"
+                class="nav-button">Giorno Successivo</a>
         </div>
-        
-        <!-- Selezionatore di data per navigazione rapida -->
+
+        <!-- Selezionatore di data e ristorante -->
         <form method="get" action="{% url 'gestionale:prenotazioni' %}" class="date-selector-form">
-            <label for="date-selector">Oppure seleziona una data:</label>
-            <input type="date" id="date-selector" name="date" value="{{ selected_date }}" onchange="this.form.submit()">
+            <label for="date-selector">Seleziona una data:</label>
+            <input type="date" id="date-selector" name="date" value="{{ selected_date }}">
+
+            <label for="restaurant-selector">Ristorante:</label>
+            <select name="restaurant" id="restaurant-selector">
+                <option value="">Tutti i ristoranti</option>
+                <option value="SCARPETTA" {% if selected_restaurant == 'SCARPETTA' %}selected{% endif %}>La Scarpetta
+                </option>
+                <option value="BRACERIA" {% if selected_restaurant == 'BRACERIA' %}selected{% endif %}>La Braceria
+                </option>
+            </select>
+
+            <button type="submit" class="filter-button">Filtra</button>
         </form>
     </div>
-    
+
     <div class="reservation-list">
         <div class="meal-section">
             <h3>Pranzo</h3>
             <ul>
                 {% for reservation in lunch_reservations %}
-                    <li>
-                        <!-- Link ai dettagli della prenotazione -->
-                        <a href="{% url 'gestionale:prenotazione_dettaglio' reservation.id %}">
-                            <span class="time">{{ reservation.reservation_time }}</span>
-                            <span class="name">{{ reservation.first_name }} {{ reservation.last_name }}</span>
-                            <span class="guests">{{ reservation.guests }} ospiti</span>
-                        </a>
-                        <!-- Pulsante Modifica -->
-                        <a href="{% url 'gestionale:modifica_prenotazione' reservation.id %}" class="edit-button">Modifica</a>
-                        <!-- Pulsante Elimina -->
-                        <a href="{% url 'gestionale:elimina_prenotazione' reservation.id %}" class="delete-button">Elimina</a>
-                    </li>
+                <li>
+                    <!-- Link ai dettagli della prenotazione -->
+                    <a href="{% url 'gestionale:prenotazione_dettaglio' reservation.id %}">
+                        <span class="restaurant-badge {% if reservation.restaurant_id == 'SCARPETTA' %}scarpetta{% else %}braceria{% endif %}">{{ reservation.get_restaurant_id_display }}</span>
+                        <span class="time">{{ reservation.reservation_time }}</span>
+                        <span class="name">{{ reservation.first_name }} {{ reservation.last_name }}</span>
+                        <span class="guests">{{ reservation.guests }} ospiti</span>
+                    </a>
+                    <!-- Pulsante Modifica -->
+                    <a href="{% url 'gestionale:modifica_prenotazione' reservation.id %}"
+                        class="edit-button">Modifica</a>
+                    <!-- Pulsante Elimina -->
+                    <a href="{% url 'gestionale:elimina_prenotazione' reservation.id %}"
+                        class="delete-button">Elimina</a>
+                </li>
                 {% empty %}
-                    <li class="no-reservation">Nessuna prenotazione per il pranzo</li>
+                <li class="no-reservation">Nessuna prenotazione per il pranzo</li>
                 {% endfor %}
             </ul>
         </div>
-        
+
         <div class="meal-section">
             <h3>Cena</h3>
             <ul>
@@ -58,17 +74,20 @@
                 <li>
                     <!-- Link ai dettagli della prenotazione -->
                     <a href="{% url 'gestionale:prenotazione_dettaglio' reservation.id %}">
+                        <span class="restaurant-badge {% if reservation.restaurant_id == 'SCARPETTA' %}scarpetta{% else %}braceria{% endif %}">{{ reservation.get_restaurant_id_display }}</span>
                         <span class="time">{{ reservation.reservation_time }}</span>
                         <span class="name">{{ reservation.first_name }} {{ reservation.last_name }}</span>
                         <span class="guests">{{ reservation.guests }} ospiti</span>
                     </a>
                     <!-- Pulsante Modifica -->
-                    <a href="{% url 'gestionale:modifica_prenotazione' reservation.id %}" class="edit-button">Modifica </a>
+                    <a href="{% url 'gestionale:modifica_prenotazione' reservation.id %}"
+                        class="edit-button">Modifica</a>
                     <!-- Pulsante Elimina -->
-                    <a href="{% url 'gestionale:elimina_prenotazione' reservation.id %}" class="delete-button">Elimina</a>
+                    <a href="{% url 'gestionale:elimina_prenotazione' reservation.id %}"
+                        class="delete-button">Elimina</a>
                 </li>
                 {% empty %}
-                    <li class="no-reservation">Nessuna prenotazione per la cena</li>
+                <li class="no-reservation">Nessuna prenotazione per la cena</li>
                 {% endfor %}
             </ul>
         </div>

@@ -1,27 +1,178 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}prenotazione_dettaglio{% endblock %}
+{% block title %}Dettagli Prenotazione{% endblock %}
 
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'gestionale/prenotazione_dettaglio.css' %}">
+<link rel="stylesheet" href="{% static 'gestionale/prenotazione_dettaglio.css' %}">
 {% endblock %}
 
-
 {% block content %}
-<div class="reservation-detail-container">
-    <h2>Dettagli Prenotazione</h2>
-    
-    <p><strong>Nome:</strong> {{ reservation.first_name }} {{ reservation.last_name }}</p>
-    <p><strong>Numero di Telefono:</strong> {{ reservation.phone_number }}</p>
-    <p><strong>Numero di Ospiti:</strong> {{ reservation.guests }}</p>
-    <p><strong>Data:</strong> {{ reservation.reservation_date }}</p>
-    <p><strong>Orario:</strong> {{ reservation.reservation_time }}</p>
-    <p><strong>Consenso Cookie:</strong> {{ reservation.cookie_consent|yesno:"Sì,No" }}</p>
-    <p><strong>Consenso Profilazione:</strong> {{ reservation.profiling_consent|yesno:"Sì,No" }}</p>
-    <p><strong>Consenso SMS Promozionali:</strong> {{ reservation.promotional_sms_consent|yesno:"Sì,No" }}</p>
-    <p><strong>Accetta Tutti:</strong> {{ reservation.accept_all|yesno:"Sì,No" }}</p>
+<div class="detail-page">
+    <div class="detail-card">
+        <!-- Header con icona -->
+        <div class="detail-header">
+            <div class="header-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+            </div>
+            <h2>Dettagli Prenotazione</h2>
+            <p class="subtitle">Riepilogo completo della prenotazione</p>
+        </div>
 
-    <a href="{% url 'gestionale:prenotazioni' %}" class="back-button">Torna alla lista delle prenotazioni</a>
+        <!-- Sezione Info Principale -->
+        <div class="detail-section">
+            <h3 class="section-title">
+                <span class="section-icon">👤</span>
+                Informazioni Cliente
+            </h3>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Nome Completo</span>
+                    <span class="detail-value">{{ reservation.first_name }} {{ reservation.last_name }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Telefono</span>
+                    <span class="detail-value phone">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                            </path>
+                        </svg>
+                        {{ reservation.phone_number }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Prenotazione -->
+        <div class="detail-section">
+            <h3 class="section-title">
+                <span class="section-icon">📅</span>
+                Dettagli Prenotazione
+            </h3>
+            <div class="detail-grid highlight-grid">
+                <div class="detail-item highlight">
+                    <span class="detail-label">Data</span>
+                    <span class="detail-value date">{{ reservation.reservation_date }}</span>
+                </div>
+                <div class="detail-item highlight">
+                    <span class="detail-label">Orario</span>
+                    <span class="detail-value time">{{ reservation.reservation_time }}</span>
+                </div>
+                <div class="detail-item highlight">
+                    <span class="detail-label">Ospiti</span>
+                    <span class="detail-value guests">
+                        <span class="guests-badge">{{ reservation.guests }}</span>
+                        <span class="guests-label">persone</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Consensi -->
+        <div class="detail-section consent-section">
+            <h3 class="section-title">
+                <span class="section-icon">✅</span>
+                Consensi Privacy
+            </h3>
+            <div class="consent-grid">
+                <div class="consent-item {% if reservation.cookie_consent %}active{% endif %}">
+                    <div class="consent-indicator">
+                        {% if reservation.cookie_consent %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        {% endif %}
+                    </div>
+                    <span class="consent-label">Cookie</span>
+                </div>
+                <div class="consent-item {% if reservation.profiling_consent %}active{% endif %}">
+                    <div class="consent-indicator">
+                        {% if reservation.profiling_consent %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        {% endif %}
+                    </div>
+                    <span class="consent-label">Profilazione</span>
+                </div>
+                <div class="consent-item {% if reservation.promotional_sms_consent %}active{% endif %}">
+                    <div class="consent-indicator">
+                        {% if reservation.promotional_sms_consent %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        {% endif %}
+                    </div>
+                    <span class="consent-label">SMS Promo</span>
+                </div>
+                <div class="consent-item {% if reservation.accept_all %}active{% endif %}">
+                    <div class="consent-indicator">
+                        {% if reservation.accept_all %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        {% endif %}
+                    </div>
+                    <span class="consent-label">Accetta Tutti</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pulsanti Azione -->
+        <div class="detail-actions">
+            <a href="{% url 'gestionale:prenotazioni' %}" class="btn btn-back">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Torna alla Lista
+            </a>
+            <a href="{% url 'gestionale:modifica_prenotazione' reservation.id %}" class="btn btn-edit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                Modifica
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock %}

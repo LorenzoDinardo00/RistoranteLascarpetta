@@ -12,6 +12,8 @@ from .models import DisabledDate, Reservation
 from .form import ReservationForm
 from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
 
+import json
+
 def prenota_tavolo(request):
     """
     Gestisce la prenotazione del tavolo, inclusa la gestione dei consensi,
@@ -22,6 +24,8 @@ def prenota_tavolo(request):
     formatted_disabled_dates = [
         {'date': date.strftime("%Y-%m-%d"), 'reason': reason or "Non specificata"} for date, reason in disabled_dates
     ]
+    # Serialize for JavaScript
+    disabled_dates_json = json.dumps(formatted_disabled_dates)
 
     if request.method == 'POST':
         form = ReservationForm(request.POST)
@@ -29,6 +33,7 @@ def prenota_tavolo(request):
         if form.is_valid():
             # Salva la prenotazione
             reservation = form.save(commit=False)
+            reservation.restaurant_id = 'SCARPETTA'  # Fisso per La Scarpetta
             reservation.reservation_time = reservation.reservation_time.strip()
             reservation.save()
 
@@ -116,7 +121,7 @@ Il Team di La Scarpetta
             # Ritorna errori del modulo
             return render(request, 'gestionale/prenota_tavolo.html', {
                 'form': form,
-                'disabled_dates': formatted_disabled_dates,
+                'disabled_dates': disabled_dates_json,
             })
     else:
         # Mostra il modulo vuoto
@@ -125,7 +130,7 @@ Il Team di La Scarpetta
     # Rendi il template con il modulo e le date disabilitate
     return render(request, 'gestionale/prenota_tavolo.html', {
         'form': form,
-        'disabled_dates': formatted_disabled_dates,
+        'disabled_dates': disabled_dates_json,
     })
     
 def send_confirmation_sms(reservation):
@@ -192,11 +197,26 @@ from .models import Reservation
 @login_required
 def prenotazioni(request):
     # Ottieni la data selezionata dal parametro GET, con default alla data odierna
-    selected_date_str = request.GET.get('date', timezone.now().date().isoformat())
-    selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d').date()
+    selected_date_str = request.GET.get('date', '').strip()
+    selected_restaurant = request.GET.get('restaurant', '')  # Nuovo parametro per filtro ristorante
     
-    # Recupera le prenotazioni per la data selezionata, ordinate per orario
-    reservations = Reservation.objects.filter(reservation_date=selected_date).order_by('reservation_time')
+    # Se la data è vuota o non valida, usa la data odierna
+    if not selected_date_str:
+        selected_date = timezone.now().date()
+    else:
+        try:
+            selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d').date()
+        except ValueError:
+            selected_date = timezone.now().date()
+    
+    # Recupera le prenotazioni per la data selezionata
+    reservations = Reservation.objects.filter(reservation_date=selected_date)
+    
+    # Filtra per ristorante se selezionato
+    if selected_restaurant:
+        reservations = reservations.filter(restaurant_id=selected_restaurant)
+    
+    reservations = reservations.order_by('reservation_time')
     
     # Suddividi le prenotazioni in pranzo e cena
     lunch_reservations = reservations.filter(reservation_time__lt="15:00")
@@ -208,6 +228,7 @@ def prenotazioni(request):
     
     context = {
         'selected_date': selected_date,
+        'selected_restaurant': selected_restaurant,
         'lunch_reservations': lunch_reservations,
         'dinner_reservations': dinner_reservations,
         'prev_date': prev_date,
