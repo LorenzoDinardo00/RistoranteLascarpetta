@@ -555,3 +555,118 @@ def get_disabled_time_slots(request):
     else:
         data = {'disabled_time_slots': []}
     return JsonResponse(data)
+
+
+from .form import AdminReservationForm
+
+@login_required
+def nuova_prenotazione(request):
+    """
+    Pagina per inserire prenotazioni direttamente dal gestionale.
+    Permette di scegliere il ristorante (default BRACERIA).
+    Invia email automatiche come il form cliente.
+    """
+    # Recupera le date disabilitate
+    disabled_dates = DisabledDate.objects.values_list('date', 'reason')
+    formatted_disabled_dates = [
+        {'date': date.strftime("%Y-%m-%d"), 'reason': reason or "Non specificata"} 
+        for date, reason in disabled_dates
+    ]
+    disabled_dates_json = json.dumps(formatted_disabled_dates)
+    
+    if request.method == 'POST':
+        form = AdminReservationForm(request.POST)
+        
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.reservation_time = str(reservation.reservation_time).strip()
+            # Il cookie_consent lo impostiamo a True perché il ristoratore sta inserendo
+            reservation.cookie_consent = True
+            reservation.save()
+            
+            # Configura i dettagli in base al ristorante
+            restaurant_id = reservation.restaurant_id
+            if restaurant_id == 'BRACERIA':
+                restaurant_name = 'La Braceria'
+                email_recipients = ['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com']
+            else:
+                restaurant_name = 'La Scarpetta'
+                email_recipients = ['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com']
+            
+            # Invia email al titolare
+            try:
+                send_mail(
+                    subject=f'Nuova Prenotazione (Gestionale) - {restaurant_name}',
+                    message=f"""
+Prenotazione inserita dal gestionale:
+
+- Ristorante: {restaurant_name}
+- Nome Cliente: {reservation.first_name} {reservation.last_name}
+- Telefono Cliente: {reservation.phone_number}
+- Email Cliente: {reservation.email}
+- Data Prenotazione: {reservation.reservation_date.strftime('%d/%m/%Y')}
+- Ora Prenotazione: {reservation.reservation_time}
+- Numero di Persone: {reservation.guests}
+
+Cordiali saluti,
+Il Sistema di Prenotazione
+""",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=email_recipients,
+                    fail_silently=False,
+                )
+            except Exception as e:
+                print(f"Errore durante l'invio dell'email al titolare: {e}")
+            
+            # Genera il token di cancellazione
+            signer = TimestampSigner()
+            token = signer.sign(reservation.id)
+            cancellation_url = request.build_absolute_uri(
+                reverse('gestionale:annulla_prenotazione', args=[reservation.id, token])
+            )
+            
+            # Invia email di conferma al cliente
+            try:
+                send_mail(
+                    subject=f'Conferma Prenotazione - {restaurant_name}',
+                    message=f"""
+Ciao {reservation.first_name},
+
+Grazie per aver prenotato da {restaurant_name}!
+Ecco il riepilogo della tua prenotazione:
+
+- Nome: {reservation.first_name} {reservation.last_name}
+- Telefono: {reservation.phone_number}
+- Data: {reservation.reservation_date.strftime('%d/%m/%Y')}
+- Ora: {reservation.reservation_time}
+- Numero di Persone: {reservation.guests}
+
+Se desideri annullare la prenotazione, clicca sul seguente link:
+{cancellation_url}
+
+Ti aspettiamo!
+Cordiali saluti,
+Il Team di {restaurant_name}
+""",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[reservation.email],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                print(f"Errore durante l'invio dell'email di conferma al cliente: {e}")
+            
+            # Redirect alla pagina prenotazioni
+            return redirect(reverse('gestionale:prenotazioni'))
+        else:
+            return render(request, 'gestionale/nuova_prenotazione.html', {
+                'form': form,
+                'disabled_dates': disabled_dates_json,
+            })
+    else:
+        form = AdminReservationForm()
+    
+    return render(request, 'gestionale/nuova_prenotazione.html', {
+        'form': form,
+        'disabled_dates': disabled_dates_json,
+    })
+

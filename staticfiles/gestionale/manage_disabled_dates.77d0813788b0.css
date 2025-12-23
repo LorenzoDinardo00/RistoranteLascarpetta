@@ -1,0 +1,218 @@
+/* ============================================
+   LA SCARPETTA - MANAGE DISABLED DATES
+   Date/Time Management Styling
+   ============================================ */
+
+/* Import main gestionale styles */
+@import url("./gestionale.7906c3dfd566.css");
+
+/* Date Management Container */
+.date-management-container {
+    max-width: 800px;
+    margin: 32px auto;
+    padding: 40px;
+    background: #FFFFFF;
+    border-radius: 24px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(191, 160, 84, 0.1);
+}
+
+.date-management-container h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: #141414;
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+/* Date Grid */
+.date-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.date-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #FAF8F5;
+    border-radius: 10px;
+    border: 1px solid #E8E8E8;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.date-item:hover {
+    border-color: #BFA054;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.date-item .date-text {
+    font-weight: 500;
+    color: #141414;
+    font-size: 0.9rem;
+}
+
+.date-item .remove-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FEE8E8;
+    color: #C53030;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.date-item .remove-btn:hover {
+    background: #C53030;
+    color: #FFFFFF;
+}
+
+/* Time Slots Grid */
+.time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin: 24px 0;
+}
+
+.time-slot {
+    padding: 10px 16px;
+    background: #FAF8F5;
+    border: 2px solid #E8E8E8;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #141414;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.time-slot:hover {
+    border-color: #BFA054;
+    background: #FFFFFF;
+}
+
+.time-slot.selected {
+    background: linear-gradient(135deg, #BFA054 0%, #D4BC7C 100%);
+    border-color: #BFA054;
+    color: #141414;
+}
+
+.time-slot.disabled {
+    background: #FEE8E8;
+    border-color: #C53030;
+    color: #C53030;
+    text-decoration: line-through;
+}
+
+/* Add Date Form */
+.add-date-form {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 24px;
+    background: #FAF8F5;
+    border-radius: 12px;
+    margin-top: 24px;
+}
+
+.add-date-form label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #6B6B6B;
+}
+
+.add-date-form input[type="date"],
+.add-date-form input[type="time"],
+.add-date-form select {
+    padding: 10px 14px;
+    border: 2px solid #E8E8E8;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    background: #FFFFFF;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add-date-form input:focus,
+.add-date-form select:focus {
+    outline: none;
+    border-color: #BFA054;
+    box-shadow: 0 0 0 3px rgba(191, 160, 84, 0.15);
+}
+
+.add-date-form button {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #BFA054 0%, #D4BC7C 100%);
+    color: #141414;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add-date-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(191, 160, 84, 0.25);
+}
+
+/* Section Divider */
+.section-divider {
+    border: none;
+    height: 1px;
+    background: #E8E8E8;
+    margin: 32px 0;
+}
+
+/* Info Box */
+.info-box {
+    padding: 16px 20px;
+    background: #EBF4FF;
+    border: 1px solid #2B6CB0;
+    border-radius: 10px;
+    color: #2B6CB0;
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+}
+
+.info-box i {
+    margin-right: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .date-management-container {
+        margin: 16px;
+        padding: 24px;
+    }
+
+    .date-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .time-slots-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .add-date-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .add-date-form input,
+    .add-date-form select,
+    .add-date-form button {
+        width: 100%;
+    }
+}

@@ -33,4 +33,5 @@ urlpatterns = [
     path('get-disabled-time-slots/', views.get_disabled_time_slots, name='get_disabled_time_slots'),
     path('annulla-prenotazione/<int:reservation_id>/<str:token>/', views.annulla_prenotazione, name='annulla_prenotazione'),
     path('prenotazione-cancellata/', views.reservation_cancelled, name='reservation_cancelled'),
+    path('nuova-prenotazione/', views.nuova_prenotazione, name='nuova_prenotazione'),
 ]

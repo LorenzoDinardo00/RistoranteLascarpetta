@@ -132,3 +132,79 @@ class DisabledTimeSlotForm(forms.ModelForm):
             'end_time': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
             'reason': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+class AdminReservationForm(forms.ModelForm):
+    """Form per inserimento prenotazioni da parte del ristoratore - senza consensi obbligatori"""
+    
+    RESTAURANT_CHOICES = [
+        ('BRACERIA', 'La Braceria'),
+        ('SCARPETTA', 'La Scarpetta'),
+    ]
+    
+    restaurant_id = forms.ChoiceField(
+        choices=RESTAURANT_CHOICES,
+        initial='BRACERIA',
+        widget=forms.RadioSelect(attrs={'class': 'restaurant-toggle'})
+    )
+    
+    reservation_date = forms.DateField(
+        widget=forms.TextInput(attrs={
+            'inputmode': 'none',
+            'class': 'form-control',
+            'placeholder': 'Seleziona data',
+        })
+    )
+    
+    reservation_time = forms.ChoiceField(
+        choices=[
+            ("12:00", "12:00"), ("12:30", "12:30"), ("13:00", "13:00"),
+            ("13:30", "13:30"), ("14:00", "14:00"), ("19:00", "19:00"),
+            ("19:30", "19:30"), ("20:00", "20:00"), ("20:30", "20:30"),
+            ("21:00", "21:00"), ("21:30", "21:30"), ("22:00", "22:00"),
+            ("22:30", "22:30"), ("23:00", "23:00"),
+        ],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email cliente'}),
+        label="Email",
+        required=True
+    )
+    
+    def clean_reservation_date(self):
+        reservation_date = self.cleaned_data.get('reservation_date')
+        if DisabledDate.objects.filter(date=reservation_date).exists():
+            raise forms.ValidationError("La data selezionata non è disponibile per le prenotazioni.")
+        return reservation_date
+    
+    def clean_reservation_time(self):
+        reservation_time = self.cleaned_data.get('reservation_time')
+        reservation_date = self.cleaned_data.get('reservation_date')
+        if reservation_date and reservation_time:
+            disabled_slots = DisabledTimeSlot.objects.filter(date=reservation_date)
+            for slot in disabled_slots:
+                time_obj = reservation_time if isinstance(reservation_time, str) else reservation_time.strftime('%H:%M')
+                if slot.start_time.strftime('%H:%M') <= time_obj < slot.end_time.strftime('%H:%M'):
+                    raise forms.ValidationError(f"L'orario selezionato ({reservation_time}) è disabilitato.")
+        return reservation_time
+    
+    class Meta:
+        model = Reservation
+        fields = [
+            'restaurant_id',
+            'first_name',
+            'last_name',
+            'phone_number',
+            'email',
+            'guests',
+            'reservation_date',
+            'reservation_time',
+        ]
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Cognome'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telefono'}),
+            'guests': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'value': 2}),
+        }

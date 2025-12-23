@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Nuova Prenotazione - Gestionale{% endblock %}
+
+{% block css_files %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="{% static 'gestionale/nuova_prenotazione.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="reservation-card">
+        <!-- Header -->
+        <div class="card-header">
+            <a href="{% url 'gestionale:gestionale' %}" class="back-link">
+                ← Torna al Gestionale
+            </a>
+            <h1>Nuova Prenotazione</h1>
+            <p class="subtitle">Inserisci una prenotazione per conto del cliente</p>
+        </div>
+
+        <!-- Form -->
+        <form method="post" class="reservation-form">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <!-- Restaurant Toggle -->
+            <div class="restaurant-selector">
+                <label class="selector-label">Ristorante</label>
+                <div class="toggle-container">
+                    <input type="radio" id="braceria" name="restaurant_id" value="BRACERIA" checked>
+                    <label for="braceria" class="toggle-option braceria">
+                        <span class="toggle-icon">🥩</span>
+                        <span class="toggle-name">La Braceria</span>
+                    </label>
+                    
+                    <input type="radio" id="scarpetta" name="restaurant_id" value="SCARPETTA">
+                    <label for="scarpetta" class="toggle-option scarpetta">
+                        <span class="toggle-icon">🍝</span>
+                        <span class="toggle-name">La Scarpetta</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Customer Info -->
+            <div class="form-section">
+                <h3 class="section-title">Dati Cliente</h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="id_first_name">Nome</label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <span class="error">{{ form.first_name.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_last_name">Cognome</label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <span class="error">{{ form.last_name.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="id_phone_number">Telefono</label>
+                        {{ form.phone_number }}
+                        {% if form.phone_number.errors %}
+                            <span class="error">{{ form.phone_number.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_email">Email</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <span class="error">{{ form.email.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reservation Details -->
+            <div class="form-section">
+                <h3 class="section-title">Dettagli Prenotazione</h3>
+                
+                <div class="form-row three-cols">
+                    <div class="form-group">
+                        <label for="id_guests">Ospiti</label>
+                        {{ form.guests }}
+                        {% if form.guests.errors %}
+                            <span class="error">{{ form.guests.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_reservation_date">Data</label>
+                        {{ form.reservation_date }}
+                        {% if form.reservation_date.errors %}
+                            <span class="error">{{ form.reservation_date.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_reservation_time">Ora</label>
+                        {{ form.reservation_time }}
+                        {% if form.reservation_time.errors %}
+                            <span class="error">{{ form.reservation_time.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    ✓ Conferma Prenotazione
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Disabled dates from backend
+        const disabledDatesData = JSON.parse('{{ disabled_dates|safe|escapejs }}' || '[]');
+        const disabledDates = Array.isArray(disabledDatesData) ? disabledDatesData.map(item => item.date) : [];
+
+        flatpickr("#id_reservation_date", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            disable: disabledDates,
+            clickOpens: true,
+            allowInput: false,
+            onChange: function (selectedDates, dateStr) {
+                fetchDisabledTimeSlots(dateStr);
+            }
+        });
+    });
+
+    // Fetch disabled time slots for a specific date
+    function fetchDisabledTimeSlots(date) {
+        fetch(`/gestionale/get-disabled-time-slots/?date=${date}`)
+            .then(response => response.json())
+            .then(data => {
+                updateTimeSlots(data.disabled_time_slots);
+            })
+            .catch(error => {
+                console.error("Errore nel recupero delle fasce orarie disabilitate:", error);
+            });
+    }
+
+    // Update available time slots in the dropdown
+    function updateTimeSlots(disabledTimeSlots) {
+        const timeSelect = document.getElementById("id_reservation_time");
+        const options = timeSelect.options;
+
+        // Reset all options to enabled
+        for (let i = 0; i < options.length; i++) {
+            options[i].disabled = false;
+            options[i].textContent = options[i].value;
+        }
+
+        // Disable time slots that fall within disabled ranges
+        disabledTimeSlots.forEach(slot => {
+            const slotStart = slot.start_time;
+            const slotEnd = slot.end_time;
+
+            for (let i = 0; i < options.length; i++) {
+                const optionTime = options[i].value;
+                if (optionTime >= slotStart && optionTime < slotEnd) {
+                    options[i].disabled = true;
+                    if (!options[i].textContent.includes("(Non disponibile)")) {
+                        options[i].textContent += " (Non disponibile)";
+                    }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

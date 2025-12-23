@@ -102,6 +102,7 @@ body::before {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -199,6 +200,24 @@ h1 {
 
 .button:hover::before {
     transform: scaleY(1);
+}
+
+/* Primary Button (Nuova Prenotazione) */
+.button.primary {
+    background: var(--gold-gradient);
+    color: var(--charcoal);
+    border: none;
+    font-weight: 600;
+}
+
+.button.primary::before {
+    display: none;
+}
+
+.button.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+    background: var(--gold-gradient);
 }
 
 /* Logout Button */

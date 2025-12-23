@@ -4,26 +4,27 @@
 {% block title %}Gestionale{% endblock %}
 
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'gestionale/gestionale.css' %}">
+<link rel="stylesheet" href="{% static 'gestionale/gestionale.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container">
     {% if user.is_authenticated %}
-        <h1>Benvenuto nel Gestionale</h1>
-        <div class="button-container">
-            <a href="{% url 'gestionale:prenotazioni' %}" class="button">Gestisci Prenotazioni</a>
-            <a href="{% url 'gestionale:clienti' %}" class="button">Gestisci Clienti</a>
-            <a href="{% url 'gestionale:search_customers_by_hashtag' %}" class="button">Ricerca Clienti per Hashtag</a>
-            <a href="{% url 'gestionale:send_sms' %}" class="button">Invia SMS</a>
-            <a href="{% url 'gestionale:manage_disabled_time_slots' %}" class="button">Chiusura</a>
-            <a href="{% url 'logout' %}" class="button logout">Logout</a>
-        </div>
+    <h1>Benvenuto nel Gestionale</h1>
+    <div class="button-container">
+        <a href="{% url 'gestionale:nuova_prenotazione' %}" class="button primary">+ Nuova Prenotazione</a>
+        <a href="{% url 'gestionale:prenotazioni' %}" class="button">Gestisci Prenotazioni</a>
+        <a href="{% url 'gestionale:clienti' %}" class="button">Gestisci Clienti</a>
+        <a href="{% url 'gestionale:search_customers_by_hashtag' %}" class="button">Ricerca Clienti per Hashtag</a>
+        <a href="{% url 'gestionale:send_sms' %}" class="button">Invia SMS</a>
+        <a href="{% url 'gestionale:manage_disabled_time_slots' %}" class="button">Chiusura</a>
+        <a href="{% url 'logout' %}" class="button logout">Logout</a>
+    </div>
     {% else %}
-        <div class="unauthorized-message">
-            <h2>Non sei autorizzato ad accedere a questa pagina</h2>
-            <p>Per favore, accedi per visualizzare i contenuti.</p>
-        </div>
+    <div class="unauthorized-message">
+        <h2>Non sei autorizzato ad accedere a questa pagina</h2>
+        <p>Per favore, accedi per visualizzare i contenuti.</p>
+    </div>
     {% endif %}
 </div>
 {% endblock %}
