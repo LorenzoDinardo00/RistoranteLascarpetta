@@ -184,17 +184,24 @@ LOGGING = {
     },
 }
 
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# -----------------------------
+# Configurazione email (Brevo)
+# -----------------------------
 import os
 
-# Configurazione dell'email
-# Configurazione dell'email per SendGrid
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'  # Host del server SMTP di SendGrid
-EMAIL_PORT = 465  # Porta per connessione SSL
-EMAIL_USE_SSL = True  # Utilizza SSL per la connessione
-EMAIL_USE_TLS = False  # Disabilita TLS (utilizziamo SSL)
-EMAIL_HOST_USER = 'apikey'  # Nome utente richiesto da SendGrid (fisso "apikey")
-EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY')  # Chiave API configurata come variabile d'ambiente
-DEFAULT_FROM_EMAIL = 'lascarpettafirenze@gmail.com'  # Mittente verificato su SendGrid
+
+EMAIL_HOST = 'smtp-relay.brevo.com'   # Host SMTP Brevo
+EMAIL_PORT = 587                      # Porta TLS (STARTTLS)
+EMAIL_USE_TLS = True                  # Abilita TLS (STARTTLS)
+EMAIL_USE_SSL = False                 # NO SSL diretto (evita errori certificato)
+EMAIL_TIMEOUT = 10                    # Timeout in secondi per connessione SMTP
+
+# Credenziali Brevo SMTP
+# USER: il login SMTP (di solito la mail dell'account Brevo)
+# PASS: la SMTP key
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'lascarpettafirenze@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'prenotazioni@lascarpettafirenze.com')
