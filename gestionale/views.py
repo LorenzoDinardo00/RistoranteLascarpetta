@@ -73,7 +73,7 @@ Il Team di La Scarpetta
 """,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com', 'lorenzodinardo030@gmail.com'],
-                    fail_silently=False,
+                    fail_silently=True,
                 )
             except Exception as e:
                 print(f"Errore durante l'invio dell'email: {e}")
@@ -110,7 +110,7 @@ Il Team di La Scarpetta
 """,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[reservation.email],
-                    fail_silently=False,
+                    fail_silently=True,
                 )
             except Exception as e:
                 print(f"Errore durante l'invio dell'email di conferma al cliente: {e}")
@@ -485,7 +485,7 @@ def test_email(request):
             message='Questa è una email di prova inviata dal sistema di prenotazione La Scarpetta.',
             from_email='assistenza.lorenzodinardo@gmail.com',  # Mittente verificato in SendGrid
             recipient_list=['lorenzodinardo030@gmail.com','lascarpettafirenze@gmail.com','artursiko4@gmail.com'],  # Sostituisci con un tuo indirizzo reale
-            fail_silently=False,
+            fail_silently=True,
         )
         logger.info("Email di test inviata con successo.")
         return HttpResponse("Email di test inviata con successo!")
@@ -613,7 +613,7 @@ Il Sistema di Prenotazione
 """,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=email_recipients,
-                    fail_silently=False,
+                    fail_silently=True,
                 )
             except Exception as e:
                 print(f"Errore durante l'invio dell'email al titolare: {e}")
@@ -650,7 +650,7 @@ Il Team di {restaurant_name}
 """,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[reservation.email],
-                    fail_silently=False,
+                    fail_silently=True,
                 )
             except Exception as e:
                 print(f"Errore durante l'invio dell'email di conferma al cliente: {e}")
