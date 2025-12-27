@@ -201,7 +201,7 @@ EMAIL_TIMEOUT = 10                    # Timeout in secondi per connessione SMTP
 # Credenziali Brevo SMTP
 # USER: il login SMTP (di solito la mail dell'account Brevo)
 # PASS: la SMTP key
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'lascarpettafirenze@gmail.com')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'prenotazioni@lascarpettafirenze.com')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'lascarpettafirenze@gmail.com')
