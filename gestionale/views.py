@@ -72,7 +72,7 @@ Cordiali saluti,
 Il Team di La Scarpetta
 """,
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com'],  # Sostituisci con un tuo indirizzo reale
+                    recipient_list=['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com', 'lorenzodinardo030@gmail.com'],
                     fail_silently=False,
                 )
             except Exception as e:
@@ -172,7 +172,7 @@ Prenotazione ANNULLATA dal cliente:
 - Persone: {reservation.guests}
 """,
         from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com'],
+        recipient_list=['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com', 'lorenzodinardo030@gmail.com'],
     )
 
     return redirect(reverse('gestionale:reservation_cancelled'))
@@ -588,10 +588,10 @@ def nuova_prenotazione(request):
             restaurant_id = reservation.restaurant_id
             if restaurant_id == 'BRACERIA':
                 restaurant_name = 'La Braceria'
-                email_recipients = ['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com']
+                email_recipients = ['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com', 'lorenzodinardo030@gmail.com']
             else:
                 restaurant_name = 'La Scarpetta'
-                email_recipients = ['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com']
+                email_recipients = ['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com', 'lorenzodinardo030@gmail.com']
             
             # Invia email al titolare
             try:
