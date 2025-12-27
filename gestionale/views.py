@@ -11,8 +11,27 @@ from django.urls import reverse
 from .models import DisabledDate, Reservation, Customer
 from .form import ReservationForm
 from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
+from django.core.mail import send_mail
+import threading
 
 import json
+
+def send_email_async(subject, message, from_email, recipient_list):
+    """Invia email in un thread separato per non bloccare la richiesta."""
+    def _send():
+        try:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=from_email,
+                recipient_list=recipient_list,
+                fail_silently=True,
+            )
+        except Exception as e:
+            print(f"Errore invio email async: {e}")
+    
+    thread = threading.Thread(target=_send)
+    thread.start()
 
 def prenota_tavolo(request):
     """
@@ -53,11 +72,10 @@ def prenota_tavolo(request):
                     customer.last_name = reservation.last_name
                     customer.save()
 
-            # Invia un'email al titolare
-            try:
-                send_mail(
-                    subject='Nuova Prenotazione - La Scarpetta',
-                    message=f"""
+            # Invia un'email al titolare (asincrona)
+            send_email_async(
+                subject='Nuova Prenotazione - La Scarpetta',
+                message=f"""
 Gentile Titolare,
 
 È stata effettuata una nuova prenotazione presso il ristorante La Scarpetta:
@@ -71,12 +89,9 @@ Gentile Titolare,
 Cordiali saluti,
 Il Team di La Scarpetta
 """,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com', 'lorenzodinardo030@gmail.com'],
-                    fail_silently=True,
-                )
-            except Exception as e:
-                print(f"Errore durante l'invio dell'email: {e}")
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com', 'lorenzodinardo030@gmail.com'],
+            )
 
             # Genera il token di cancellazione e costruisce l'URL per annullare la prenotazione
             signer = TimestampSigner()
@@ -85,11 +100,10 @@ Il Team di La Scarpetta
                 reverse('gestionale:annulla_prenotazione', args=[reservation.id, token])
             )
 
-            # Invia un'email di conferma al cliente, includendo il link per annullare la prenotazione
-            try:
-                send_mail(
-                    subject='Conferma Prenotazione - La Scarpetta',
-                    message=f"""
+            # Invia un'email di conferma al cliente (asincrona)
+            send_email_async(
+                subject='Conferma Prenotazione - La Scarpetta',
+                message=f"""
 Ciao {reservation.first_name},
 
 Grazie per aver prenotato da La Scarpetta!
@@ -108,12 +122,9 @@ Ti aspettiamo!
 Cordiali saluti,
 Il Team di La Scarpetta
 """,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[reservation.email],
-                    fail_silently=True,
-                )
-            except Exception as e:
-                print(f"Errore durante l'invio dell'email di conferma al cliente: {e}")
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[reservation.email],
+            )
 
             # Redireziona alla pagina di successo
             return redirect(reverse('gestionale:reservation_success'))
@@ -158,8 +169,8 @@ def annulla_prenotazione(request, reservation_id, token):
 
     reservation = get_object_or_404(Reservation, id=reservation_id)
 
-    # Invia notifica al titolare
-    send_mail(
+    # Invia notifica al titolare (asincrona)
+    send_email_async(
         subject='Prenotazione Annullata - La Scarpetta',
         message=f"""
 Prenotazione ANNULLATA dal cliente:
@@ -480,12 +491,11 @@ def test_email(request):
     """
     try:
         logger.info("Tentativo di invio email di test tramite SendGrid.")
-        send_mail(
+        send_email_async(
             subject='Test Email - La Scarpetta',
             message='Questa è una email di prova inviata dal sistema di prenotazione La Scarpetta.',
-            from_email='assistenza.lorenzodinardo@gmail.com',  # Mittente verificato in SendGrid
-            recipient_list=['lorenzodinardo030@gmail.com','lascarpettafirenze@gmail.com','artursiko4@gmail.com'],  # Sostituisci con un tuo indirizzo reale
-            fail_silently=True,
+            from_email='lascarpettafirenze@gmail.com',
+            recipient_list=['lorenzodinardo030@gmail.com','lascarpettafirenze@gmail.com','artursiko4@gmail.com'],
         )
         logger.info("Email di test inviata con successo.")
         return HttpResponse("Email di test inviata con successo!")
@@ -593,11 +603,10 @@ def nuova_prenotazione(request):
                 restaurant_name = 'La Scarpetta'
                 email_recipients = ['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com', 'lorenzodinardo030@gmail.com']
             
-            # Invia email al titolare
-            try:
-                send_mail(
-                    subject=f'Nuova Prenotazione (Gestionale) - {restaurant_name}',
-                    message=f"""
+            # Invia email al titolare (asincrona)
+            send_email_async(
+                subject=f'Nuova Prenotazione (Gestionale) - {restaurant_name}',
+                message=f"""
 Prenotazione inserita dal gestionale:
 
 - Ristorante: {restaurant_name}
@@ -611,12 +620,9 @@ Prenotazione inserita dal gestionale:
 Cordiali saluti,
 Il Sistema di Prenotazione
 """,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=email_recipients,
-                    fail_silently=True,
-                )
-            except Exception as e:
-                print(f"Errore durante l'invio dell'email al titolare: {e}")
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=email_recipients,
+            )
             
             # Genera il token di cancellazione
             signer = TimestampSigner()
@@ -625,11 +631,10 @@ Il Sistema di Prenotazione
                 reverse('gestionale:annulla_prenotazione', args=[reservation.id, token])
             )
             
-            # Invia email di conferma al cliente
-            try:
-                send_mail(
-                    subject=f'Conferma Prenotazione - {restaurant_name}',
-                    message=f"""
+            # Invia email di conferma al cliente (asincrona)
+            send_email_async(
+                subject=f'Conferma Prenotazione - {restaurant_name}',
+                message=f"""
 Ciao {reservation.first_name},
 
 Grazie per aver prenotato da {restaurant_name}!
@@ -648,12 +653,9 @@ Ti aspettiamo!
 Cordiali saluti,
 Il Team di {restaurant_name}
 """,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[reservation.email],
-                    fail_silently=True,
-                )
-            except Exception as e:
-                print(f"Errore durante l'invio dell'email di conferma al cliente: {e}")
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[reservation.email],
+            )
             
             # Redirect alla pagina prenotazioni
             return redirect(reverse('gestionale:prenotazioni'))
