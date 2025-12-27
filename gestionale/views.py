@@ -53,30 +53,31 @@ def prenota_tavolo(request):
                     customer.last_name = reservation.last_name
                     customer.save()
 
+            # TEMPORANEAMENTE DISABILITATO - TEST TIMEOUT
             # Invia un'email al titolare
-            try:
-                send_mail(
-                    subject='Nuova Prenotazione - La Scarpetta',
-                    message=f"""
-Gentile Titolare,
-
-È stata effettuata una nuova prenotazione presso il ristorante La Scarpetta:
-
-- Nome Cliente: {reservation.first_name} {reservation.last_name}
-- Telefono Cliente: {reservation.phone_number}
-- Data Prenotazione: {reservation.reservation_date.strftime('%d/%m/%Y')}
-- Ora Prenotazione: {reservation.reservation_time}
-- Numero di Persone: {reservation.guests}
-
-Cordiali saluti,
-Il Team di La Scarpetta
-""",
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com', 'lorenzodinardo030@gmail.com'],
-                    fail_silently=True,
-                )
-            except Exception as e:
-                print(f"Errore durante l'invio dell'email: {e}")
+            # try:
+            #     send_mail(
+            #         subject='Nuova Prenotazione - La Scarpetta',
+            #         message=f"""
+# Gentile Titolare,
+#
+# È stata effettuata una nuova prenotazione presso il ristorante La Scarpetta:
+#
+# - Nome Cliente: {reservation.first_name} {reservation.last_name}
+# - Telefono Cliente: {reservation.phone_number}
+# - Data Prenotazione: {reservation.reservation_date.strftime('%d/%m/%Y')}
+# - Ora Prenotazione: {reservation.reservation_time}
+# - Numero di Persone: {reservation.guests}
+#
+# Cordiali saluti,
+# Il Team di La Scarpetta
+# """,
+#                     from_email=settings.DEFAULT_FROM_EMAIL,
+#                     recipient_list=['lascarpettafirenze@gmail.com', 'artursiko4@gmail.com', 'lorenzodinardo030@gmail.com'],
+#                     fail_silently=True,
+#                 )
+#             except Exception as e:
+#                 print(f"Errore durante l'invio dell'email: {e}")
 
             # Genera il token di cancellazione e costruisce l'URL per annullare la prenotazione
             signer = TimestampSigner()
@@ -85,35 +86,36 @@ Il Team di La Scarpetta
                 reverse('gestionale:annulla_prenotazione', args=[reservation.id, token])
             )
 
+            # TEMPORANEAMENTE DISABILITATO - TEST TIMEOUT
             # Invia un'email di conferma al cliente, includendo il link per annullare la prenotazione
-            try:
-                send_mail(
-                    subject='Conferma Prenotazione - La Scarpetta',
-                    message=f"""
-Ciao {reservation.first_name},
-
-Grazie per aver prenotato da La Scarpetta!
-Ecco il riepilogo della tua prenotazione:
-
-- Nome: {reservation.first_name} {reservation.last_name}
-- Telefono: {reservation.phone_number}
-- Data: {reservation.reservation_date.strftime('%d/%m/%Y')}
-- Ora: {reservation.reservation_time}
-- Numero di Persone: {reservation.guests}
-
-Se desideri annullare la prenotazione, clicca sul seguente link:
-{cancellation_url}
-
-Ti aspettiamo!
-Cordiali saluti,
-Il Team di La Scarpetta
-""",
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[reservation.email],
-                    fail_silently=True,
-                )
-            except Exception as e:
-                print(f"Errore durante l'invio dell'email di conferma al cliente: {e}")
+            # try:
+            #     send_mail(
+            #         subject='Conferma Prenotazione - La Scarpetta',
+            #         message=f"""
+# Ciao {reservation.first_name},
+#
+# Grazie per aver prenotato da La Scarpetta!
+# Ecco il riepilogo della tua prenotazione:
+#
+# - Nome: {reservation.first_name} {reservation.last_name}
+# - Telefono: {reservation.phone_number}
+# - Data: {reservation.reservation_date.strftime('%d/%m/%Y')}
+# - Ora: {reservation.reservation_time}
+# - Numero di Persone: {reservation.guests}
+#
+# Se desideri annullare la prenotazione, clicca sul seguente link:
+# {cancellation_url}
+#
+# Ti aspettiamo!
+# Cordiali saluti,
+# Il Team di La Scarpetta
+# """,
+#                     from_email=settings.DEFAULT_FROM_EMAIL,
+#                     recipient_list=[reservation.email],
+#                     fail_silently=True,
+#                 )
+#             except Exception as e:
+#                 print(f"Errore durante l'invio dell'email di conferma al cliente: {e}")
 
             # Redireziona alla pagina di successo
             return redirect(reverse('gestionale:reservation_success'))
