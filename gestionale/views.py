@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import DisabledDate, Reservation
+from .models import DisabledDate, Reservation, Customer
 from .form import ReservationForm
 from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
 
@@ -34,7 +34,7 @@ def prenota_tavolo(request):
             # Salva la prenotazione
             reservation = form.save(commit=False)
             reservation.restaurant_id = 'SCARPETTA'  # Fisso per La Scarpetta
-            reservation.reservation_time = reservation.reservation_time.strip()
+            reservation.reservation_time = str(reservation.reservation_time).strip()
             reservation.save()
 
             # Verifica se il consenso alla profilazione è stato accettato
