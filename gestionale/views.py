@@ -19,16 +19,27 @@ import json
 def send_email_async(subject, message, from_email, recipient_list):
     """Invia email in un thread separato per non bloccare la richiesta."""
     def _send():
+        import datetime
+        print(f"\n{'='*60}")
+        print(f"[DEBUG EMAIL] {datetime.datetime.now()}")
+        print(f"[DEBUG EMAIL] Subject: {subject}")
+        print(f"[DEBUG EMAIL] From: {from_email}")
+        print(f"[DEBUG EMAIL] To: {recipient_list}")
+        print(f"[DEBUG EMAIL] Message preview: {message[:200]}...")
+        print(f"{'='*60}")
         try:
-            send_mail(
+            result = send_mail(
                 subject=subject,
                 message=message,
                 from_email=from_email,
                 recipient_list=recipient_list,
-                fail_silently=True,
+                fail_silently=False,  # Cambiato a False per vedere gli errori
             )
+            print(f"[DEBUG EMAIL] ✅ SUCCESSO! Email inviata. Risultato: {result}")
         except Exception as e:
-            print(f"Errore invio email async: {e}")
+            print(f"[DEBUG EMAIL] ❌ ERRORE invio email: {e}")
+            import traceback
+            traceback.print_exc()
     
     thread = threading.Thread(target=_send)
     thread.start()
