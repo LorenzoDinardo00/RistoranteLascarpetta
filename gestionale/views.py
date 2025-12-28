@@ -17,9 +17,10 @@ import threading
 import json
 
 def send_email_async(subject, message, from_email, recipient_list):
-    """Invia email in un thread separato per non bloccare la richiesta."""
+    """Invia email in un thread separato usando Brevo HTTP API (SMTP bloccato su Render)."""
     def _send():
         import datetime
+        import os
         print(f"\n{'='*60}")
         print(f"[DEBUG EMAIL] {datetime.datetime.now()}")
         print(f"[DEBUG EMAIL] Subject: {subject}")
@@ -27,15 +28,36 @@ def send_email_async(subject, message, from_email, recipient_list):
         print(f"[DEBUG EMAIL] To: {recipient_list}")
         print(f"[DEBUG EMAIL] Message preview: {message[:200]}...")
         print(f"{'='*60}")
+        
         try:
-            result = send_mail(
+            import sib_api_v3_sdk
+            from sib_api_v3_sdk.rest import ApiException
+            
+            # Configura Brevo API
+            configuration = sib_api_v3_sdk.Configuration()
+            configuration.api_key['api-key'] = os.environ.get('BREVO_API_KEY', '')
+            
+            api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
+            
+            # Prepara i destinatari
+            to_list = [{"email": email} for email in recipient_list]
+            
+            # Crea l'email
+            send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+                to=to_list,
+                sender={"email": from_email, "name": "La Scarpetta"},
                 subject=subject,
-                message=message,
-                from_email=from_email,
-                recipient_list=recipient_list,
-                fail_silently=False,  # Cambiato a False per vedere gli errori
+                text_content=message
             )
-            print(f"[DEBUG EMAIL] ✅ SUCCESSO! Email inviata. Risultato: {result}")
+            
+            # Invia l'email
+            api_response = api_instance.send_transac_email(send_smtp_email)
+            print(f"[DEBUG EMAIL] ✅ SUCCESSO! Email inviata via Brevo API. Message ID: {api_response.message_id}")
+            
+        except ApiException as e:
+            print(f"[DEBUG EMAIL] ❌ ERRORE Brevo API: {e}")
+            import traceback
+            traceback.print_exc()
         except Exception as e:
             print(f"[DEBUG EMAIL] ❌ ERRORE invio email: {e}")
             import traceback

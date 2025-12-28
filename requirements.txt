@@ -13,3 +13,4 @@ python-decouple==3.8  # Aggiungi la versione corretta di python-decouple
 django-storages==1.13.2  
 psycopg2-binary==2.9.9
 twilio==6.63.1  # Cambia la versione in base alla tua compatibilità
+sib-api-v3-sdk  # Brevo API per invio email (SMTP bloccato su Render)

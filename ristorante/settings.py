@@ -32,7 +32,9 @@ ALLOWED_HOSTS = [
     '*.onrender.com',
     'lascarpettafirenze.com',
     'www.lascarpettafirenze.com',
-    'ristorantelascarpetta-trvj.onrender.com'
+    'ristorantelascarpetta-trvj.onrender.com',
+    'localhost',
+    '127.0.0.1',
 ]
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
@@ -89,16 +91,25 @@ WSGI_APPLICATION = 'ristorante.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT', default='5432'),
+# Use SQLite if DB_NAME ends with .sqlite3, otherwise PostgreSQL
+if config('DB_NAME', default='').endswith('.sqlite3'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / config('DB_NAME'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USER'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST'),
+            'PORT': config('DB_PORT', default='5432'),
+        }
+    }
 
 
 # Password validation
