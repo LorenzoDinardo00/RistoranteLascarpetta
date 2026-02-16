@@ -85,12 +85,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 24px 48px;
+    padding: 22px 48px;
     transition: all 0.5s var(--ease-out);
 }
 
 .site-header.scrolled {
-    padding: 16px 48px;
+    padding: 14px 48px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
@@ -99,13 +99,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .header-logo img {
-    height: 48px;
+    height: 44px;
     width: auto;
     transition: all 0.5s var(--ease-out);
 }
 
 .site-header.scrolled .header-logo img {
-    height: 40px;
+    height: 38px;
 }
 
 .header-logo:hover img {
@@ -134,28 +134,42 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: var(--white);
 }
 
-/* Hamburger — always visible */
+/* Hamburger — refined, always visible */
 .menu-icon {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 18px;
+    gap: 5px;
+    width: 26px;
     cursor: pointer;
     z-index: 1002;
+    padding: 8px;
+    margin: -8px;
 }
 
 .menu-icon span {
     display: block;
-    width: 100%;
-    height: 1.5px;
+    height: 1px;
     background: var(--text-primary);
-    transition: all var(--dur) var(--ease);
+    transition: all 0.4s var(--ease-out);
     transform-origin: center;
 }
 
+.menu-icon span:nth-child(1) { width: 100%; }
+.menu-icon span:nth-child(2) { width: 60%; margin-left: auto; }
+.menu-icon span:nth-child(3) { width: 80%; margin-left: auto; }
+
+.menu-icon:hover span {
+    width: 100%;
+    background: var(--gold);
+}
+
+.menu-icon.active span {
+    width: 100%;
+    margin-left: 0;
+}
+
 .menu-icon.active span:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
+    transform: rotate(45deg) translate(4.5px, 4.5px);
     background: var(--gold);
 }
 .menu-icon.active span:nth-child(2) {
@@ -163,7 +177,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     transform: scaleX(0);
 }
 .menu-icon.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
+    transform: rotate(-45deg) translate(4.5px, -4.5px);
     background: var(--gold);
 }
 
@@ -1133,22 +1147,25 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    ============================================ */
 @media (max-width: 768px) {
     .site-header {
-        padding: 14px 20px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        padding: 16px 20px;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(20px) saturate(1.2);
+        -webkit-backdrop-filter: blur(20px) saturate(1.2);
+        border-bottom: 1px solid rgba(184, 150, 62, 0.08);
     }
 
     .site-header.scrolled {
         padding: 12px 20px;
+        background: rgba(255, 255, 255, 0.97);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
     }
 
     .header-logo img {
-        height: 40px;
+        height: 36px;
     }
 
     .site-header.scrolled .header-logo img {
-        height: 36px;
+        height: 32px;
     }
 
     .header-cta {
@@ -1157,6 +1174,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
     .header-actions {
         gap: 0;
+    }
+
+    .menu-icon {
+        width: 24px;
+        gap: 4px;
+        padding: 10px;
+        margin: -10px;
     }
 
     /* Off-canvas full-width on mobile */
@@ -1287,16 +1311,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    ============================================ */
 @media (max-width: 480px) {
     .site-header {
-        padding: 12px 16px;
+        padding: 14px 16px;
     }
 
     .header-logo img {
-        height: 36px;
+        height: 32px;
     }
 
     .menu-icon {
-        width: 24px;
-        height: 16px;
+        width: 22px;
+        gap: 4px;
     }
 
     #custom-logo {
@@ -1374,8 +1398,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    RESPONSIVE — EXTRA SMALL (≤ 360px)
    ============================================ */
 @media (max-width: 360px) {
+    .site-header {
+        padding: 12px 14px;
+    }
+
     .header-logo img {
-        height: 32px;
+        height: 28px;
+    }
+
+    .menu-icon {
+        width: 20px;
+        gap: 3px;
     }
 
     #custom-logo {
