@@ -1257,7 +1257,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
     /* Menu */
     .menu-editorial {
-        padding: var(--section-gap) 16px;
+        padding: var(--section-gap) 8px;
     }
 
     .menu-editorial-title {
@@ -1269,8 +1269,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     .pdf-container {
-        padding: 16px;
-        margin: 0 8px;
+        padding: 8px;
+        margin: 0;
+        border: none;
+        box-shadow: none;
     }
 
     /* Gallery */
@@ -1375,12 +1377,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         letter-spacing: 4px;
     }
 
+    .menu-editorial {
+        padding: var(--section-gap) 4px;
+    }
+
     .menu-editorial-title {
         font-size: 32px;
     }
 
     .gold-rule {
         width: 24px;
+    }
+
+    .pdf-container {
+        padding: 4px;
     }
 
     .off-canvas-inner {
@@ -1448,8 +1458,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         font-size: 13px;
     }
 
+    .menu-editorial {
+        padding: var(--section-gap) 2px;
+    }
+
     .menu-editorial-title {
         font-size: 24px;
+    }
+
+    .pdf-container {
+        padding: 2px;
     }
 
     .contact-title {
