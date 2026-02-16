@@ -75,6 +75,29 @@ body {
     box-shadow: 0 2px 12px rgba(0,0,0,0.04);
 }
 
+/* Prenota page always has white bg → dark hamburger + gold CTA */
+.menu-icon span {
+    background: var(--text-primary) !important;
+}
+
+.menu-icon:hover span {
+    background: var(--gold) !important;
+}
+
+.menu-icon.active span {
+    background: var(--gold) !important;
+}
+
+.header-cta {
+    color: var(--gold) !important;
+    border-color: var(--gold) !important;
+}
+
+.header-cta:hover {
+    background: var(--gold) !important;
+    color: var(--white) !important;
+}
+
 /* ============================================
    CONTENT WRAPPER
    ============================================ */

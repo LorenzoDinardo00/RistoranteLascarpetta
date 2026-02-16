@@ -98,6 +98,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     box-shadow: 0 1px 8px rgba(0,0,0,0.04);
 }
 
+/* On scrolled (white bg), hamburger lines go dark */
+.site-header.scrolled .menu-icon span {
+    background: var(--text-primary);
+}
+
 .header-logo img {
     height: 44px;
     width: auto;
@@ -123,13 +128,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     font-weight: 400;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--white);
     padding: 10px 28px;
-    border: 1px solid var(--gold);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     transition: all var(--dur) var(--ease);
 }
 
 .header-cta:hover {
+    background: var(--white);
+    color: var(--text-primary);
+}
+
+/* When scrolled (white bg), CTA reverts to gold */
+.site-header.scrolled .header-cta {
+    color: var(--gold);
+    border-color: var(--gold);
+}
+
+.site-header.scrolled .header-cta:hover {
     background: var(--gold);
     color: var(--white);
 }
@@ -148,8 +164,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .menu-icon span {
     display: block;
-    height: 1px;
-    background: var(--text-primary);
+    height: 2px;
+    background: var(--white);
+    border-radius: 2px;
     transition: all 0.4s var(--ease-out);
     transform-origin: center;
 }
@@ -169,7 +186,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .menu-icon.active span:nth-child(1) {
-    transform: rotate(45deg) translate(4.5px, 4.5px);
+    transform: rotate(45deg) translate(5px, 5px);
     background: var(--gold);
 }
 .menu-icon.active span:nth-child(2) {
@@ -177,7 +194,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     transform: scaleX(0);
 }
 .menu-icon.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(4.5px, -4.5px);
+    transform: rotate(-45deg) translate(5px, -5px);
     background: var(--gold);
 }
 
@@ -1181,6 +1198,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         gap: 4px;
         padding: 10px;
         margin: -10px;
+    }
+
+    /* Mobile always has white bg header → dark hamburger */
+    .menu-icon span {
+        background: var(--text-primary);
     }
 
     /* Off-canvas full-width on mobile */
