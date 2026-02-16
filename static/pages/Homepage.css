@@ -150,16 +150,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: var(--white);
 }
 
-/* Hamburger — refined, always visible */
+/* Hamburger — refined, always visible
+   NOTE: width = visual lines area + padding for touch target.
+   With box-sizing: border-box, content = width − padding.
+   Keep content area ≥ 20px so lines are visible. */
 .menu-icon {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    width: 26px;
+    width: 44px;
     cursor: pointer;
     z-index: 1002;
-    padding: 8px;
-    margin: -8px -4px -8px -8px;
+    padding: 10px;
+    margin: -10px -6px -10px -10px;
 }
 
 .menu-icon span {
@@ -1194,8 +1197,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     .menu-icon {
-        width: 24px;
-        gap: 4px;
+        width: 42px;
+        gap: 5px;
         padding: 10px;
         margin: -10px 0 -10px -10px;
     }
@@ -1341,7 +1344,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     .menu-icon {
-        width: 22px;
+        width: 40px;
         gap: 4px;
     }
 
@@ -1429,8 +1432,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     .menu-icon {
-        width: 20px;
-        gap: 3px;
+        width: 38px;
+        gap: 4px;
     }
 
     #custom-logo {
