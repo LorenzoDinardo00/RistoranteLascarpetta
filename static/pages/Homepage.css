@@ -359,7 +359,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .hero-tagline {
     font-family: var(--font-display);
-    font-size: clamp(16px, 2.5vw, 22px);
+    font-size: clamp(20px, 3.5vw, 32px);
     font-weight: 300;
     font-style: italic;
     color: rgba(255, 255, 255, 0.8);
@@ -408,7 +408,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .about-editorial {
     position: relative;
     scroll-snap-align: start;
-    padding-bottom: var(--section-gap);
+    padding: var(--section-gap) 0;
 }
 
 .about-image-strip {
@@ -435,10 +435,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .about-text-block {
     position: relative;
     max-width: 620px;
-    margin: -80px auto 0;
+    margin: 0 auto;
     padding: 56px 48px;
     background: var(--white);
-    box-shadow: var(--shadow-lg);
     text-align: center;
     z-index: 2;
 }
@@ -526,7 +525,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .menu-editorial-title {
     font-family: var(--font-display);
-    font-size: clamp(36px, 5vw, 56px);
+    font-size: clamp(42px, 6vw, 68px);
     font-weight: 300;
     font-style: italic;
     color: var(--text-primary);
@@ -1115,7 +1114,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     .about-text-block {
-        margin: -60px 32px 0;
+        margin: 0 32px;
         max-width: none;
         padding: 40px 36px;
     }
@@ -1184,7 +1183,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     .hero-tagline {
-        font-size: 15px;
+        font-size: 18px;
         letter-spacing: 2px;
         padding: 0 20px;
     }
@@ -1194,13 +1193,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     /* About — editorial */
-    .about-image-strip {
-        height: 40vh;
-        min-height: 260px;
-    }
-
     .about-text-block {
-        margin: -48px 16px 0;
+        margin: 0 16px;
         padding: 32px 24px;
     }
 
@@ -1218,7 +1212,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     .menu-editorial-title {
-        font-size: 32px;
+        font-size: 38px;
     }
 
     .gold-rule {
@@ -1310,17 +1304,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     .hero-tagline {
-        font-size: 13px;
+        font-size: 16px;
         letter-spacing: 1.5px;
     }
 
-    .about-image-strip {
-        height: 35vh;
-        min-height: 220px;
-    }
-
     .about-text-block {
-        margin: -40px 12px 0;
+        margin: 0 12px;
         padding: 28px 20px;
     }
 
@@ -1338,7 +1327,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     .menu-editorial-title {
-        font-size: 28px;
+        font-size: 32px;
     }
 
     .gold-rule {
