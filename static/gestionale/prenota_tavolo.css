@@ -1,51 +1,50 @@
 /* ============================================
-   LA SCARPETTA - PRENOTA TAVOLO 2026
-   Dark Luxury Reservation Form
+   LA SCARPETTA — PRENOTA TAVOLO 2026
+   Minimal White & Gold — Reservation Form
    ============================================ */
 
-/* ============================================
-   DESIGN TOKENS (override Homepage.css where needed)
-   ============================================ */
 :root {
-    --gold: #C9A96E;
-    --gold-light: #DFC89A;
-    --gold-dark: #8B6914;
-    --gold-gradient: linear-gradient(135deg, #C9A96E 0%, #DFC89A 50%, #8B6914 100%);
+    --white: #FFFFFF;
+    --off-white: #FAFAF8;
+    --cream: #F5F3EF;
+    --warm-gray-100: #E5E2DC;
+    --warm-gray-200: #D4D0C8;
+    --warm-gray-400: #9A948A;
+    --warm-gray-600: #5C584F;
+    --warm-gray-900: #1A1815;
 
-    --black: #080808;
-    --charcoal: #141414;
-    --surface: #1A1816;
-    --surface-elevated: #222018;
-    --surface-input: #1E1C1A;
+    --gold: #B8963E;
+    --gold-light: #D4B86A;
+    --gold-dark: #8B6F1E;
 
-    --border-subtle: rgba(201, 169, 110, 0.08);
-    --border-accent: rgba(201, 169, 110, 0.20);
-    --border-input: rgba(201, 169, 110, 0.15);
+    --text-primary: #1A1815;
+    --text-secondary: #5C584F;
+    --text-muted: #9A948A;
 
-    --text-primary: #E8E4DE;
-    --text-secondary: #9A958D;
-    --text-muted: #6B665E;
-    --text-on-gold: #0A0A0A;
+    --border: #E5E2DC;
+    --border-light: #F0EEEA;
+    --border-gold: rgba(184, 150, 62, 0.25);
 
-    --danger: #E05555;
-    --success: #4CAF7D;
+    --danger: #C53030;
 
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.4);
-    --shadow-gold: 0 4px 24px rgba(201, 169, 110, 0.2);
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
 
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration: 0.35s;
 }
 
 /* ============================================
-   BASE OVERRIDES
+   BASE
    ============================================ */
 body {
     font-family: var(--font-body);
-    background: var(--charcoal);
+    background: var(--off-white);
     min-height: 100vh;
     margin: 0;
     padding: 0;
@@ -77,11 +76,10 @@ body {
 .reservation-container {
     width: 100%;
     max-width: 520px;
-    background: var(--surface);
+    background: var(--white);
     padding: 56px 44px;
-    border-radius: 2px;
+    border: 1px solid var(--border);
     box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border-subtle);
     position: relative;
     overflow: hidden;
 }
@@ -92,10 +90,10 @@ body {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 80px;
+    width: 60px;
     height: 1px;
     background: var(--gold);
-    opacity: 0.6;
+    opacity: 0.5;
 }
 
 /* ============================================
@@ -117,17 +115,6 @@ body {
     color: var(--gold);
     margin-right: 12px;
     font-style: normal;
-}
-
-.section-title {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--gold);
-    text-align: center;
-    margin-bottom: 24px;
-    letter-spacing: 1px;
 }
 
 /* ============================================
@@ -153,7 +140,7 @@ body {
     color: var(--gold);
     margin-right: 10px;
     font-size: 0.9rem;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 .form-group input,
@@ -161,20 +148,19 @@ body {
 .form-group textarea {
     width: 100%;
     padding: 14px 16px;
-    border: 1px solid var(--border-input);
-    border-radius: 2px;
+    border: 1px solid var(--border);
     font-family: var(--font-body);
     font-size: 0.95rem;
     font-weight: 300;
     color: var(--text-primary);
-    background: var(--surface-input);
-    transition: var(--transition);
+    background: var(--white);
+    transition: border-color var(--duration) var(--ease);
     -webkit-appearance: none;
     appearance: none;
 }
 
 .form-group select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23C9A96E' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23B8963E' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 16px center;
     padding-right: 40px;
@@ -185,39 +171,25 @@ body {
 .form-group textarea:focus {
     outline: none;
     border-color: var(--gold);
-    background: var(--surface-elevated);
-    box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.08);
+    box-shadow: 0 0 0 3px rgba(184, 150, 62, 0.08);
 }
 
 .form-group input::placeholder {
     color: var(--text-muted);
 }
 
-/* Fix for date/time inputs in dark mode */
-.form-group input[type="date"],
-.form-group input[type="time"] {
-    color: var(--text-primary);
-}
-
-.form-group input[type="date"]::-webkit-calendar-picker-indicator,
-.form-group input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(0.7) sepia(0.5) hue-rotate(10deg);
-    cursor: pointer;
-}
-
-/* Fix select option styling for dark mode */
 .form-group select option {
-    background: var(--surface);
+    background: var(--white);
     color: var(--text-primary);
 }
 
 /* ============================================
-   CONSENTS SECTION
+   CONSENTS
    ============================================ */
 .consents {
     margin-top: 36px;
     padding-top: 28px;
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--border-light);
 }
 
 .consents h2 {
@@ -245,17 +217,15 @@ body {
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    margin-bottom: 12px;
-    padding: 14px 16px;
-    background: rgba(255, 255, 255, 0.02);
+    margin-bottom: 10px;
+    padding: 12px 14px;
     border: 1px solid transparent;
-    border-radius: 2px;
-    transition: var(--transition);
+    transition: all var(--duration) var(--ease);
 }
 
 .consent-group:hover {
-    background: rgba(201, 169, 110, 0.04);
-    border-color: var(--border-subtle);
+    background: var(--off-white);
+    border-color: var(--border-light);
 }
 
 .consent-group input[type="checkbox"] {
@@ -280,11 +250,11 @@ body {
 .consent-group label a {
     color: var(--gold);
     text-decoration: none;
-    border-bottom: 1px solid rgba(201, 169, 110, 0.3);
+    border-bottom: 1px solid var(--border-gold);
 }
 
 .consent-group label a:hover {
-    color: var(--gold-light);
+    color: var(--gold-dark);
     border-bottom-color: var(--gold);
 }
 
@@ -294,11 +264,10 @@ body {
     align-items: center;
     justify-content: center;
     gap: 12px;
-    margin-top: 20px;
-    padding: 16px;
-    background: rgba(201, 169, 110, 0.06);
-    border: 1px solid var(--border-accent);
-    border-radius: 2px;
+    margin-top: 16px;
+    padding: 14px;
+    background: rgba(184, 150, 62, 0.04);
+    border: 1px solid var(--border-gold);
 }
 
 .accept-all input[type="checkbox"] {
@@ -327,14 +296,13 @@ body {
     background: transparent;
     color: var(--gold);
     border: 1px solid var(--gold);
-    border-radius: 0;
     font-family: var(--font-body);
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 400;
     letter-spacing: 2.5px;
     text-transform: uppercase;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all var(--duration) var(--ease);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -351,22 +319,16 @@ body {
     width: 100%;
     height: 100%;
     background: var(--gold);
-    transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: left 0.4s var(--ease-out);
     z-index: 0;
 }
 
 .submit-btn:hover {
-    color: var(--text-on-gold);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-gold);
+    color: var(--white);
 }
 
 .submit-btn:hover::before {
     left: 0;
-}
-
-.submit-btn:active {
-    transform: translateY(0);
 }
 
 .submit-btn i,
@@ -376,29 +338,28 @@ body {
 }
 
 /* ============================================
-   NAVBAR OVERRIDES (for this page)
+   NAVBAR OVERRIDES (always visible, white)
    ============================================ */
 .navbar {
-    top: 38px;
-    background: rgba(14, 14, 12, 0.92);
-    backdrop-filter: blur(24px) saturate(120%);
-    -webkit-backdrop-filter: blur(24px) saturate(120%);
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 16px 56px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    top: 35px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-light);
+    padding: 14px 56px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
 }
 
 /* ============================================
-   BOOKING BUTTON (nav) OVERRIDES
+   BOOKING BUTTON (nav)
    ============================================ */
 #booking-button {
     white-space: nowrap;
     background: transparent;
     color: var(--gold) !important;
-    padding: 10px 28px !important;
+    padding: 9px 24px !important;
     border: 1px solid var(--gold);
-    border-radius: 0;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 0.7rem;
     letter-spacing: 2.5px;
     box-shadow: none;
@@ -406,9 +367,7 @@ body {
 
 #booking-button:hover {
     background: var(--gold);
-    color: var(--text-on-gold) !important;
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-gold);
+    color: var(--white) !important;
 }
 
 #booking-button::after {
@@ -434,65 +393,60 @@ body {
 .lang-button,
 .lang-button-mobile {
     background: none;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-light);
     padding: 4px;
     cursor: pointer;
     border-radius: 2px;
-    transition: var(--transition);
+    transition: all var(--duration) var(--ease);
 }
 
 .lang-button:hover,
 .lang-button-mobile:hover {
     border-color: var(--gold);
-    background: rgba(201, 169, 110, 0.06);
 }
 
 .flag-icon {
     width: 24px;
     height: 16px;
-    border-radius: 2px;
+    border-radius: 1px;
     display: block;
 }
 
 /* ============================================
-   PAGE FLASH (dark mode)
+   PAGE FLASH
    ============================================ */
 @keyframes pageFlash {
-    0% { background-color: rgba(201, 169, 110, 0); }
-    50% { background-color: rgba(201, 169, 110, 0.03); }
-    100% { background-color: rgba(201, 169, 110, 0); }
+    0% { background-color: rgba(184, 150, 62, 0); }
+    50% { background-color: rgba(184, 150, 62, 0.03); }
+    100% { background-color: rgba(184, 150, 62, 0); }
 }
 
 .page-flash::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(201, 169, 110, 0.03);
+    inset: 0;
+    background-color: rgba(184, 150, 62, 0.03);
     animation: pageFlash 0.3s ease-in-out;
     pointer-events: none;
     z-index: 9999;
 }
 
 /* ============================================
-   FLATPICKR DARK THEME OVERRIDES
+   FLATPICKR — LIGHT THEME OVERRIDES
    ============================================ */
 .flatpickr-calendar {
-    background: var(--surface) !important;
-    border: 1px solid var(--border-accent) !important;
+    background: var(--white) !important;
+    border: 1px solid var(--border) !important;
     box-shadow: var(--shadow-lg) !important;
-    border-radius: 2px !important;
 }
 
 .flatpickr-months .flatpickr-month {
-    background: var(--surface) !important;
+    background: var(--white) !important;
     color: var(--text-primary) !important;
 }
 
 .flatpickr-current-month .flatpickr-monthDropdown-months {
-    background: var(--surface) !important;
+    background: var(--white) !important;
     color: var(--text-primary) !important;
 }
 
@@ -502,8 +456,8 @@ body {
 
 .flatpickr-months .flatpickr-prev-month,
 .flatpickr-months .flatpickr-next-month {
-    color: var(--text-primary) !important;
-    fill: var(--text-primary) !important;
+    color: var(--text-secondary) !important;
+    fill: var(--text-secondary) !important;
 }
 
 .flatpickr-months .flatpickr-prev-month:hover,
@@ -514,7 +468,7 @@ body {
 
 .flatpickr-months .flatpickr-prev-month svg,
 .flatpickr-months .flatpickr-next-month svg {
-    fill: var(--text-primary) !important;
+    fill: var(--text-secondary) !important;
 }
 
 .flatpickr-months .flatpickr-prev-month:hover svg,
@@ -524,23 +478,22 @@ body {
 
 span.flatpickr-weekday {
     color: var(--gold) !important;
-    background: var(--surface) !important;
+    background: var(--white) !important;
     font-weight: 500;
 }
 
 .flatpickr-day {
     color: var(--text-primary) !important;
-    border-radius: 2px !important;
 }
 
 .flatpickr-day:hover {
-    background: rgba(201, 169, 110, 0.15) !important;
+    background: rgba(184, 150, 62, 0.1) !important;
     border-color: transparent !important;
 }
 
 .flatpickr-day.selected {
     background: var(--gold) !important;
-    color: var(--text-on-gold) !important;
+    color: var(--white) !important;
     border-color: var(--gold) !important;
 }
 
@@ -550,7 +503,7 @@ span.flatpickr-weekday {
 
 .flatpickr-day.today:hover {
     background: var(--gold) !important;
-    color: var(--text-on-gold) !important;
+    color: var(--white) !important;
 }
 
 .flatpickr-day.flatpickr-disabled {
@@ -567,16 +520,13 @@ span.flatpickr-weekday {
     border-bottom: none !important;
 }
 
-.flatpickr-rContainer {
-    background: var(--surface) !important;
-}
-
+.flatpickr-rContainer,
 .dayContainer {
-    background: var(--surface) !important;
+    background: var(--white) !important;
 }
 
 /* ============================================
-   FORM ERROR STYLES
+   FORM ERRORS
    ============================================ */
 .errorlist {
     list-style: none;
@@ -589,9 +539,8 @@ span.flatpickr-weekday {
     font-size: 0.8rem;
     font-weight: 400;
     padding: 6px 12px;
-    background: rgba(224, 85, 85, 0.08);
+    background: rgba(197, 48, 48, 0.05);
     border-left: 2px solid var(--danger);
-    border-radius: 0 2px 2px 0;
     margin-bottom: 4px;
 }
 
@@ -640,31 +589,31 @@ span.flatpickr-weekday {
     }
 
     .navbar {
-        top: 32px;
+        top: 30px;
         padding: 12px 20px;
     }
 
-    /* Mobile Menu Dark */
+    /* Mobile Menu — White */
     .mobile-menu {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100vh;
-        background: rgba(14, 14, 12, 0.98);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         z-index: 1001;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 20px;
-        padding: 100px 40px 64px;
+        gap: 16px;
+        padding: 80px 40px 60px;
         transform: translateY(-100%);
         opacity: 0;
         visibility: hidden;
-        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: all 0.5s var(--ease-out);
     }
 
     .mobile-menu.active {
@@ -675,20 +624,19 @@ span.flatpickr-weekday {
 
     .mobile-menu a {
         width: 100%;
-        max-width: 280px;
-        padding: 14px 24px;
+        max-width: 260px;
+        padding: 14px 20px;
         text-align: center;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 400;
         letter-spacing: 3px;
         text-transform: uppercase;
         color: var(--text-primary);
         background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 0;
+        border-bottom: 1px solid var(--border-light);
         text-decoration: none;
         text-shadow: none;
-        transition: var(--transition);
+        transition: all var(--duration) var(--ease);
         margin: 0;
     }
 
@@ -696,31 +644,30 @@ span.flatpickr-weekday {
         display: none;
     }
 
-    .mobile-menu a:hover,
-    .mobile-menu a:active {
-        background: rgba(201, 169, 110, 0.08);
+    .mobile-menu a:hover {
         color: var(--gold);
-        border-color: var(--gold);
+        border-bottom-color: var(--gold);
     }
 
     #booking-button-mobile {
-        background: transparent;
         color: var(--gold) !important;
         border: 1px solid var(--gold) !important;
+        border-bottom: 1px solid var(--gold) !important;
+        background: transparent;
     }
 
     #booking-button-mobile:hover {
         background: var(--gold);
-        color: var(--text-on-gold) !important;
+        color: var(--white) !important;
     }
 
     .language-switcher-mobile {
         padding-top: 24px;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--border-light);
     }
 
     .lang-button-mobile {
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--border-light);
         background: transparent;
     }
 }
@@ -736,14 +683,5 @@ span.flatpickr-weekday {
 
     .consents h2 {
         font-size: 1.1rem;
-    }
-}
-
-/* Mobile menu override for wider screens */
-@media (max-width: 800px) {
-    .language-switcher-mobile button {
-        width: 36px;
-        max-width: 36px;
-        margin: 0 6px;
     }
 }
