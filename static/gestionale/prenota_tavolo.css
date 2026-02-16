@@ -1,6 +1,7 @@
 /* ============================================
    LA SCARPETTA — PRENOTA TAVOLO 2026
    Minimal White & Gold — Reservation Form
+   Compatible with new site-header / off-canvas
    ============================================ */
 
 :root {
@@ -48,15 +49,22 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    padding-top: 120px;
+    padding-top: 88px;
     color: var(--text-secondary);
     line-height: 1.6;
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
 }
 
-.mobile-menu {
-    display: none;
+/* ============================================
+   HEADER OVERRIDES — always frosted glass
+   ============================================ */
+.site-header {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.04);
 }
 
 /* ============================================
@@ -67,7 +75,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     padding: 40px 20px 80px;
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 88px);
 }
 
 /* ============================================
@@ -338,81 +346,6 @@ body {
 }
 
 /* ============================================
-   NAVBAR OVERRIDES (always visible, white)
-   ============================================ */
-.navbar {
-    top: 35px;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-light);
-    padding: 14px 56px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
-}
-
-/* ============================================
-   BOOKING BUTTON (nav)
-   ============================================ */
-#booking-button {
-    white-space: nowrap;
-    background: transparent;
-    color: var(--gold) !important;
-    padding: 9px 24px !important;
-    border: 1px solid var(--gold);
-    font-weight: 400;
-    font-size: 0.7rem;
-    letter-spacing: 2.5px;
-    box-shadow: none;
-}
-
-#booking-button:hover {
-    background: var(--gold);
-    color: var(--white) !important;
-}
-
-#booking-button::after {
-    display: none;
-}
-
-/* ============================================
-   LANGUAGE SWITCHER
-   ============================================ */
-.language-switcher {
-    display: flex;
-    gap: 8px;
-    margin-left: 16px;
-}
-
-.language-switcher-mobile {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 16px;
-}
-
-.lang-button,
-.lang-button-mobile {
-    background: none;
-    border: 1px solid var(--border-light);
-    padding: 4px;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: all var(--duration) var(--ease);
-}
-
-.lang-button:hover,
-.lang-button-mobile:hover {
-    border-color: var(--gold);
-}
-
-.flag-icon {
-    width: 24px;
-    height: 16px;
-    border-radius: 1px;
-    display: block;
-}
-
-/* ============================================
    PAGE FLASH
    ============================================ */
 @keyframes pageFlash {
@@ -549,7 +482,7 @@ span.flatpickr-weekday {
    ============================================ */
 @media (max-width: 768px) {
     body {
-        padding-top: 95px;
+        padding-top: 72px;
     }
 
     .content-wrapper {
@@ -587,92 +520,13 @@ span.flatpickr-weekday {
         padding: 16px;
         font-size: 0.8rem;
     }
-
-    .navbar {
-        top: 30px;
-        padding: 12px 20px;
-    }
-
-    /* Mobile Menu — White */
-    .mobile-menu {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        z-index: 1001;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
-        padding: 80px 40px 60px;
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.5s var(--ease-out);
-    }
-
-    .mobile-menu.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .mobile-menu a {
-        width: 100%;
-        max-width: 260px;
-        padding: 14px 20px;
-        text-align: center;
-        font-size: 11px;
-        font-weight: 400;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        color: var(--text-primary);
-        background: transparent;
-        border-bottom: 1px solid var(--border-light);
-        text-decoration: none;
-        text-shadow: none;
-        transition: all var(--duration) var(--ease);
-        margin: 0;
-    }
-
-    .mobile-menu a::after {
-        display: none;
-    }
-
-    .mobile-menu a:hover {
-        color: var(--gold);
-        border-bottom-color: var(--gold);
-    }
-
-    #booking-button-mobile {
-        color: var(--gold) !important;
-        border: 1px solid var(--gold) !important;
-        border-bottom: 1px solid var(--gold) !important;
-        background: transparent;
-    }
-
-    #booking-button-mobile:hover {
-        background: var(--gold);
-        color: var(--white) !important;
-    }
-
-    .language-switcher-mobile {
-        padding-top: 24px;
-        border-top: 1px solid var(--border-light);
-    }
-
-    .lang-button-mobile {
-        border: 1px solid var(--border-light);
-        background: transparent;
-    }
 }
 
 @media (max-width: 480px) {
+    body {
+        padding-top: 64px;
+    }
+
     .reservation-container {
         padding: 28px 20px;
     }

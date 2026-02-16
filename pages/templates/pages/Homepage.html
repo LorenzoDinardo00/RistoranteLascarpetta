@@ -14,75 +14,65 @@
 {% endblock %}
 
 {% block content %}
-<!-- Top Bar -->
-<div class="top-bar">
-    <div class="top-bar-content">
-        <a href="tel:0555121510" class="top-bar-phone">
-            <i class="fas fa-phone-alt"></i>
-            <span>055 512 1510</span>
-        </a>
-        <div class="top-bar-separator"></div>
-        <div class="top-bar-languages">
-            <button onclick="setLanguage('it')" class="top-bar-lang-btn active" title="Italiano">
-                <img src="{% static 'pages/images/bandieraitaliana.png' %}" alt="IT" class="flag-icon">
-            </button>
-            <button onclick="setLanguage('en')" class="top-bar-lang-btn" title="English">
-                <img src="{% static 'pages/images/usa-flag.png' %}" alt="EN" class="flag-icon">
-            </button>
+<!-- ═══════════════════════════════════════════
+     FLOATING HEADER
+     ═══════════════════════════════════════════ -->
+<header class="site-header" id="navbar">
+    <a href="#hero" class="header-logo">
+        <img src="{% static 'pages/images/Logosvgcentrato(1).webp' %}" alt="La Scarpetta">
+    </a>
+
+    <div class="header-actions">
+        <a href="{% url 'gestionale:prenota_tavolo' %}" class="header-cta lang lang-it">Prenota</a>
+        <a href="{% url 'gestionale:prenota_tavolo' %}" class="header-cta lang lang-en" style="display: none;">Book</a>
+
+        <div class="menu-icon" id="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </div>
-</div>
+</header>
 
-<!-- Navigation -->
-<nav class="navbar" id="navbar">
-    <div class="menu left">
-        <a href="#about" class="lang lang-it">Chi Siamo</a>
-        <a href="#menu" class="lang lang-it">Il Menu</a>
-        <a href="#about" class="lang lang-en" style="display: none;">About</a>
-        <a href="#menu" class="lang lang-en" style="display: none;">Menu</a>
-    </div>
+<!-- ═══════════════════════════════════════════
+     OFF-CANVAS NAVIGATION
+     ═══════════════════════════════════════════ -->
+<nav class="off-canvas" id="mobile-menu">
+    <div class="off-canvas-inner">
+        <div class="off-canvas-links">
+            <a href="#about" class="lang lang-it">Chi Siamo</a>
+            <a href="#about" class="lang lang-en" style="display: none;">About</a>
 
-    <div class="logo">
-        <a href="#hero">
-            <img src="{% static 'pages/images/Logosvgcentrato(1).webp' %}" alt="La Scarpetta">
-        </a>
-    </div>
+            <a href="#menu" class="lang lang-it">Il Menu</a>
+            <a href="#menu" class="lang lang-en" style="display: none;">Menu</a>
 
-    <div class="menu right">
-        <a href="#contatti" class="lang lang-it">Contatti</a>
-        <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button" class="lang lang-it">Prenota</a>
-        <a href="#contatti" class="lang lang-en" style="display: none;">Contact</a>
-        <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button" class="lang lang-en" style="display: none;">Book</a>
-    </div>
+            <a href="#gallery" class="lang lang-it">Galleria</a>
+            <a href="#gallery" class="lang lang-en" style="display: none;">Gallery</a>
 
-    <div class="menu-icon" id="menu-icon">
-        <span></span>
-        <span></span>
-        <span></span>
+            <a href="#contatti" class="lang lang-it">Contatti</a>
+            <a href="#contatti" class="lang lang-en" style="display: none;">Contact</a>
+
+            <a href="{% url 'gestionale:prenota_tavolo' %}" class="off-canvas-cta lang lang-it">Prenota Ora</a>
+            <a href="{% url 'gestionale:prenota_tavolo' %}" class="off-canvas-cta lang lang-en" style="display: none;">Book Now</a>
+        </div>
+
+        <div class="off-canvas-bottom">
+            <a href="tel:0555121510" class="off-canvas-phone">
+                <i class="fas fa-phone-alt"></i>
+                <span>055 512 1510</span>
+            </a>
+
+            <div class="language-switcher-mobile">
+                <button onclick="setLanguage('it')" class="lang-button-mobile">
+                    <img src="{% static 'pages/images/bandieraitaliana.png' %}" alt="IT" class="flag-icon">
+                </button>
+                <button onclick="setLanguage('en')" class="lang-button-mobile">
+                    <img src="{% static 'pages/images/usa-flag.png' %}" alt="EN" class="flag-icon">
+                </button>
+            </div>
+        </div>
     </div>
 </nav>
-
-<!-- Mobile Menu -->
-<div class="mobile-menu" id="mobile-menu">
-    <a href="#about" class="lang lang-it">Chi Siamo</a>
-    <a href="#menu" class="lang lang-it">Il Menu</a>
-    <a href="#contattiMobile" class="lang lang-it">Contatti</a>
-    <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button-mobile" class="lang lang-it">Prenota Ora</a>
-
-    <a href="#about" class="lang lang-en" style="display: none;">About</a>
-    <a href="#menu" class="lang lang-en" style="display: none;">Menu</a>
-    <a href="#contattiMobile" class="lang lang-en" style="display: none;">Contact</a>
-    <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button-mobile" class="lang lang-en" style="display: none;">Book Now</a>
-
-    <div class="language-switcher-mobile">
-        <button onclick="setLanguage('it')" class="lang-button-mobile">
-            <img src="{% static 'pages/images/bandieraitaliana.png' %}" alt="IT" class="flag-icon">
-        </button>
-        <button onclick="setLanguage('en')" class="lang-button-mobile">
-            <img src="{% static 'pages/images/usa-flag.png' %}" alt="EN" class="flag-icon">
-        </button>
-    </div>
-</div>
 
 <!-- Cookie Consent -->
 <div id="cookie-consent-modal" style="display:none;">
@@ -94,7 +84,9 @@
     <button onclick="declineCookies()" class="lang lang-en" style="display: none;">Decline</button>
 </div>
 
-<!-- Hero Section -->
+<!-- ═══════════════════════════════════════════
+     HERO — FULL VIEWPORT
+     ═══════════════════════════════════════════ -->
 <section class="hero-banner" id="hero">
     <div class="slider-container">
         <div class="slider-image">
@@ -105,6 +97,8 @@
         <div class="logo-container">
             <img src="{% static 'pages/images/LaScarpettaSVG_01_RevA (2) 2.webp' %}" alt="La Scarpetta" id="custom-logo">
         </div>
+        <p class="hero-tagline lang lang-it">Tradizione Toscana dal Cuore di Firenze</p>
+        <p class="hero-tagline lang lang-en" style="display: none;">Tuscan Tradition from the Heart of Florence</p>
         <div class="hero-scroll-cue">
             <span class="lang lang-it">Scopri</span>
             <span class="lang lang-en" style="display: none;">Discover</span>
@@ -113,19 +107,20 @@
     </div>
 </section>
 
-<!-- Section Divider -->
-<div class="section-divider">
-    <span class="divider-ornament"></span>
-</div>
+<!-- ═══════════════════════════════════════════
+     ABOUT — EDITORIAL LAYOUT
+     Full-width image + overlapping text block
+     ═══════════════════════════════════════════ -->
+<section class="about-editorial" id="about">
+    <div class="about-image-strip animate-section">
+        <img src="{% static 'pages/images/Osteria.webp' %}" alt="La Scarpetta Ristorante Firenze">
+    </div>
 
-<!-- About Section -->
-<section class="container1" id="about">
-    <div class="text-container animate-section">
-        <span class="intro lang lang-it">La Nostra Storia</span>
-        <span class="intro lang lang-en" style="display: none;">Our Story</span>
+    <div class="about-text-block animate-section">
+        <span class="about-label lang lang-it">La Nostra Storia</span>
+        <span class="about-label lang lang-en" style="display: none;">Our Story</span>
 
-        <h1 id="scritta" class="lang lang-it">La Scarpetta</h1>
-        <h1 class="lang lang-en" style="display: none;">La Scarpetta</h1>
+        <h2 class="about-title">La Scarpetta</h2>
 
         <p class="lang lang-it">
             Nel cuore di Firenze, celebriamo la tradizione culinaria toscana con passione autentica.
@@ -140,23 +135,25 @@
 
         <p class="lang lang-it">
             Un'atmosfera calda e accogliente dove ogni ospite diventa parte della nostra famiglia.
-            <a href="https://www.google.com/maps/place/La+Scarpetta/@43.7742329,11.2115738,17z" target="_blank">Vieni a trovarci</a>
+            <a href="https://www.google.com/maps/place/La+Scarpetta/@43.7742329,11.2115738,17z" target="_blank" class="about-link">Vieni a trovarci <i class="fas fa-arrow-right"></i></a>
         </p>
         <p class="lang lang-en" style="display: none;">
             A warm and welcoming atmosphere where every guest becomes part of our family.
-            <a href="https://www.google.com/maps/place/La+Scarpetta/@43.7742329,11.2115738,17z" target="_blank">Come visit us</a>
+            <a href="https://www.google.com/maps/place/La+Scarpetta/@43.7742329,11.2115738,17z" target="_blank" class="about-link">Come visit us <i class="fas fa-arrow-right"></i></a>
         </p>
-    </div>
-
-    <div class="image-container1 animate-section">
-        <img src="{% static 'pages/images/Osteria.webp' %}" alt="La Scarpetta Ristorante Firenze">
     </div>
 </section>
 
-<!-- Menu Section -->
-<section class="gourmet-section" id="menu">
-    <h1 class="gourmet-title lang lang-it">Il nostro Menu</h1>
-    <h1 class="gourmet-title lang lang-en" style="display: none;">Our Menu</h1>
+<!-- ═══════════════════════════════════════════
+     MENU / PDF — EDITORIAL
+     ═══════════════════════════════════════════ -->
+<section class="menu-editorial" id="menu">
+    <div class="menu-editorial-header">
+        <span class="gold-rule"></span>
+        <h2 class="menu-editorial-title lang lang-it">Il Nostro Menu</h2>
+        <h2 class="menu-editorial-title lang lang-en" style="display: none;">Our Menu</h2>
+        <span class="gold-rule"></span>
+    </div>
 
     {% if latest_pdf %}
     <div class="pdf-container">
@@ -201,188 +198,116 @@
     {% endif %}
 </section>
 
-<!-- Gallery Carousel -->
-<div class="carousel-container animate-section">
-    <div class="slides-wrapper">
-        <div class="carousel-image">
-            <img src="{% static 'pages/images/Foto-29.jpg' %}" alt="La Scarpetta Piatti">
-        </div>
-        <div class="carousel-image">
-            <img src="{% static 'pages/images/Foto-7.jpg' %}" alt="La Scarpetta Cucina">
-        </div>
-        <div class="carousel-image">
-            <img src="{% static 'pages/images/Foto-13.jpg' %}" alt="La Scarpetta Atmosfera">
-        </div>
-    </div>
-    <a class="previous" onclick="prevSlide()">&#10094;</a>
-    <a class="next" onclick="nextSlide()">&#10095;</a>
-</div>
-
-<div class="carousel-indicators">
-    <span class="carousel-dot active" data-index="0"></span>
-    <span class="carousel-dot" data-index="1"></span>
-    <span class="carousel-dot" data-index="2"></span>
-</div>
-
-<!-- Contact Section Desktop -->
-<section class="content-container" id="contatti">
-    <div class="contact-hours-container">
-        <div class="contact-left">
-            <h2 class="lang lang-it">Contatti</h2>
-            <h2 class="lang lang-en" style="display: none;">Contact</h2>
-
-            <div class="contact-info animate-section">
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <a href="https://www.google.com/maps/place/La+Scarpetta" target="_blank">
-                        <p>Via del Ponte Sospeso, 7r - Firenze</p>
-                    </a>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone-alt"></i>
-                    <a href="tel:0555121510"><p>055 512 1510</p></a>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-instagram"></i>
-                    <a href="https://instagram.com/lascarpettafirenze" target="_blank"><p>@lascarpettafirenze</p></a>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-facebook"></i>
-                    <a href="https://facebook.com/lascarpettafirenze" target="_blank"><p>lascarpettafirenze</p></a>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <a href="mailto:lascarpettafirenze@gmail.com"><p>lascarpettafirenze@gmail.com</p></a>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <a href="https://wa.me/3755374459" target="_blank">
-                        <p class="lang lang-it">Scrivici su WhatsApp</p>
-                        <p class="lang lang-en" style="display: none;">Message us on WhatsApp</p>
-                    </a>
-                </div>
+<!-- ═══════════════════════════════════════════
+     GALLERY — FULL-BLEED CAROUSEL
+     ═══════════════════════════════════════════ -->
+<section class="gallery-fullbleed" id="gallery">
+    <div class="carousel-container animate-section">
+        <div class="slides-wrapper">
+            <div class="carousel-image">
+                <img src="{% static 'pages/images/Foto-29.jpg' %}" alt="La Scarpetta Piatti">
+            </div>
+            <div class="carousel-image">
+                <img src="{% static 'pages/images/Foto-7.jpg' %}" alt="La Scarpetta Cucina">
+            </div>
+            <div class="carousel-image">
+                <img src="{% static 'pages/images/Foto-13.jpg' %}" alt="La Scarpetta Atmosfera">
             </div>
         </div>
 
-        <div class="hours-right animate-section">
-            <h2 class="lang lang-it">Orari</h2>
-            <h2 class="lang lang-en" style="display: none;">Hours</h2>
+        <a class="previous" onclick="prevSlide()">&#10094;</a>
+        <a class="next" onclick="nextSlide()">&#10095;</a>
 
-            <div class="opening-hours">
-                <p>
-                    <strong class="lang lang-it">Pranzo:</strong>
-                    <strong class="lang lang-en" style="display: none;">Lunch:</strong>
-                    <span>12:00 - 15:00</span>
-                </p>
-                <p>
-                    <strong class="lang lang-it">Cena:</strong>
-                    <strong class="lang lang-en" style="display: none;">Dinner:</strong>
-                    <span>19:00 - 00:00</span>
-                </p>
-                <p>
-                    <strong class="lang lang-it">Aperti:</strong>
-                    <strong class="lang lang-en" style="display: none;">Open:</strong>
-                    <span class="lang lang-it">Tutti i giorni</span>
-                    <span class="lang lang-en" style="display: none;">Every day</span>
-                </p>
-            </div>
-
-            <div id="map">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2881.5!2d11.2115738!3d43.7742329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a5aa11009a4f9%3A0x7b2045d5b4037df9!2sVia%20del%20Ponte%20Sospeso%2C%2050142%20Firenze%20FI!5e0!3m2!1sit!2sit!4v1647101325581!5m2!1sit!2sit"
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
+        <div class="carousel-indicators">
+            <span class="carousel-dot active" data-index="0"></span>
+            <span class="carousel-dot" data-index="1"></span>
+            <span class="carousel-dot" data-index="2"></span>
         </div>
     </div>
 </section>
 
-<!-- Contact Section Mobile -->
-<section class="mobile-contact-section" id="contattiMobile">
-    <div class="mobile-contact-grid">
-        <!-- Colonna Contatti -->
-        <div class="mobile-contact-card">
-            <h2 class="lang lang-it">Contatti</h2>
-            <h2 class="lang lang-en" style="display: none;">Contact</h2>
+<!-- ═══════════════════════════════════════════
+     CONTATTI — UNIFIED MINIMAL
+     ═══════════════════════════════════════════ -->
+<section class="contact-minimal" id="contatti">
+    <div class="contact-inner">
+        <span class="contact-label lang lang-it">Trovateci</span>
+        <span class="contact-label lang lang-en" style="display: none;">Find Us</span>
 
-            <div class="contact-item-mobile">
+        <h2 class="contact-title lang lang-it">Contatti</h2>
+        <h2 class="contact-title lang lang-en" style="display: none;">Contact</h2>
+
+        <div class="contact-details">
+            <a href="https://www.google.com/maps/place/La+Scarpetta" target="_blank" class="contact-line">
                 <i class="fas fa-map-marker-alt"></i>
-                <a href="https://www.google.com/maps/place/La+Scarpetta" target="_blank">Via del Ponte Sospeso, 7r<br>Firenze</a>
-            </div>
-            <div class="contact-item-mobile">
+                <span>Via del Ponte Sospeso, 7r — Firenze</span>
+            </a>
+            <a href="tel:0555121510" class="contact-line">
                 <i class="fas fa-phone-alt"></i>
-                <a href="tel:0555121510">055 512 1510</a>
-            </div>
-            <div class="contact-item-mobile">
+                <span>055 512 1510</span>
+            </a>
+            <a href="mailto:lascarpettafirenze@gmail.com" class="contact-line">
                 <i class="fas fa-envelope"></i>
-                <a href="mailto:lascarpettafirenze@gmail.com">lascarpettafirenze@gmail.com</a>
-            </div>
-
-            <div class="social-links-mobile">
-                <a href="https://instagram.com/lascarpettafirenze" target="_blank" class="social-btn">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://facebook.com/lascarpettafirenze" target="_blank" class="social-btn">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://wa.me/3755374459" target="_blank" class="social-btn whatsapp">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-            </div>
+                <span>lascarpettafirenze@gmail.com</span>
+            </a>
         </div>
 
-        <!-- Colonna Orari -->
-        <div class="mobile-hours-card">
-            <h2 class="lang lang-it">Orari</h2>
-            <h2 class="lang lang-en" style="display: none;">Hours</h2>
-
-            <div class="hours-block">
-                <div class="hours-row">
-                    <span class="hours-label lang lang-it">Pranzo</span>
-                    <span class="hours-label lang lang-en" style="display: none;">Lunch</span>
-                    <span class="hours-time">12:00 - 15:00</span>
-                </div>
-                <div class="hours-row">
-                    <span class="hours-label lang lang-it">Cena</span>
-                    <span class="hours-label lang lang-en" style="display: none;">Dinner</span>
-                    <span class="hours-time">19:00 - 00:00</span>
-                </div>
-                <div class="hours-note">
-                    <span class="lang lang-it">Aperti tutti i giorni</span>
-                    <span class="lang lang-en" style="display: none;">Open every day</span>
-                </div>
-            </div>
+        <div class="contact-social">
+            <a href="https://instagram.com/lascarpettafirenze" target="_blank" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://facebook.com/lascarpettafirenze" target="_blank" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://wa.me/3755374459" target="_blank" aria-label="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
         </div>
+
+        <div class="contact-hours">
+            <div class="hours-line">
+                <span class="lang lang-it">Pranzo</span>
+                <span class="lang lang-en" style="display: none;">Lunch</span>
+                <span class="hours-dash"></span>
+                <span>12:00 — 15:00</span>
+            </div>
+            <div class="hours-line">
+                <span class="lang lang-it">Cena</span>
+                <span class="lang lang-en" style="display: none;">Dinner</span>
+                <span class="hours-dash"></span>
+                <span>19:00 — 00:00</span>
+            </div>
+            <p class="hours-note">
+                <span class="lang lang-it">Aperti tutti i giorni</span>
+                <span class="lang lang-en" style="display: none;">Open every day</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="map-fullbleed" id="map">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2881.5!2d11.2115738!3d43.7742329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a5aa11009a4f9%3A0x7b2045d5b4037df9!2sVia%20del%20Ponte%20Sospeso%2C%2050142%20Firenze%20FI!5e0!3m2!1sit!2sit!4v1647101325581!5m2!1sit!2sit"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
     </div>
 </section>
 
-<!-- Footer Desktop -->
-<footer class="footer fpc">
-    <p>
-        &copy; 2026 La Scarpetta
-        <a href="{% url 'cookie_consent:privacy_policy' %}">Privacy Policy</a>
-        <a href="{% url 'cookie_consent:cookie_policy' %}">Cookie Policy</a>
-        {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}" class="admin-link">Logout</a>
-        {% endif %}
-        Engineered by Tempora Innovation
-    </p>
-</footer>
-
-<!-- Footer Mobile -->
-<footer class="footer fmobile">
-    <p>&copy; 2026 La Scarpetta</p>
-    <div class="footer-links">
-        <a href="{% url 'cookie_consent:privacy_policy' %}">Privacy Policy</a>
-        <span class="separator">|</span>
-        <a href="{% url 'cookie_consent:cookie_policy' %}">Cookie Policy</a>
-        {% if user.is_authenticated %}
-        <span class="separator">|</span>
-        <a href="{% url 'logout' %}" class="admin-link">Logout</a>
-        {% endif %}
+<!-- ═══════════════════════════════════════════
+     FOOTER — UNIFIED
+     ═══════════════════════════════════════════ -->
+<footer class="footer-minimal">
+    <div class="footer-inner">
+        <p class="footer-copy">&copy; 2026 La Scarpetta</p>
+        <div class="footer-links">
+            <a href="{% url 'cookie_consent:privacy_policy' %}">Privacy Policy</a>
+            <a href="{% url 'cookie_consent:cookie_policy' %}">Cookie Policy</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="admin-link">Logout</a>
+            {% endif %}
+        </div>
+        <p class="footer-credit">Engineered by Tempora Innovation</p>
     </div>
-    <p class="footer-credit">Engineered by Tempora Innovation</p>
 </footer>
 
 <!-- Scripts -->

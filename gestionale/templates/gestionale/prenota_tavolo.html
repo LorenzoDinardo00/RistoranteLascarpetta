@@ -20,81 +20,66 @@
 {% block content %}
 
 <body>
-    <!-- Top Bar with Phone and Language Switcher -->
-    <div class="top-bar">
-        <div class="top-bar-content">
-            <a href="tel:0555121510" class="top-bar-phone">
-                <i class="fas fa-phone"></i>
-                <span>055 5121510</span>
-            </a>
-            <div class="top-bar-separator"></div>
-            <div class="top-bar-languages">
-                <button onclick="setLanguage('it')" class="top-bar-lang-btn" title="Italiano">
-                    <img src="{% static 'pages/images/bandieraitaliana.png' %}" alt="Italiano" class="flag-icon">
-                </button>
-                <button onclick="setLanguage('en')" class="top-bar-lang-btn" title="English">
-                    <img src="{% static 'pages/images/usa-flag.png' %}" alt="English" class="flag-icon">
-                </button>
+    <!-- ═══════════════════════════════════════════
+         FLOATING HEADER (same as Homepage)
+         ═══════════════════════════════════════════ -->
+    <header class="site-header" id="navbar">
+        <a href="{% url 'Homepage' %}#hero" class="header-logo">
+            <img src="{% static 'pages/images/Logosvgcentrato(1).webp' %}" alt="La Scarpetta">
+        </a>
+
+        <div class="header-actions">
+            <a href="{% url 'gestionale:prenota_tavolo' %}" class="header-cta lang lang-it">Prenota</a>
+            <a href="{% url 'gestionale:prenota_tavolo' %}" class="header-cta lang lang-en" style="display: none;">Book</a>
+
+            <div class="menu-icon" id="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
-    </div>
+    </header>
 
-    <nav class="navbar">
-        <div class="menu left">
-            <!-- Italian -->
-            <a href="{% url 'Homepage' %}#container1-1" class="lang lang-it">Chi Siamo</a>
-            <a href="{% url 'Homepage' %}#menu" class="lang lang-it">Il Menù</a>
-            <!-- English -->
-            <a href="{% url 'Homepage' %}#container1-1" class="lang lang-en" style="display: none;">About Us</a>
-            <a href="{% url 'Homepage' %}#menu" class="lang lang-en" style="display: none;">Our Menu</a>
-        </div>
-        <div class="logo">
-            <a href="{% url 'Homepage' %}#starting">
-                <img src="{% static 'pages/images/Logosvgcentrato(1).webp' %}" alt="Logo La Scarpetta">
-            </a>
-        </div>
-        <div class="menu right">
-            <!-- Italian -->
-            <a href="{% url 'Homepage' %}#contatti" class="lang lang-it">Contattaci</a>
-            <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button" class="lang lang-it">Prenota Ora</a>
-            <!-- English -->
-            <a href="{% url 'Homepage' %}#contatti" class="lang lang-en" style="display: none;">Contact Us</a>
-            <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button" class="lang lang-en"
-                style="display: none;">Book Now</a>
-        </div>
-        <!-- Icona del menu hamburger -->
-        <div class="menu-icon" id="menu-icon">
-            <span></span>
-            <span></span>
-            <span></span>
+    <!-- ═══════════════════════════════════════════
+         OFF-CANVAS NAVIGATION (same as Homepage)
+         ═══════════════════════════════════════════ -->
+    <nav class="off-canvas" id="mobile-menu">
+        <div class="off-canvas-inner">
+            <div class="off-canvas-links">
+                <a href="{% url 'Homepage' %}#about" class="lang lang-it">Chi Siamo</a>
+                <a href="{% url 'Homepage' %}#about" class="lang lang-en" style="display: none;">About</a>
+
+                <a href="{% url 'Homepage' %}#menu" class="lang lang-it">Il Menu</a>
+                <a href="{% url 'Homepage' %}#menu" class="lang lang-en" style="display: none;">Menu</a>
+
+                <a href="{% url 'Homepage' %}#gallery" class="lang lang-it">Galleria</a>
+                <a href="{% url 'Homepage' %}#gallery" class="lang lang-en" style="display: none;">Gallery</a>
+
+                <a href="{% url 'Homepage' %}#contatti" class="lang lang-it">Contatti</a>
+                <a href="{% url 'Homepage' %}#contatti" class="lang lang-en" style="display: none;">Contact</a>
+
+                <a href="{% url 'gestionale:prenota_tavolo' %}" class="off-canvas-cta lang lang-it">Prenota Ora</a>
+                <a href="{% url 'gestionale:prenota_tavolo' %}" class="off-canvas-cta lang lang-en" style="display: none;">Book Now</a>
+            </div>
+
+            <div class="off-canvas-bottom">
+                <a href="tel:0555121510" class="off-canvas-phone">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>055 512 1510</span>
+                </a>
+
+                <div class="language-switcher-mobile">
+                    <button onclick="setLanguage('it')" class="lang-button-mobile">
+                        <img src="{% static 'pages/images/bandieraitaliana.png' %}" alt="IT" class="flag-icon">
+                    </button>
+                    <button onclick="setLanguage('en')" class="lang-button-mobile">
+                        <img src="{% static 'pages/images/usa-flag.png' %}" alt="EN" class="flag-icon">
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <!-- Menu Mobile -->
-    <div class="mobile-menu" id="mobile-menu">
-        <!-- Lingua italiana -->
-        <a href="{% url 'Homepage'%}#scritta" id="chi" class="lang lang-it">Chi Siamo</a>
-        <a href="{% url 'Homepage'%}#menu" class="lang lang-it">Il Menù</a>
-        <a href="{% url 'Homepage'%}#contattiMobile" class="lang lang-it">Contattaci</a>
-        <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button-mobile" class="lang lang-it">Prenota Ora</a>
-
-        <!-- Lingua inglese -->
-        <a href="{% url 'Homepage'%}#scritta" id="chi" class="lang lang-en" style="display: none;">About Us</a>
-        <a href="{% url 'Homepage'%}#menu" class="lang lang-en" style="display: none;">Our Menu</a>
-        <a href="{% url 'Homepage'%}#contattiMobile" class="lang lang-en" style="display: none;">Contact Us</a>
-        <a href="{% url 'gestionale:prenota_tavolo' %}" id="booking-button-mobile" class="lang lang-en"
-            style="display: none;">Book Now</a>
-
-        <!-- Language Switcher per versione mobile -->
-        <div class="language-switcher-mobile">
-            <button onclick="setLanguage('it')" class="lang-button-mobile">
-                <img src="{% static 'pages/images/bandieraitaliana.png' %}" alt="Italiano" class="flag-icon">
-            </button>
-            <button onclick="setLanguage('en')" class="lang-button-mobile">
-                <img src="{% static 'pages/images/usa-flag.png' %}" alt="English" class="flag-icon">
-            </button>
-        </div>
-    </div>
     <!-- Reservation Form -->
     <div class="content-wrapper">
         <div class="reservation-container">
@@ -238,60 +223,53 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const navbar = document.querySelector('.navbar');
+        const navbar = document.getElementById('navbar');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
 
-        // Mostra/Nasconde il menu mobile al clic sull'icona
-        menuIcon.addEventListener('click', function () {
-            mobileMenu.classList.toggle('active');
-            this.classList.toggle('active');
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            navbar.classList.toggle('scrolled', currentScroll > 50);
         });
 
-        // Chiude il menu mobile cliccando fuori
+        // Toggle off-canvas
+        menuIcon.addEventListener('click', function (e) {
+            e.stopPropagation();
+            mobileMenu.classList.toggle('active');
+            this.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close off-canvas clicking outside
         document.addEventListener('click', function (event) {
             if (!menuIcon.contains(event.target) && !mobileMenu.contains(event.target)) {
                 mobileMenu.classList.remove('active');
                 menuIcon.classList.remove('active');
+                document.body.style.overflow = '';
             }
         });
 
-        // Aggiorna la posizione della navbar
-        function adjustMenuPosition() {
-            const navbarHeight = navbar.offsetHeight;
-            document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
-        }
+        // Close off-canvas on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuIcon.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
 
-        adjustMenuPosition();
-        window.addEventListener("resize", adjustMenuPosition);
-    });
-
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const navbar = document.querySelector(".navbar");
-        const languageSwitcher = document.querySelector(".language-switcher");
-
-        // Posiziona il selettore della lingua sotto la navbar
-        const navbarHeight = navbar.offsetHeight;
-        languageSwitcher.style.top = `${navbarHeight + 10}px`;
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const mobileMenu = document.getElementById("mobile-menu");
-        const menuIcon = document.getElementById("menu-icon");
-
-        // Aggiungi un listener per lo scorrimento della finestra
+        // Close on scroll
         window.addEventListener("scroll", function () {
             if (mobileMenu.classList.contains("active")) {
                 mobileMenu.classList.remove("active");
                 menuIcon.classList.remove("active");
+                document.body.style.overflow = '';
             }
         });
     });
 </script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const acceptAllCheckbox = document.querySelector(".accept-all input[type='checkbox']");
