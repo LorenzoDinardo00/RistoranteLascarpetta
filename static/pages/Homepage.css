@@ -345,8 +345,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 #custom-logo {
-    max-width: 320px;
-    width: 60%;
+    max-width: 480px;
+    width: 80%;
     height: auto;
     filter: drop-shadow(0 8px 32px rgba(0,0,0,0.3)) brightness(1.15);
     animation: floatLogo 7s ease-in-out infinite;
@@ -1179,7 +1179,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     #custom-logo {
-        max-width: 250px;
+        max-width: 340px;
     }
 
     .hero-tagline {
@@ -1300,7 +1300,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     #custom-logo {
-        max-width: 200px;
+        max-width: 280px;
     }
 
     .hero-tagline {
@@ -1379,7 +1379,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     #custom-logo {
-        max-width: 180px;
+        max-width: 240px;
     }
 
     .about-title {
